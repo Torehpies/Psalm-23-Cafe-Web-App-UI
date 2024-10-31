@@ -3,7 +3,7 @@
         <div class="login-image"></div>
         <div class="login-form">
             <h1>Psalm 23 Cafe</h1>
-            <form>
+            <form (submit)="redirect($event)">
                 <div class="input-container email">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="Email@example.com" required>
