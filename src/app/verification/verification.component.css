@@ -1,0 +1,102 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f5c65b;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 50px; 
+    margin-right: 10px;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: bold;
+    color: #000;
+}
+
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0 20px;
+    color: #000;
+}
+
+
+.code-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.code-box {
+    width: 100px;
+    height: 150px; 
+    font-size: 50px; 
+    font-weight: bold; 
+    color: #000; 
+    background-color: #fff;
+    border: 2px solid #ddd; 
+    border-radius: 8px; 
+    text-align: center; 
+    outline: none; 
+    transition: border-color 0.3s; 
+}
+
+
+.code-box:focus {
+    border-color: #4a90e2; 
+}
+
+.code-box::placeholder {
+    color: #888; 
+    opacity: 1; 
+}
+
+.verification-title {
+    height: 80px;
+    font-size: 40px; 
+    font-weight: bold;
+    color: #000; 
+    margin: 20px 0; 
+    text-align: center; 
+    letter-spacing: 10px; 
+}
+ 
+.resend-link {
+    font-size: 17px;
+    color: #000;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+.resend-link:hover {
+    text-decoration: underline; 
+}
+
+.reset-button {
+    width: 220px;
+    height: 45px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    background-color: #fff;
+    border: none; 
+    border-radius: 8px;
+    cursor: pointer; 
+}
+
+.reset-button:hover {
+    background-color: #e0e0e0; 
+}
