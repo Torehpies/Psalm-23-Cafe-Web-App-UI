@@ -22,11 +22,18 @@
     background-color: #FFC800; /* Card background color */
     border-radius: 16px; /* Rounded corners */
     padding: 16px; /* Space inside the card */
-    margin: 8px 0; /* Space between cards */
+    margin: 16px 16px ; /* Space between cards */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
     transition: transform 0.2s; /* Smooth transform effect */
+    cursor: pointer;
 }
 
 .sidebar li:hover {
     transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.sidebar li.logout {
+    background-color: #a67400;
+    color: white;
+    margin: 400px 16px 16px;
 }

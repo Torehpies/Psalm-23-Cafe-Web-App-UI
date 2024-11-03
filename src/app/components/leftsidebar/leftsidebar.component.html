@@ -1,7 +1,10 @@
 <div class="sidebar" [class.active]="isMenuActive">
     <ul>
-        <li>Test</li>
-        <li>Test</li>
-        <li>Test</li>
+        <li (click)="gotoDashboard()">Dashboard</li>
+        <li (click)="gotoInventory()">Inventory</li>
+        <li (click)="gotoReports()">Reports</li>
+        <li (click)="gotoAccountManagement()">Account Management</li>
+        <li (click)="gotoAccountMonitoring()">Attendance Monitoring</li>
+        <li class="logout" (click)="logout()">Log Out</li>
     </ul>
 </div>
