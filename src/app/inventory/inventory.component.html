@@ -2,6 +2,17 @@
 <div class="container">
 <app-leftsidebar />
 <div class="main-content" [class.active] = "isMenuActive">
-<p>inventory works</p>
+<div class="button-container">
+<button (click)="gotoItemForm()">+ Add Item</button>
+
+<div class="card-container">
+  <div class="card" *ngFor="let item of items">
+    <h3>{{ item.category }}</h3>
+    <p>Name: {{ item.name }}</p>
+    <p>Quantity: {{ item.quantity }}</p>
+    <p>Unit: {{ item.unit }}</p>
+  </div>
+</div>
+</div>
 </div>
 </div>

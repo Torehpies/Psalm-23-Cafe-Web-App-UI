@@ -17,4 +17,6 @@ body {
 }
 .main-content.active {
     margin-left: 300px; /* Shift main content to the right when sidebar is active */
+    pointer-events: none;
+    opacity: 0.5;
 }

@@ -17,7 +17,8 @@ export class AccountManagementComponent {
 
   ngOnInit() {
       this.menuService.isMenuActive$.subscribe((status) => {
-          this.isMenuActive = status;
+          this.isMenuActive = status;     
       });
+      this.menuService.changeHeaderText('Account Management');
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -15,4 +15,12 @@ export class MenuService {
     getMenuStatus(): boolean {
         return this.isMenuActiveSubject.value;
     }
+
+    headerText = signal<string>('Welcome, Admin!');
+
+    changeHeaderText(text: string) {
+        this.headerText.set(text);
+    }
+
 }
+

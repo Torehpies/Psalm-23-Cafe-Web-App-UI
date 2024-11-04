@@ -10,6 +10,10 @@ import { MenuService } from '../../services/menu.service';
 export class HeaderComponent implements OnInit {
   isMenuActive: boolean = false;
 
+  get headerText() {
+    return this.menuService.headerText;
+  }
+  
   constructor(private menuService: MenuService) {}
 
   ngOnInit() {
@@ -21,4 +25,5 @@ export class HeaderComponent implements OnInit {
   toggleMenu() {
       this.menuService.toggleMenu(); // Toggle the menu state in the service
   }
+  
 }
