@@ -8,7 +8,9 @@ import { AuthResponse } from './response.model';
   providedIn: 'root'
 })
 export class AuthService {
-  private loginUrl = 'https://your-api-url.com/login'; 
+  private  apiUrl = 'https://your-api-url.com/api';
+  private loginUrl = this.apiUrl + '/login'; 
+  //private forgotpassword = this.apiUrl + '/forgotpassword';
 
   constructor(private http: HttpClient) {}
 
@@ -32,4 +34,6 @@ export class AuthService {
   }
 
   // For forgot password
+
+  
 }

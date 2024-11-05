@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 })
 export class ForgotPasswordComponent {
 
+  // constructor(private router: Router, private authService: AuthService) {
+  // }   
   constructor(private router: Router) {}
 
   onSubmit() {
