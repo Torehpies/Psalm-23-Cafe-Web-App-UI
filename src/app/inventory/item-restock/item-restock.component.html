@@ -1,0 +1,34 @@
+<div class="popup-backdrop">
+    <div class="popup-modal">
+      <h2>Restock Item</h2>
+  
+      <form>
+        <div class="form-group">
+          <label for="itemName">Item Name:</label>
+          <input type="text" id="itemName" [value]="item.name" readonly />
+        </div>
+  
+        <div class="form-group">
+          <label for="quantity">Quantity:</label>
+          <input type="number" id="quantity" [(ngModel)]="quantity" name="quantity" min="0" />
+        </div>
+  
+        <div class="form-group">
+          <label for="price">Price (PHP):</label>
+          <input type="number" id="price" [(ngModel)]="price" name="price" min="0" />
+        </div>
+  
+        <div class="button-group">
+          <button type="button" class="btn-submit" (click)="submitRestock()">Submit Restock</button>
+          <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <app-confirm-modal
+  *ngIf="showModal"
+  [message]="modalMessage"
+  (confirmed)="onConfirmed($event)"
+  (canceled)="onModalCancel()"
+></app-confirm-modal>

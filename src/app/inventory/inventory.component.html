@@ -1,18 +1,30 @@
 <app-header />
 <div class="container">
-<app-leftsidebar />
-<div class="main-content" [class.active] = "isMenuActive">
-<div class="button-container">
-<button (click)="gotoItemForm()">+ Add Item</button>
+  <app-leftsidebar />
+  <div class="main-content" [class.active]="isMenuActive">
+    <div class="button-container">
+      <button (click)="toggleShowItemForm()">+ Add Item</button>
+    </div>
 
-<div class="card-container">
-  <div class="card" *ngFor="let item of items">
-    <h3>{{ item.category }}</h3>
-    <p>Name: {{ item.name }}</p>
-    <p>Quantity: {{ item.quantity }}</p>
-    <p>Unit: {{ item.unit }}</p>
+    <div class="card-container">
+      <div class="card" *ngFor="let item of items" (click)="showItemDetails(item)">
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.quantity || 0 }} {{ item.unit }}</p>
+      </div>
+    </div>
   </div>
 </div>
-</div>
-</div>
-</div>
+
+<!-- Popup for item details -->
+<app-item-detail
+  *ngIf="showItemDetail"
+  [item]="selectedItem"
+  (close)="closeItemDetailsModal()"
+></app-item-detail>
+
+<app-item-form
+  *ngIf="showItemForm"
+  (visible)="toggleShowItemForm()"
+  (itemAdded)="onItemAdded($event)"
+>
+</app-item-form>

@@ -1,34 +1,89 @@
 .button-container {
-    display: flex;
-    justify-content: flex-end; /* Aligns the button to the right */
-    margin: 25px 100px 25px; /* Optional: add some space below the button */
-  }
+  display: flex;
+  justify-content: flex-end; /* Aligns the button to the right */
+  margin: 25px 100px 25px; /* Optional: add some space below the button */
+}
 
 button {
-    /* Optional: style your button */
-    padding: 10px 20px;
-    background-color: #FFF940; /* Bootstrap primary color */
-    color: black;
-    border: none;
-    border-radius: 5px;
-    font-size: large;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    transform: translateY(-2px);
-  }
-  .card-container {
-    display: flex;
-    flex-wrap: wrap; /* Allows items to wrap to the next line */
-    gap: 20px; /* Space between cards */
-  }
-  
-  .card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 15px;
-    width: 200px; /* Set width for the cards */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
+  /* Optional: style your button */
+  padding: 10px 20px;
+  background-color: #FFF940; /* Bootstrap primary color */
+  color: black;
+  border: none;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+.popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center the modal in the viewport */
+}
+
+.popup-modal {
+  background-color: #F9C03F; /* Background color for the modal */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  outline: 2px solid black;
+  width: 300px; /* Set a fixed width for the modal */
+  text-align: center; /* Centers the content inside the modal */
+}
+
+.popup-content p {
+  margin-top: 15px; /* Adds space above the paragraph */
+}
+
+.popup-content h2 {
+  margin-bottom: 15px; /* Adds space below the heading */
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap to the next line */
+  gap: 20px; /* Space between cards */
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  width: 200px; /* Set width for the cards */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex; /* Enable flexbox layout within the card */
+  flex-direction: column; /* Stack content vertically */
+  align-items: center; /* Center content horizontally */
+  justify-content: center; /* Center content vertically */
+  text-align: center; /* Center text within the card */
+  height: 200px; /* Fixed height for uniform card sizes */
+  cursor: pointer; /* Makes the card clickable */
+  transition: transform 0.2s ease; /* Adds a smooth hover effect */
+}
+
+.card:hover {
+  transform: scale(1.05); /* Slightly enlarge the card on hover */
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.card p {
+  margin: 5px 0;
+  color: gray;
+}
