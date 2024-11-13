@@ -1,3 +1,4 @@
+/* Body Styles */
 body {
     display: flex;
     justify-content: center;
@@ -8,7 +9,7 @@ body {
     background: linear-gradient(135deg, #f9da6c, #f6c88f); 
 }
 
-
+/* Container Styles */
 .login-container {
     display: flex;
     align-items: stretch;
@@ -20,7 +21,6 @@ body {
     overflow: hidden;
 }
 
-
 .login-image {
     width: 50%;
     background-image: url('/assets/cafe.png'); 
@@ -30,7 +30,7 @@ body {
     border-bottom-left-radius: 12px; 
 }
 
-
+/* Form and Text Styles */
 .login-form {
     width: 50%;
     padding: 40px;
@@ -46,16 +46,7 @@ body {
     margin-bottom: 20px;
 }
 
-
-.input-container label {
-    display: block; 
-    margin-bottom: 5px; 
-    color: #333; 
-    font-size: 14px; 
-    margin-left: 30px; 
-}
-
-
+/* Input Container */
 .input-container {
     width: 100%;
     margin: 10px 0;
@@ -75,44 +66,17 @@ body {
     transition: border-color 0.3s; 
 }
 
-.login-form input[type="email"]:focus,
-.login-form input[type="password"]:focus {
-    border-color: #4a90e2; 
-}
-
-
-.input-container.email::before {
-    content: '';
-    position: absolute;
-    left: 12px;
-    top: 43px;
-    transform: translateY(-50%);
-    width: 24px; 
-    height: 24px; 
-    background-image: url('/assets/gmail.jpg'); 
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 1; 
-}
-
-
-.input-container.password::before {
-    content: '';
-    position: absolute;
-    left: 12px;
-    top: 43px;
-    transform: translateY(-50%);
-    width: 24px; 
-    height: 24px; 
-    background-image: url('/assets/password.jpg'); 
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 1; 
-}
-
-
-.login-form button {
+/* Buttons Container */
+.button-container {
+    display: flex;
     width: 100%;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Log In Button */
+.login-button {
+    flex: 1;
     padding: 14px;
     background-color: #FFD500; 
     color: #000000;
@@ -120,17 +84,33 @@ body {
     border: none;
     border-radius: 8px; 
     cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s, transform 0.2s; 
     outline: 2px solid black;
+    transition: background-color 0.3s, transform 0.2s; 
 }
 
-.login-form button:hover {
+.login-button:hover {
     background-color: #13a886; 
     transform: translateY(-2px); 
 }
 
+/* Sign Up Button */
+.signup-button {
+    background-color: #FFD500;
+    color: #000000;
+    width: 80px;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
 
+.signup-button:hover {
+    background-color: #13a886;
+    transform: translateY(-2px); 
+}
+
+/* Forgot Password Link */
 .login-form a {
     margin-top: 15px;
     font-size: 14px;
@@ -143,7 +123,25 @@ body {
     text-decoration: underline; 
 }
 
+.input-container.email::before {
+    content: '📧'; /* Emoji for email */
+    position: absolute;
+    left: 12px;
+    top: 40px;
+    transform: translateY(-50%);
+    font-size: 18px;
+}
 
+.input-container.password::before {
+    content: '🔒'; /* Emoji for lock */
+    position: absolute;
+    left: 12px;
+    top: 40px;
+    transform: translateY(-50%);
+    font-size: 18px;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
     .login-container {
         width: 90%; 

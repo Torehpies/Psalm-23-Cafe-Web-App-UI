@@ -16,6 +16,12 @@ export const routes: Routes = [
       }
   },
   {
+    path:'create-account',
+    loadComponent: () => {
+        return import('./create-account/create-account.component').then((m) => m.CreateAccountComponent)
+    }
+    },
+  {
     path:'forgot-password',
     loadComponent: () => {
         return import('./forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent)

@@ -8,8 +8,9 @@ import { AuthResponse } from './response.model';
   providedIn: 'root'  
 })
 export class AuthService {
-  private apiUrl = 'https://your-api-url.com/api';
+  private apiUrl = 'http://localhost:7000';
   private loginUrl = `${this.apiUrl}/login`;
+  private createAccountUrl = `${this.apiUrl}/create-account`; 
   private forgotPasswordUrl = `${this.apiUrl}/forgot-password`;
   private resendVerificationUrl = `${this.apiUrl}/resend-verification`;
   private verifyVerificationCodeUrl = `${this.apiUrl}/verify-code`;
@@ -68,7 +69,12 @@ export class AuthService {
     return this.http.post<any>(this.resetPasswordUrl, body, { headers });
   }
   
+  // Create account method
+  createAccount(fullName: string, email: string, password: string, role: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = JSON.stringify({ fullName, email, password, role });  // Creating the request body
 
-
+    return this.http.post<any>(this.createAccountUrl, body, { headers });  // Send POST request
+  }
   
 }

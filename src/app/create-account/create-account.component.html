@@ -1,1 +1,19 @@
-<p>create-account works!</p>
+<div class="container">
+    <div class="form-wrapper">
+      <div class="form-header">
+        <!-- Back Arrow with click event to go back -->
+        <span class="back-arrow" (click)="goBack()">←</span> <!-- Back arrow button that triggers goBack -->
+        <h2>Create Account</h2>
+      </div>
+      
+        <form (ngSubmit)="createAccount()">
+            <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+            <input type="text" [(ngModel)]="fullName"class="input-field" placeholder="Full Name" name="fullName" />
+            <input type="text" [(ngModel)]="role"class="input-field" placeholder="Role" name="role" />
+            <input type="email" [(ngModel)]="email" class="input-field" placeholder="Email" name="email"/>
+            <input type="password" [(ngModel)]="password" class="input-field" placeholder="Password" name="password"/>
+            <button type="submit" class="submit-button">Create</button>
+        </form>
+    </div>
+  </div>
+  
