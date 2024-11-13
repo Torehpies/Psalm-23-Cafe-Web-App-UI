@@ -1,9 +1,9 @@
 <body>
-    <div class="login-container">
-        <div class="login-image"></div>
-        <div class="login-form">
-            <h1>Psalm 23 Cafe</h1>
-            <!-- <form (ngSubmit)="onLogin()"> --> <!-- swap if BE login endpoint okay -->
+  <div class="login-container">
+      <div class="login-image"></div>
+      <div class="login-form">
+          <h1>Psalm 23 Cafe</h1>
+          <!-- <form (ngSubmit)="onLogin()"> -->
             <form> 
               <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
                 <div class="input-container email">
@@ -18,10 +18,10 @@
                 </div>
                 <button type="submit">Log In</button>
             </form>
-            <p>
-              <a (click)="navigateToForgotPassword()" class="forgot-password">Forgot Password?</a>
-            </p>
-        </div>
-    </div>  
-  </body>
-  
+          <p>
+            <a (click)="navigateToForgotPassword()" class="forgot-password">Forgot Password?</a>
+          </p>
+      </div>
+  </div>  
+</body>
+

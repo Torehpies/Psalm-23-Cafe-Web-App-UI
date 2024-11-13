@@ -91,12 +91,13 @@ h2 {
     font-size: 18px;
     font-weight: bold;
     color: #000;
-    background-color: #fff;
+    background-color: #FFD500;
     border: none; 
     border-radius: 8px;
     cursor: pointer; 
+    outline: 2px solid black;
 }
 
 .reset-button:hover {
-    background-color: #e0e0e0; 
+    background-color: #009688; 
 }

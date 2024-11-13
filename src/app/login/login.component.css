@@ -114,18 +114,19 @@ body {
 .login-form button {
     width: 100%;
     padding: 14px;
-    background-color: #4a90e2; 
-    color: #fff;
+    background-color: #FFD500; 
+    color: #000000;
     font-size: 16px;
     border: none;
     border-radius: 8px; 
     cursor: pointer;
     margin-top: 20px;
     transition: background-color 0.3s, transform 0.2s; 
+    outline: 2px solid black;
 }
 
 .login-form button:hover {
-    background-color: #357ab8; 
+    background-color: #13a886; 
     transform: translateY(-2px); 
 }
 

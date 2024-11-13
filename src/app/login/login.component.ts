@@ -17,6 +17,8 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
   errorMessage: string | null = null;
+
+
   // constructor(private router: Router, private authService: AuthService) {
   //   console.log('LoginComponent initialized');
   // }   
@@ -42,4 +44,3 @@ export class LoginComponent {
   //   );
   // } 
 }
-

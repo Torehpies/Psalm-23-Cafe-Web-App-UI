@@ -8,20 +8,29 @@
       
     <h2 class="verification-title">VERIFICATION CODE</h2>
   
-    
-   
+    <!-- Verification Form -->
+    <!-- <form [formGroup]="verificationForm" (ngSubmit)="onSubmit()"> -->
+    <!-- Code Inputs (6 Digits) -->  
     <div class="code-input">
-      <input type="text" class="code-box" maxlength="1" placeholder="1" />
-      <input type="text" class="code-box" maxlength="1" placeholder="2" />
-      <input type="text" class="code-box" maxlength="1" placeholder="3" />
-      <input type="text" class="code-box" maxlength="1" placeholder="4" />
-      <input type="text" class="code-box" maxlength="1" placeholder="5" />
-      <input type="text" class="code-box" maxlength="1" placeholder="6" />
+      <input type="text" class="code-box" maxlength="1" formControlName="code1" placeholder="1" />
+      <input type="text" class="code-box" maxlength="1" formControlName="code2" placeholder="2" />
+      <input type="text" class="code-box" maxlength="1" formControlName="code3" placeholder="3" />
+      <input type="text" class="code-box" maxlength="1" formControlName="code4" placeholder="4" />
+      <input type="text" class="code-box" maxlength="1" formControlName="code5" placeholder="5" />
+      <input type="text" class="code-box" maxlength="1" formControlName="code6" placeholder="6" />
     </div>
     
+   <!-- Error Message -->
+   <!-- <div *ngIf="verificationForm.invalid && verificationForm.touched" class="error">
+    <small *ngIf="verificationForm.controls['code1'].errors?.['required'] || verificationForm.controls['code1'].errors?.['pattern']">Please enter a valid code.</small>
+  </div> -->
 
-    <a href="#" class="resend-link">Resend Code</a>
-    
-    <button class="reset-button" (click)="onSubmit()">Continue</button>
-  </div>
+  <!-- Resend Link -->
+  <!-- <a href="#" class="resend-link" (click)="reSendVerification()">Resend Code</a> -->
+  <a href="#" class="resend-link">Resend Code</a>
+  <!-- Submit Button -->
+  <!-- <button class="reset-button" type="submit" [disabled]="verificationForm.invalid">Continue</button>\ -->
+  <button class="reset-button" type="submit" (click)="onSubmit()">Continue</button>
+  <!-- </form> -->
+</div>
   

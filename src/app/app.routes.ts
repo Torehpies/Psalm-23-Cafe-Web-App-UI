@@ -10,7 +10,7 @@ export const routes: Routes = [
       },
   },
   {
-      path:'verification',
+      path:'verify-code',
       loadComponent: () => {
           return import('./verification/verification.component').then((m) => m.VerificationComponent)
       }

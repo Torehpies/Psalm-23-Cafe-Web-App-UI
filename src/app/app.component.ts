@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
+  imports: [RouterOutlet, HttpClientModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./login/login.component.css'],
-  imports: [RouterOutlet]
+  styleUrl: './app.component.css'
 })
+
 export class AppComponent {
-  title = 'My Angular App';
+  title = 'Psalms-23-Cafe-Web-UI';
 }
