@@ -7,10 +7,12 @@ import { CommonModule } from '@angular/common';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
+import { InventoryService } from '../services/inventory.service';
+import { Observable, of } from 'rxjs';
 
 interface Item {
   name: string;
-  PAR: number;
+  //PAR: number;
   unit: string;
   quantity: number;
 }
@@ -26,31 +28,42 @@ export class InventoryComponent {
   router = inject(Router);
   isMenuActive: boolean = false;
   showItemForm: boolean = false;
-  items: Item[] = []; // Array to hold the items
+  items$: Observable<Item[]> = of([]); // Observable to hold the items
+  private inventoryService = inject(InventoryService)
   quantity = 0;
   showItemDetail: boolean = false;
-  selectedItem: any = null;
+  selectedItem: Item | null = null;
   
   constructor(private menuService: MenuService) {}
 
   ngOnInit() {
+    // Subscribe to menu status updates
     this.menuService.isMenuActive$.subscribe((status) => {
       this.isMenuActive = status;
     });
+
+    // Change the header text
     this.menuService.changeHeaderText('Inventory');
-  }
+
+    // Fetch items from the backend
+    this.items$ = this.inventoryService.getItems();
+}
+
 
   toggleShowItemForm() {
     this.showItemForm = !this.showItemForm;
   }
 
-  addItem(item: Item) {
-    this.items.push(item); // Add item to the array
-  }
-
-  onItemAdded(newItem: Item) {
-    this.addItem(newItem); // Add the received item to the list
-  }
+ // New method to handle adding an item to both frontend and backend
+ addItemToBackend(item: Item) {
+  this.inventoryService.addItem(item).forEach(() => {
+    // Refresh items$ to get the updated list of items
+    this.items$ = this.inventoryService.getItems();
+    this.showItemForm = false; // Hide the item form
+  }).catch(error => {
+    console.error('Error adding item:', error);
+  });
+}
 
   // Handle the click on an item card
   showItemDetails(item: any) {
@@ -62,4 +75,5 @@ export class InventoryComponent {
     this.showItemDetail = false;
     this.selectedItem = null;
   }
+
 }

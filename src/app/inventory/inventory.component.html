@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-container">
-      <div class="card" *ngFor="let item of items" (click)="showItemDetails(item)">
+      <div class="card" *ngFor="let item of items$ | async" (click)="showItemDetails(item)">
         <h3>{{ item.name }}</h3>
         <p>{{ item.quantity || 0 }} {{ item.unit }}</p>
       </div>
@@ -25,6 +25,6 @@
 <app-item-form
   *ngIf="showItemForm"
   (visible)="toggleShowItemForm()"
-  (itemAdded)="onItemAdded($event)"
+  (itemAdded)="addItemToBackend($event)"
 >
 </app-item-form>

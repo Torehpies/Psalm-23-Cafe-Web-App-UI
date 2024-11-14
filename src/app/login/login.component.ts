@@ -17,13 +17,18 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string | null = null;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, /*private authService: AuthService*/) {}
 
   navigateToForgotPassword() {
     this.router.navigate(['/forgot-password']);
   }
 
-  onLogin() {
+  redirect(event: Event) {
+    event.preventDefault(); // Prevent default form submission
+    // Here you can add logic to handle login (e.g., authentication)
+    this.router.navigate(['/dashboard']); // Replace with your target route
+  }
+  /*onLogin() {
     this.authService.login(this.username, this.password).subscribe(
       (response: AuthResponse) => {
         console.log('Login successful:', response);
@@ -36,5 +41,5 @@ export class LoginComponent {
         this.errorMessage = 'Login failed. Please try again.';
       }
     );
-  }
+  }*/
 }

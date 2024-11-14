@@ -36,6 +36,8 @@ export class ItemRestockComponent {
       // If confirmed, update the item's quantity
       this.item.quantity += this.quantity;
 
+      this.restock.emit(this.item);
+
       // Create the restock history record
       const date = new Date().toLocaleDateString();
       const restockHistory = { quantity: this.quantity, price: this.price, date };
