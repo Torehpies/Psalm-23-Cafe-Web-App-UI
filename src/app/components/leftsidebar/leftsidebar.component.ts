@@ -2,8 +2,6 @@
 import { Component, inject, OnInit,} from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
-
 
 @Component({
   selector: 'app-leftsidebar',
@@ -16,7 +14,7 @@ export class LeftsidebarComponent implements OnInit {
   router = inject(Router);
   isMenuActive: boolean = false;
 
-  constructor(private menuService: MenuService, private location: Location) {}
+  constructor(private menuService: MenuService) {}
 
   ngOnInit() {
       this.menuService.isMenuActive$.subscribe((status) => {
@@ -24,13 +22,10 @@ export class LeftsidebarComponent implements OnInit {
       });
   }
   
-  logout(): void {
+   logout(): void {
     this.menuService.toggleMenu();
-    localStorage.removeItem('token');
     this.router.navigate(['']);
-    //prevent access to the previous page
-    this.location.replaceState('/');
-}
+   }
 
    gotoDashboard(): void {
     this.router.navigate(['dashboard']);
