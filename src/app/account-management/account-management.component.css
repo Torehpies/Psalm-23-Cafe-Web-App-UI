@@ -1,0 +1,201 @@
+/* Existing Styles */
+.container {
+  background-color: #ffd36f;
+  min-height: 79vh;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.main-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.content {
+  h2 {
+    font-size: 35px;
+  }
+
+  /* Actions Section */
+  .actions {
+    display: flex;
+    justify-content: flex-end; /* Align to the right */
+    margin-bottom: 20px;
+  }
+
+  /* Action button container (for horizontal alignment) */
+  .action-buttons-container {
+    display: flex;
+    justify-content: flex-end; /* Align the items horizontally to the right */
+    align-items: center; /* Vertically center the input and button */
+    gap: 10px; /* Space between the input and the button */
+    width: 100%; /* Make the container take the full available width */
+    max-width: 600px; /* Limit the container width (optional) */
+  }
+
+  /* Styling for the search input */
+  .search-input {
+    width: 250px; /* Fixed width for the input */
+    padding: 10px; /* Adjust padding */
+    font-size: 14px; /* Adjust font size */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding and border in the width */
+  }
+
+  /* Styling for the approve button */
+  .approve-button {
+    background-color: #f2d14b;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+
+    .role-label {
+      background-color: black;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .operation-cell {
+      text-align: left;
+    }
+  }
+
+  /* Horizontal Operation Buttons */
+  .operation-buttons-horizontal {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    margin-top: 10px;
+    gap: 10px; /* Space between buttons */
+  }
+
+  .update-button,
+  .delete-button,
+  .disable-button {
+    width: 120px;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    color: white;
+  }
+
+  .update-button {
+    background-color: #4f9efc;
+  }
+
+  .delete-button {
+    background-color: #f44336;
+  }
+
+  .disable-button {
+    background-color: #fdd835;
+  }
+}
+
+/* Popup Styles (Updated) */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-container {
+  background-color: #ffd36f;
+  padding: 20px;
+  border-radius: 10px;
+  width: 500px;
+  position: relative; /* Allows absolute positioning for the X button */
+}
+
+.popup-container h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.popup-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  background-color: white; /* White background for each item */
+  padding: 15px; /* Padding inside each item */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+}
+
+.info p {
+  margin: 0;
+  font-size: 14px; /* Adjust font size for better readability */
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.accept-button {
+  background-color: #f2d14b;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reject-button {
+  background-color: #f44336;
+  border: none;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* X Button (Close) */
+.close-popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 1100; /* Ensures it stays on top */
+}
+
+.close-popup:hover {
+  color: #f44336; /* Changes color to red on hover */
+}

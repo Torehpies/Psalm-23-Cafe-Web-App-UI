@@ -1,7 +1,80 @@
-<app-header />
+<app-header></app-header>
 <div class="container">
-<app-leftsidebar />
-<div class="main-content" [class.active] = "isMenuActive">
-<p>account management works</p>
+  <app-leftsidebar></app-leftsidebar>
+  <div class="main-content" [class.active]="isMenuActive">
+    <section class="content">
+      <h2>Account Management</h2>
+
+      <!-- Actions Section -->
+      <div class="actions">
+        <div class="action-buttons-container">
+          <input type="text" placeholder="Search User" class="search-input" />
+          <button class="approve-button" (click)="openPopup()">Approve Account</button>
+        </div>
+      </div>
+
+      <!-- User Table -->
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th style="text-align: center;">Name</th>
+            <th style="text-align: center;">User Role</th>
+            <th style="text-align: center;">Email</th>
+            <th style="text-align: center;">Operation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Table content goes here -->
+        </tbody>
+      </table>
+
+      <!-- Operation Buttons -->
+      <div class="operation-buttons-horizontal">
+        <button class="update-button">Update</button>
+        <button class="delete-button">Delete</button>
+        <button class="disable-button">Disable</button>
+      </div>
+    </section>
+  </div>
 </div>
+
+<!-- Popup -->
+<div class="popup-overlay" *ngIf="showPopup">
+  <div class="popup-container">
+    <button class="close-popup" (click)="closePopup()">X</button> <!-- X button to close -->
+    <h3>Account Information</h3>
+    <div class="popup-item">
+      <div class="info">
+        <p>Name:</p>
+        <p>Email:</p>
+        <p>Role:</p>
+      </div>
+      <div class="action-buttons">
+        <button class="accept-button">Accept</button>
+        <button class="reject-button">Reject</button>
+      </div>
+    </div>
+    <div class="popup-item">
+      <div class="info">
+        <p>Name:</p>
+        <p>Email:</p>
+        <p>Role:</p>
+      </div>
+      <div class="action-buttons">
+        <button class="accept-button">Accept</button>
+        <button class="reject-button">Reject</button>
+      </div>
+    </div>
+    <div class="popup-item">
+      <div class="info">
+        <p>Name:</p>
+        <p>Email:</p>
+        <p>Role:</p>
+      </div>
+      <div class="action-buttons">
+        <button class="accept-button">Accept</button>
+        <button class="reject-button">Reject</button>
+      </div>
+    </div>
+  </div>
 </div>
