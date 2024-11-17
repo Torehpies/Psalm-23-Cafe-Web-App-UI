@@ -36,19 +36,25 @@ export class LeftsidebarComponent implements OnInit {
     this.router.navigate(['inventory']);
     this.menuService.toggleMenu();
    }
-
-   gotoReports(): void {
-    this.router.navigate(['reports']);
+   //gian changes
+   gotoSupplies(): void {
+    this.router.navigate(['supplies']);
     this.menuService.toggleMenu();
    }
 
-   gotoAccountManagement(): void {
-    this.router.navigate(['account-management']);
+   gotoclockin(): void {
+    this.router.navigate(['clock-in']);
     this.menuService.toggleMenu();
    }
 
-   gotoAccountMonitoring(): void {
-    this.router.navigate(['account-monitoring']);
+   gotoProduction(): void {
+    this.router.navigate(['production']);
     this.menuService.toggleMenu();
    }
+
+   gotoScrapping(): void {
+    this.router.navigate(['scrapping']);
+    this.menuService.toggleMenu();
+   }
+   //until here
 }
