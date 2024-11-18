@@ -2,11 +2,14 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from '../components/header/header.component';
 import { LeftsidebarComponent } from '../components/leftsidebar/leftsidebar.component';
 import { MenuService } from '../services/menu.service';
+import { MainBoardComponent } from './main-board/main-board.component';
+import { DateTimeComponent } from './date-time/date-time.component';
+import { DailyComponent } from './daily/daily.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [LeftsidebarComponent,HeaderComponent],
+  imports: [LeftsidebarComponent,HeaderComponent, MainBoardComponent, DateTimeComponent, DailyComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -19,6 +22,6 @@ export class DashboardComponent {
       this.menuService.isMenuActive$.subscribe((status) => {
           this.isMenuActive = status;   
       });
-      this.menuService.changeHeaderText('Welcome, User!'); 
+      this.menuService.changeHeaderText('Welcome, Baker!'); 
   }
 }
