@@ -1,20 +1,20 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
   }
   
-  /* Container that centers the content */
+
   .container {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
     background: linear-gradient(135deg, #f9da6c, #f6c88f);
   }
   
-  /* Form wrapper (create account form container) */
+
   .form-wrapper {
     background-color: #F9C03F;
     color: #000000;
@@ -27,33 +27,29 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   }
   
-  /* Header (Back arrow and Title) */
   .form-header {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
   }
   
-  /* Back Arrow Styling */
   .back-arrow {
-    font-size: 28px;  /* Adjust this value to make the arrow bigger or smaller */
+    font-size: 28px; 
     cursor: pointer;
-    margin-right: 15px; /* Space between the arrow and the title */
-    transition: transform 0.3s ease; /* Optional: smooth transition on hover */
+    margin-right: 15px;
+    transition: transform 0.3s ease; 
   }
   
-  /* Optional: Hover effect for the back arrow */
+
   .back-arrow:hover {
-    transform: scale(1.2); /* Slightly increase the size on hover */
+    transform: scale(1.2);
   }
   
-  /* Form Title (Create Account) */
   .form-header h2 {
     font-size: 24px;
     font-weight: bold;
   }
   
-  /* Form text description */
   .form-text {
     font-size: 16px;
     line-height: 1.5;
@@ -65,7 +61,6 @@
     color: #333;
   }
   
-  /* Input fields styling */
   .input-field {
     width: 100%;
     padding: 12px;
@@ -76,7 +71,6 @@
     color: #333;
   }
   
-  /* Submit button styling */
   .submit-button {
     width: 100%;
     padding: 12px;
@@ -95,7 +89,6 @@
     background-color: #009688;
   }
   
-  /* Popup Backdrop (if any) */
   .popup-backdrop {
     position: fixed;
     top: 0;
@@ -106,7 +99,6 @@
     z-index: 10;
   }
   
-  /* Popup modal for any additional interactions */
   .popup-modal {
     position: fixed;
     top: 50%;
@@ -120,7 +112,6 @@
     outline: 2px solid black;
   }
   
-  /* Popup content for the modal */
   .popup-content p {
     margin-top: 15px;
   }
@@ -129,7 +120,6 @@
     margin-bottom: 15px;
   }
   
-  /* Button group (for popup/modal actions) */
   .button-group {
     display: flex;
     justify-content: flex-end;
@@ -153,4 +143,138 @@
   .button-group button:hover {
     background-color: #009688;
   }
-  
+   */
+   /* Added styles for first and last name side-by-side fields */
+/* General Styling */
+/* General styling for the form */
+/* General styling for the form */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #f9da6c, #f6c88f); 
+}
+
+.create-account-form {
+  background-color: #F9C03F;
+  color: #000000;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-header i {
+  font-size: 24px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.form-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.name-fields {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.name-fields .input-field {
+  width: 48%; 
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  color: #333;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  background-color: #FFD500;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #13a886;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field .input-field {
+  padding-right: 40px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 35%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  color: #333;
+}
+
+.role-field .input-field {
+  padding-left: 10px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.go-back-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: transparent;
+  color: #333;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.go-back-btn i {
+  font-size: 24px; 
+}
+
+.go-back-btn:hover {
+  color: #f44336;
+}

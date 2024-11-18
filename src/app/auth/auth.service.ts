@@ -70,11 +70,12 @@ export class AuthService {
   }
   
   // Create account method
-  createAccount(fullName: string, email: string, password: string, role: string): Observable<any> {
+  createAccount(firstName: string, lastName: string, email: string, password: string, role: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = JSON.stringify({ fullName, email, password, role });  // Creating the request body
-
-    return this.http.post<any>(this.createAccountUrl, body, { headers });  // Send POST request
+    const fullName = `${firstName} ${lastName}`;
+    const body = JSON.stringify({ fullName, email, password, role });
+    return this.http.post<any>(this.createAccountUrl, body, { headers });
   }
+  
   
 }
