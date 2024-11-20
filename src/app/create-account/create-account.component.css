@@ -278,3 +278,57 @@
 .go-back-btn:hover {
   color: #f44336;
 }
+.popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.popup-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #F9C03F;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  outline: 2px solid black;
+}
+
+.popup-content p {
+  margin-top: 15px;
+}
+
+.popup-content h2 {
+  margin-bottom: 15px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.button-group button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  background-color: #FFD500;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: 2px solid black;
+}
+
+.button-group button:hover {
+  background-color: #009688;
+}
