@@ -24,6 +24,18 @@ export class UserProfileComponent implements OnInit {
     this.isClockedIn = !this.isClockedIn;
   }
 
+  updateTime(): void {
+    const timeElement = document.getElementById('current-time');
+    if (timeElement) {
+      const d = new Date();
+      timeElement.innerHTML = d.toLocaleTimeString();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.updateTime();
+    setInterval(() => this.updateTime(), 1000);
+  }
   
   clockInData: { date: string; timeIn: string; timeOut: string }[] = [];
 
