@@ -1,4 +1,4 @@
-/* Existing Styles */
+
 .container {
   background-color: #ffd36f;
   min-height: 79vh;
@@ -17,34 +17,30 @@
     font-size: 35px;
   }
 
-  /* Actions Section */
   .actions {
     display: flex;
-    justify-content: flex-end; /* Align to the right */
+    justify-content: flex-end;
     margin-bottom: 20px;
   }
 
-  /* Action button container (for horizontal alignment) */
   .action-buttons-container {
     display: flex;
-    justify-content: flex-end; /* Align the items horizontally to the right */
-    align-items: center; /* Vertically center the input and button */
-    gap: 10px; /* Space between the input and the button */
-    width: 100%; /* Make the container take the full available width */
-    max-width: 600px; /* Limit the container width (optional) */
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
   }
 
-  /* Styling for the search input */
   .search-input {
-    width: 250px; /* Fixed width for the input */
-    padding: 10px; /* Adjust padding */
-    font-size: 14px; /* Adjust font size */
+    width: 250px;
+    padding: 10px;
+    font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box; /* Include padding and border in the width */
+    box-sizing: border-box;
   }
 
-  /* Styling for the approve button */
   .approve-button {
     background-color: #f2d14b;
     border: none;
@@ -69,25 +65,13 @@
       background-color: #f2f2f2;
       font-weight: bold;
     }
-
-    .role-label {
-      background-color: black;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-    }
-
-    .operation-cell {
-      text-align: left;
-    }
   }
 
-  /* Horizontal Operation Buttons */
   .operation-buttons-horizontal {
     display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
+    justify-content: flex-end;
     margin-top: 10px;
-    gap: 10px; /* Space between buttons */
+    gap: 10px;
   }
 
   .update-button,
@@ -99,7 +83,8 @@
     border-radius: 5px;
     cursor: pointer;
     border: none;
-    color: white;
+    color: black;
+    font-size: 15px;
   }
 
   .update-button {
@@ -115,7 +100,6 @@
   }
 }
 
-/* Popup Styles (Updated) */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -134,7 +118,7 @@
   padding: 20px;
   border-radius: 10px;
   width: 500px;
-  position: relative; /* Allows absolute positioning for the X button */
+  position: relative;
 }
 
 .popup-container h3 {
@@ -149,15 +133,15 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
-  background-color: white; /* White background for each item */
-  padding: 15px; /* Padding inside each item */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .info p {
   margin: 0;
-  font-size: 14px; /* Adjust font size for better readability */
+  font-size: 14px;
 }
 
 .action-buttons {
@@ -182,7 +166,6 @@
   cursor: pointer;
 }
 
-/* X Button (Close) */
 .close-popup {
   position: absolute;
   top: 10px;
@@ -193,9 +176,153 @@
   color: #333;
   cursor: pointer;
   font-weight: bold;
-  z-index: 1100; /* Ensures it stays on top */
+  z-index: 1100;
 }
 
 .close-popup:hover {
-  color: #f44336; /* Changes color to red on hover */
+  color: #f44336;
+}
+
+.delete-popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.delete-popup-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #F9C03F;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  outline: 2px solid black;
+}
+
+.delete-popup-modal h2 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding-right: 150px;
+}
+
+.delete-button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.delete-button-group button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  background-color: #FFD500;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: 2px solid black;
+}
+
+.delete-button-group button:hover {
+  background-color: #009688;
+}
+
+.close-delete-popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 1100;
+}
+
+.close-delete-popup:hover {
+  color: #f44336;
+}
+
+.disable-popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.disable-popup-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #F9C03F;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  outline: 2px solid black;
+}
+
+.disable-popup-modal h2 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding-right: 150px;
+}
+
+.disable-button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.disable-button-group button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+  background-color: #FFD500;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: 2px solid black;
+}
+
+.disable-button-group button:hover {
+  background-color: #009688;
+}
+
+.close-disable-popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 1100;
+}
+
+.close-disable-popup:hover {
+  color: #f44336;
 }
