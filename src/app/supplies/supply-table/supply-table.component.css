@@ -1,10 +1,10 @@
-.profile-section {
-    width: 40%;
+.table-section {
+    width: 80%;
     height: 60%;
     background-color: white;
     position: absolute;
     top: 55%;
-    left: 70%;
+    left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -14,7 +14,7 @@
     padding: 20px;
     overflow: hidden;
   }
-  
+
   .worker-info {
     display: flex;
     align-items: center;
@@ -29,12 +29,12 @@
     border: 2px solid #fdd835;
   }
   
-  .worker-info h3 {
+  .supply-info h3 {
     margin: 0;
     font-size: 18px;
   }
   
-  .worker-info p {
+  .supply-info p {
     margin: 0;
     font-size: 14px;
     color: #555;
@@ -46,7 +46,7 @@
     margin-top: 10px;
     border-top: 1px solid #ccc;
   }
-  
+
   table {
     width: 100%;
     border-collapse: collapse;
@@ -69,32 +69,28 @@
   tbody tr:last-child td {
     border-bottom: none;
   }
+
+/* Style for the submit button */
+.submit {
+  position: absolute;
+  top: 90%;
+  left: 45%;
+}
+
+.submit button {
+  background-color: #3C2100;
+  color: white;
+  width: 200%;
+  height: 200%;
+  border-radius: 20px;
+  font-size: 40px;
+  border: none; /* Remove default border */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: background-color 0.3s ease; /* Add hover effect */
+}
+
+.submit button:hover {
+  background-color: #f0f0f0; /* Slightly darker background on hover */
+}
+
   
-  button {
-    background-color: green;
-    color: white;
-    width: 30%;
-    height: 10%;
-    position: absolute;
-    border-radius: 8px;
-    font-size: 30px;
-    top: 60%;
-    left: 10%;
-  }
-
-  .time-container {
-    justify-content: flex-start;
-    position: absolute;
-    color: black;
-    display: flex;
-    flex-direction: column;
-    font-size: 55px;
-    top: 30%;
-    left: 10%;
-    width: 30%;
-    height: 10%;
-  }
-
-  h1 {
-    color: black;
-  }
