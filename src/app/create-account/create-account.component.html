@@ -4,37 +4,37 @@
         <i (click)="goBack()">&#8592;</i>
         <h2>Register Account</h2>
       </div>
-  
+
       <div class="name-fields">
         <input type="text" [(ngModel)]="firstName" name="firstName" placeholder="First Name" class="input-field" />
         <input type="text" [(ngModel)]="lastName" name="lastName" placeholder="Last Name" class="input-field" />
       </div>
-  
+
       <div class="role-field">
         <select [(ngModel)]="role" name="role" class="input-field">
           <option value="">Select Role</option>
-          <option value="Admin">Baker</option>
-          <option value="User">Assistant Baker</option>
-          <option value="User">Cashier</option>
+          <option value="Baker">Baker</option>
+          <option value="Assistant Baker">Assistant Baker</option>
+          <option value="Cashier">Cashier</option>
         </select>
       </div>
-  
+
       <div class="email-field">
         <input type="email" [(ngModel)]="email" name="email" placeholder="Email" class="input-field" />
       </div>
-  
+
       <div class="password-field">
         <input type="password" [(ngModel)]="password" name="password" placeholder="Password" class="input-field" />
         <button type="button" class="toggle-password" (click)="togglePasswordVisibility($event)">👁️</button>
       </div>
-  
+
       <div *ngIf="errorMessage" class="error-message">
         {{ errorMessage }}
       </div>
 
       <button type="button" (click)="showPopup()" class="submit-button">Register Account</button>
     </div>
-  
+
     <div class="popup-backdrop" *ngIf="isPromptVisible" (click)="closePopup()"></div>
     <div class="popup-modal" *ngIf="isPromptVisible">
       <div class="popup-content">
@@ -46,4 +46,4 @@
       </div>
     </div>
   </div>
-  
+

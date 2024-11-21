@@ -5,12 +5,12 @@ import { tap } from 'rxjs/operators';
 import { AuthResponse } from './response.model';
 
 @Injectable({
-  providedIn: 'root'  
+  providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:7000';
+  private apiUrl = 'http://localhost:8800';
   private loginUrl = `${this.apiUrl}/login`;
-  private createAccountUrl = `${this.apiUrl}/create-account`; 
+  private createAccountUrl = `${this.apiUrl}/api/auth/register`;
   private forgotPasswordUrl = `${this.apiUrl}/forgot-password`;
   private resendVerificationUrl = `${this.apiUrl}/resend-verification`;
   private verifyVerificationCodeUrl = `${this.apiUrl}/verify-code`;
@@ -49,7 +49,7 @@ export class AuthService {
   resendVerificationCode(email: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = JSON.stringify({ email });
-  
+
     return this.http.post<any>(this.resendVerificationUrl, body, { headers });
   }
 
@@ -57,25 +57,27 @@ export class AuthService {
   verifyCode(email: string, code: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = JSON.stringify({ email, code });
-  
+
     return this.http.post<any>(this.verifyVerificationCodeUrl, body, { headers });
   }
-  
+
   // Reset Password - yung email, new password
   resetPassword(email: string, newPassword: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = JSON.stringify({ email, newPassword });
-  
+
     return this.http.post<any>(this.resetPasswordUrl, body, { headers });
   }
-  
+
   // Create account method
-  createAccount(firstName: string, lastName: string, email: string, password: string, role: string): Observable<any> {
+  // Seiffer
+  // Changed role -> position
+  // Removed fullName changed to firstName and lastName
+  createAccount(firstName: string, lastName: string, email: string, password: string, position: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const fullName = `${firstName} ${lastName}`;
-    const body = JSON.stringify({ fullName, email, password, role });
+    const body = JSON.stringify({ firstName, lastName, email, password, position});
     return this.http.post<any>(this.createAccountUrl, body, { headers });
   }
-  
-  
+
+
 }

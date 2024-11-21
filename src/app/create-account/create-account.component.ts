@@ -13,14 +13,14 @@ import { AuthService } from '../auth/auth.service';
   providers: [AuthService],
 })
 export class CreateAccountComponent {
-  firstName: string = '';   
-  lastName: string = '';  
-  email: string = '';       
-  password: string = '';    
-  role: string = '';      
+  firstName: string = '';
+  lastName: string = '';
+  email: string = '';
+  password: string = '';
+  role: string = '';
   errorMessage: string | null = null;
-  
-  isPromptVisible: boolean = false; 
+
+  isPromptVisible: boolean = false;
 
   constructor(private router: Router, private authService: AuthService) {}
 
