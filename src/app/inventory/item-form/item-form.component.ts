@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmModalComponent } from '../../components/confirm-modal/confirm-modal.component';
+import { ItemTestService } from '../../services/item-test.service';
 
 @Component({
   selector: 'app-item-form',
@@ -15,27 +16,43 @@ export class ItemFormComponent {
   @Output() itemAdded = new EventEmitter<any>();
 
   addItemForm: FormGroup;
-  units: string[] = ['kilograms', 'grams', 'liters', 'milliliters'];
+  categories: string[] = ['Ingredient', 'Supply']
+  unitsByCategory: { [key: string]: string[] } = {
+    Ingredient: ['kilograms', 'grams', 'liters', 'milliliters'],
+    Supply: ['pieces', 'packs', 'rolls'],
+  };
+  units: string[] = [];
   isCustomUnitSelected: boolean = false;
   showModal: boolean = false;
   modalMessage: string = '';
   isPromptVisible: boolean = false;
   isSubmitAction: boolean = false;  // New flag to track whether the modal is for submission
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private itemTestService: ItemTestService) {
     this.addItemForm = this.fb.group({
       name: ['', Validators.required],
+      category: ['', Validators.required],
       unit: ['', Validators.required],
       customUnit: [''],
       parLevel: ['', [Validators.required, Validators.min(0)]],  // New PAR level control
+    });
+
+     // Listen for changes to the category and update units
+     this.addItemForm.get('category')?.valueChanges.subscribe((selectedCategory) => {
+      this.units = this.unitsByCategory[selectedCategory] || [];
+      this.addItemForm.get('unit')?.setValue(''); // Reset the unit field
     });
   }
 
   onUnitChange(event: any): void {
     const selectedUnit = event.target.value;
-    this.isCustomUnitSelected = selectedUnit === 'custom';
-    if (!this.isCustomUnitSelected) {
-      this.addItemForm.get('customUnit')?.setValue('');
+    if (selectedUnit === 'custom') {
+      this.isCustomUnitSelected = true;
+      // Assign the custom unit value to the unit field directly
+      this.addItemForm.get('unit')?.setValue(this.addItemForm.get('customUnit')?.value || ''); // Set custom unit in the unit field
+    } else {
+      this.isCustomUnitSelected = false;
+      this.addItemForm.get('customUnit')?.setValue(''); // Clear the custom unit field
     }
   }
 
@@ -60,8 +77,17 @@ export class ItemFormComponent {
       if (this.isSubmitAction) {  // Only submit if it was a submit action
         if (this.addItemForm.valid) {
           const formData = this.addItemForm.value;
-          const itemWithDefaultQuantity = { ...formData, quantity: 0 };
-          this.itemAdded.emit(itemWithDefaultQuantity);
+
+          if (this.isCustomUnitSelected) {
+            formData.unit = formData.customUnit;
+          }
+
+          // Add item to the service
+          this.itemTestService.additem({ ...formData, stock: 0, par: formData.parLevel });
+
+          // Emit the item added (optional, in case you need to update UI elsewhere)
+          this.itemAdded.emit(formData);
+          
         } else {
           console.log('Form is not valid!');
         }

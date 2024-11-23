@@ -38,4 +38,10 @@ export const routes: Routes = [
             return import('./account-monitoring/account-monitoring.component').then((m) => m.AccountMonitoringComponent)
         },
     },
+    {
+        path:'product-management',
+        loadComponent: () => {
+            return import('./product-management/product-management.component').then((m) => m.ProductManagementComponent)
+        },
+    },
 ];

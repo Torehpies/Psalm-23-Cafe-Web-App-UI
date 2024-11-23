@@ -51,4 +51,9 @@ export class LeftsidebarComponent implements OnInit {
     this.router.navigate(['account-monitoring']);
     this.menuService.toggleMenu();
    }
+
+   gotoProductManagement(): void {
+    this.router.navigate(['product-management']);
+    this.menuService.toggleMenu();
+   }
 }

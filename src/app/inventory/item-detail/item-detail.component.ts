@@ -1,25 +1,33 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ItemRestockComponent } from '../item-restock/item-restock.component'; // Import the restock modal
+import { ItemTestService } from '../../services/item-test.service';
 
 @Component({
   selector: 'app-item-detail',
   standalone: true,
-  imports: [CommonModule, ItemRestockComponent],  // Include ItemRestockComponent here
+  imports: [CommonModule],  // Include ItemRestockComponent here
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.css'],
 })
 export class ItemDetailComponent {
   @Input() item: any;  // Ensure this input is properly passed from the parent
   @Output() close = new EventEmitter<void>();
-  showRestockModal: boolean = false;  // Track whether the restock modal is open
+  @Output() visible = new EventEmitter<void>();
+
+  restockHistory: any[] = []; // Filtered restock history for the current item
+
+  constructor(private itemTestService: ItemTestService) {}
 
   ngOnInit() {
-    // Make sure restockHistory exists in the item object
-    if (!this.item.restockHistory) {
-      this.item.restockHistory = [];  // Initialize an empty array if not already present
+    if (this.item) {
+      this.loadRestockHistory(this.item.name); // Load the item's history on initialization
     }
-    console.log(this.item); // Check if item contains quantity
+  }
+
+  // Fetch and filter history for the specific item
+  loadRestockHistory(itemName: string) {
+    const allHistory = this.itemTestService.getHistory();
+    this.restockHistory = allHistory.filter((history) => history.name === itemName);
   }
 
   closeModal() {
@@ -27,18 +35,8 @@ export class ItemDetailComponent {
   }
 
   openRestock() {
-    this.showRestockModal = true;  // Open restock modal
+    this.visible.emit();
+    this.close.emit();
   }
 
-  closeRestockModal() {
-    this.showRestockModal = false;  // Close restock modal
-  }
-
-
-  // Adding a method to update the restock history
-  addRestockHistory(quantity: number, price: number) {
-    const date = new Date().toLocaleDateString();
-    const newRestock = { quantity, price, date };
-    this.item.restockHistory.push(newRestock);  // Add to the restock history array
-  }
 }
