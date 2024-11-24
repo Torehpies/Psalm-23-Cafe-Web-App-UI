@@ -2,40 +2,46 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
-        path:'',
-        pathMatch:'full',
+        path: '',
+        pathMatch: 'full',
         loadComponent: () => {
-            return import('./login/login.component').then((m) => m.LoginComponent)
+            return import('./login/login.component').then((m) => m.LoginComponent);
         },
     },
     {
-        path:'dashboard',
+        path: 'dashboard',
         loadComponent: () => {
-            return import('./dashboard/dashboard.component').then((m) => m.DashboardComponent)
-        }
-    },
-    {
-        path:'inventory',
-        loadComponent: () => {
-            return import('./inventory/inventory.component').then((m) => m.InventoryComponent)
+            return import('./dashboard/dashboard.component').then((m) => m.DashboardComponent);
         },
     },
     {
-        path:'reports',
+        path: 'inventory',
         loadComponent: () => {
-            return import('./reports/reports.component').then((m) => m.ReportsComponent)
+            return import('./inventory/inventory.component').then((m) => m.InventoryComponent);
         },
     },
     {
-        path:'account-management',
+        path: 'reports',
         loadComponent: () => {
-            return import('./account-management/account-management.component').then((m) => m.AccountManagementComponent)
+            return import('./reports/reports.component').then((m) => m.ReportsComponent);
         },
     },
     {
-        path:'account-monitoring',
+        path: 'account-management',
         loadComponent: () => {
-            return import('./account-monitoring/account-monitoring.component').then((m) => m.AccountMonitoringComponent)
+            return import('./account-management/account-management.component').then((m) => m.AccountManagementComponent);
+        },
+    },
+    {
+        path: 'account-management/update',
+        loadComponent: () => {
+            return import('./account-management/update/update.component').then((m) => m.AccountManagementUpdateComponent);
+        },
+    },    
+    {
+        path: 'account-monitoring',
+        loadComponent: () => {
+            return import('./account-monitoring/account-monitoring.component').then((m) => m.AccountMonitoringComponent);
         },
     },
     {
