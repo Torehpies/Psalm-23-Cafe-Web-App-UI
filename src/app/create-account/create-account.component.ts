@@ -42,7 +42,7 @@ export class CreateAccountComponent {
         next: (response) => {
           console.log('Account created successfully:', response);
           this.errorMessage = null;
-          this.router.navigate(['/home']);
+          this.router.navigate(['/']);
         },
         error: (err) => {
           console.error('Account creation failed:', err);
