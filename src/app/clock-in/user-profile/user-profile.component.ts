@@ -13,14 +13,7 @@ export class UserProfileComponent implements OnInit {
     name: 'Juan Dela Cruz',
     role: 'Baker'
   };
-  onButtonClick(): void {
-    if (this.isClockedIn) {
-      alert('You have been logged in');
-    } else {
-      alert('You have been logged out');
-    }
-
-    // Toggle the button state
+  onButtonClick(): void {  // Toggle the button state
     this.isClockedIn = !this.isClockedIn;
   }
 
@@ -28,9 +21,17 @@ export class UserProfileComponent implements OnInit {
     const timeElement = document.getElementById('current-time');
     if (timeElement) {
       const d = new Date();
-      timeElement.innerHTML = d.toLocaleTimeString();
+      let hours = d.getHours();
+      const minutes = d.getMinutes().toString().padStart(2, '0'); // Format minutes with leading zero
+      const period = hours >= 12 ? 'PM' : 'AM'; // Determine AM or PM
+  
+      // Convert to 12-hour format
+      hours = hours % 12 || 12; // 0 becomes 12
+  
+      timeElement.innerHTML = `${hours}:${minutes} ${period}`;
     }
   }
+  
 
   ngAfterViewInit(): void {
     this.updateTime();

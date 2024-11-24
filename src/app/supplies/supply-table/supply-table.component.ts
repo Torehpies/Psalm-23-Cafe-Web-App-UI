@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SupplyTableComponent {
 
-  supplyData: { item: string; quantity: string; date: string }[] = [];
+  supplyData: { supply_item: string; supply_quantity: string; supply_date: string }[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -19,7 +19,7 @@ export class SupplyTableComponent {
   }
 
   loadsupplyData(): void {
-    this.http.get<{ item: string; quantity: string; date: string }[]>('/api/worker-clockin-data')
+    this.http.get<{ supply_item: string; supply_quantity: string; supply_date: string }[]>('/api/worker-supply-data')
       .subscribe(
         (data) => {
           this.supplyData = data;

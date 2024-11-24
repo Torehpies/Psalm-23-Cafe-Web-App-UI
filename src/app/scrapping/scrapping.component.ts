@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { LeftsidebarComponent } from '../components/leftsidebar/leftsidebar.component';
 import { HeaderComponent } from '../components/header/header.component';
 import { MenuService } from '../services/menu.service';
+import { ScrappingTableComponent } from './scrapping-table/scrapping-table.component';
+
 @Component({
   selector: 'app-scrapping',
   standalone: true,
-  imports: [LeftsidebarComponent, HeaderComponent],
+  imports: [LeftsidebarComponent, HeaderComponent, ScrappingTableComponent],
   templateUrl: './scrapping.component.html',
   styleUrl: './scrapping.component.css'
 })

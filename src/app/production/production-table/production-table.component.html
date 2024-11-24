@@ -1,6 +1,6 @@
 <div>
     <div class="table-section">
-        <div class="supply-info">
+        <div class="product-info">
         </div>
         <div class="table-container">
         <table>
@@ -9,20 +9,22 @@
                 <th>Item</th>
                 <th>Quantity</th>
                 <th>Date Used</th>
+                <th>Expiration date</th>
                 <th>Action</th>
             </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Flour</td>
+                    <td>Pandesal</td>
                     <td>1 Kilogram</td>
                     <td>October 24, 2024</td>
-                    <td></td>
+                    <td>October 27, 2024</td>
                 </tr>
-            <tr *ngFor="let record of supplyData">
-                <td>{{ record.supply_item }}</td>
-                <td>{{ record.supply_quantity }}</td>
-                <td>{{ record.supply_date }}</td>
+            <tr *ngFor="let record of productData">
+                <td>{{ record.product_item }}</td>
+                <td>{{ record.product_quantity }}</td>
+                <td>{{ record.product_date }}</td>
+                <td>{{ record.product_expiration }}</td>
             </tr>
             </tbody>
         </table>
