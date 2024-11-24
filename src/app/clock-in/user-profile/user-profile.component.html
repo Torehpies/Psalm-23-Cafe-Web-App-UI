@@ -1,0 +1,47 @@
+<div>
+    <div class="profile-section">
+        <div class="worker-info">
+        <img src="assets/profile-placeholder.png" alt="Profile Picture">
+        <div>
+            <h3>{{ user.name }}</h3>
+            <p>{{ user.role }}</p>
+        </div>
+        </div>
+    
+        <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time In</th>
+                <th>Time Out</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Oct 17, 2024</td>
+                    <td>7:00 AM</td>
+                    <td>9:00 PM</td>
+                </tr>
+            <tr *ngFor="let record of clockInData">
+                <td>{{ record.date }}</td>
+                <td>{{ record.timeIn }}</td>
+                <td>{{ record.timeOut }}</td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <div class="time-container">
+        <h2 id="current-time">12:00 AM</h2>
+    </div>
+
+
+    <div class="button">
+        <button [style.backgroundColor]="isClockedIn ? 'green' : 'red'" (click)="onButtonClick()">
+            {{ isClockedIn ? 'Clock-In' : 'Clock-Out' }}</button>
+    </div>  
+    
+</div>
+

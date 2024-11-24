@@ -9,6 +9,7 @@
     flex-direction: column;
     text-align: center;
     transition: .3s ease;
+    z-index: 1000; /* Ensure it stays below the sidebar */
 }
 .sidebar.active {
     left: 0;

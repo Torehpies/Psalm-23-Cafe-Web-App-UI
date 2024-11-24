@@ -44,4 +44,28 @@ export const routes: Routes = [
             return import('./product-management/product-management.component').then((m) => m.ProductManagementComponent)
         },
     },
+    {
+        path:'supplies',
+        loadComponent: () => {
+            return import('./supplies/supplies.component').then((m) => m.SuppliesComponent)
+        },
+    },
+    {
+        path:'clock-in',
+        loadComponent: () => {
+            return import('./clock-in/clock-in.component').then((m) => m.ClockInComponent)
+        },
+    },
+    {
+        path:'production',
+        loadComponent: () => {
+            return import('./production/production.component').then((m) => m.ProductionComponent)
+        },
+    },
+    {
+        path:'scrapping',
+        loadComponent: () => {
+            return import('./scrapping/scrapping.component').then((m) => m.ScrappingComponent)
+        },
+    },
 ];
