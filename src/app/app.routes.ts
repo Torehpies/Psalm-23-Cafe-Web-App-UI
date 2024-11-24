@@ -1,13 +1,38 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 export const routes: Routes = [
-    {
-        path: '',
-        pathMatch: 'full',
-        loadComponent: () => {
-            return import('./login/login.component').then((m) => m.LoginComponent);
-        },
+  {
+      path:'',
+      pathMatch:'full',
+      loadComponent: () => {
+          return import('./login/login.component').then((m) => m.LoginComponent)
+      },
+  },
+  {
+      path:'verify-code',
+      loadComponent: () => {
+          return import('./verification/verification.component').then((m) => m.VerificationComponent)
+      }
+  },
+  {
+    path:'create-account',
+    loadComponent: () => {
+        return import('./create-account/create-account.component').then((m) => m.CreateAccountComponent)
+    }
     },
+  {
+    path:'forgot-password',
+    loadComponent: () => {
+        return import('./forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent)
+    }
+},
+{
+    path:'resetpassword',
+    loadComponent: () => {
+        return import('./resetpassword/resetpassword.component').then((m) => m.ResetPasswordComponent)
+    }
+},
     {
         path: 'dashboard',
         loadComponent: () => {
@@ -75,3 +100,4 @@ export const routes: Routes = [
         },
     },
 ];
+
