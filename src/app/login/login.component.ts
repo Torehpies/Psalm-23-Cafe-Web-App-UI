@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms'; 
-import { CommonModule } from '@angular/common'; 
-import { AuthService } from '../auth/auth.service'; 
-import { AuthResponse } from '../auth/response.model'; 
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth/auth.service';
+import { AuthResponse } from '../auth/response.model';
 
 @Component({
   selector: 'app-login',
@@ -14,16 +14,16 @@ import { AuthResponse } from '../auth/response.model';
   providers: [AuthService],
 })
 export class LoginComponent {
-  username: string = '';
+  email: string = '';
   password: string = '';
   errorMessage: string | null = null;
 
 
   constructor(private router: Router, private authService: AuthService) {
     console.log('LoginComponent initialized');
-  }   
-  // constructor(private router: Router) {}  //swap if BE endpoint for login is okay  
-  
+  }
+  // constructor(private router: Router) {}  //swap if BE endpoint for login is okay
+
 
   navigateToForgotPassword() {
     this.router.navigate(['/forgot-password']);
@@ -36,7 +36,7 @@ export class LoginComponent {
 
   //uncommet if BE endpoint for login is okay
   onLogin() {
-    this.authService.login(this.username, this.password).subscribe(
+    this.authService.login(this.email, this.password).subscribe(
       (response: AuthResponse) => {
         console.log('Login successful:', response);
         this.errorMessage = null;
@@ -47,5 +47,5 @@ export class LoginComponent {
         this.errorMessage = 'Login failed. Please try again.';
       }
     );
-  } 
+  }
 }

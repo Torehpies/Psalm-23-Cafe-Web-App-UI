@@ -8,7 +8,7 @@
               <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
                 <div class="input-container email">
                     <label for="email">Email</label>
-                    <input type="email" [(ngModel)]="username" id="email" name="email" placeholder="Email@example.com" required> <!-- swap if BE login endpoint okay -->
+                    <input type="email" [(ngModel)]="email" id="email" name="email" placeholder="Email@example.com" required> <!-- swap if BE login endpoint okay -->
                     <!-- <input type="email" id="email" name="email" placeholder="Email@example.com" required> swap -->
                 </div>
                 <div class="input-container password">
@@ -25,5 +25,5 @@
             <a (click)="navigateToForgotPassword()" class="forgot-password">Forgot Password?</a>
           </p>
       </div>
-  </div>  
+  </div>
 </body>

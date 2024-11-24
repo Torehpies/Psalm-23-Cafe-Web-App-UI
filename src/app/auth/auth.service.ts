@@ -9,7 +9,7 @@ import { AuthResponse } from './response.model';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8800';
-  private loginUrl = `${this.apiUrl}/login`;
+  private loginUrl = `${this.apiUrl}/api/auth/login`;
   private createAccountUrl = `${this.apiUrl}/api/auth/register`;
   private forgotPasswordUrl = `${this.apiUrl}/forgot-password`;
   private resendVerificationUrl = `${this.apiUrl}/resend-verification`;
@@ -19,9 +19,9 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   // For Login Endpoint
-  login(username: string, password: string): Observable<AuthResponse> {
+  login(email: string, password: string): Observable<AuthResponse> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = JSON.stringify({ username, password });
+    const body = JSON.stringify({ email, password });
 
     return this.http.post<AuthResponse>(this.loginUrl, body, { headers }).pipe(
       tap(response => {
