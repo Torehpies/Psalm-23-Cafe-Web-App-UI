@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif; 
+    background: linear-gradient(135deg, #f9da6c, #f6c88f); 
+}
+.container {
+    display: flex;
+}
+
+.main-content {
+    flex: 1; /* Take the remaining space */
+    padding: 20px;
+    margin-left: 0; /* No margin by default */
+    transition: margin-left 0.3s ease; /* Smooth transition for margin */
+}
+.main-content.active {
+    margin-left: 300px; /* Shift main content to the right when sidebar is active */
+    pointer-events: none;
+    opacity: 0.5;
+}

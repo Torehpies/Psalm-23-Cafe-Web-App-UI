@@ -1,0 +1,40 @@
+.sidebar {
+    background-color: white;
+    height: 100vh;
+    width: 100%;
+    max-width: 300px;
+    position: fixed;
+    left: -300px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    transition: .3s ease;
+    z-index: 1000; /* Ensure it stays below the sidebar */
+}
+.sidebar.active {
+    left: 0;
+}
+.sidebar ul {
+    list-style-type: none;
+    padding: 0; /* Remove default padding */
+}
+
+.sidebar li {
+    background-color: #FFC800; /* Card background color */
+    border-radius: 16px; /* Rounded corners */
+    padding: 16px; /* Space inside the card */
+    margin: 16px 16px ; /* Space between cards */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    transition: transform 0.2s; /* Smooth transform effect */
+    cursor: pointer;
+}
+
+.sidebar li:hover {
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.sidebar li.logout {
+    background-color: #a67400;
+    color: white;
+    margin: 350px 16px 16px;
+}

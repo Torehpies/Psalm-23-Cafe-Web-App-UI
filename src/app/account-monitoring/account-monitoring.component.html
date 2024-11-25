@@ -1,0 +1,56 @@
+<app-header></app-header>
+
+<div class="container">
+  <app-leftsidebar></app-leftsidebar>
+
+  <div class="main-content" [class.active]="isMenuActive">
+    <div class="attendance-monitoring">
+      <div class="header">
+        <h1>Attendance Monitoring</h1>
+        <div class="date-filter">
+          <label for="startDate">From:</label>
+          <input type="date" id="startDate" [(ngModel)]="startDate" />
+          <label for="endDate">To:</label>
+          <input type="date" id="endDate" [(ngModel)]="endDate" />
+        </div>
+        <div class="download-buttons">
+          <button (click)="download('custom')">Custom Download</button>
+          <button (click)="download('allTime')">All Time</button>
+          <button (click)="download('today')">Today</button>
+          <button (click)="download('monthToDate')">Month to Date</button>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="employee-list">
+          <h3>Employees</h3>
+          <ul>
+            <li *ngFor="let employee of employees" (click)="selectEmployee(employee)">
+              {{ employee.name }} <span class="role">{{ employee.role }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div *ngIf="selectedEmployee" class="employee-details">
+          <h3>{{ selectedEmployee.name }} - {{ selectedEmployee.role }}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time In</th>
+                <th>Time Out</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let record of selectedEmployee.attendance">
+                <td>{{ record.date }}</td>
+                <td>{{ record.timeIn }}</td>
+                <td>{{ record.timeOut }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

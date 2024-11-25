@@ -1,0 +1,59 @@
+body {
+    display: flex;
+}
+header {
+    display: flex;
+    width: 100%;
+    padding-inline: 16px;
+    padding-block: 8px;
+    background-color: #936639;
+    color:white;
+    align-items: center;
+}
+header p {
+    font-size: 30px;
+    margin-left: 25px;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-left: 25px;
+}
+
+.logo-container img {
+    width: 90px;
+    height: auto; 
+}
+.ham-button {
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+    position:relative;
+}
+.ham-button span {
+    height: 5px;
+    width: 100%;
+    background-color: black;
+    border-radius: 25px;
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transition: .3s ease;
+}
+.ham-button span:nth-child(1) {
+    top: 25%;
+}
+.ham-button span:nth-child(3) {
+    top: 75%;
+}
+.ham-button.active span:nth-child(1) {
+    top: 50%;
+    transform: rotate(45deg);
+}
+.ham-button.active span:nth-child(2) {
+   opacity: 0;
+}
+.ham-button.active span:nth-child(3) {
+    top: 50%;
+    transform: rotate(-45deg);
+}
