@@ -36,28 +36,28 @@ export class LeftsidebarComponent implements OnInit {
     this.router.navigate(['inventory']);
     this.menuService.toggleMenu();
    }
-   
-   gotoReports(): void {
-      this.router.navigate(['reports']);
-      this.menuService.toggleMenu();
-     }
+   // admin side (kurt)
+  //  gotoReports(): void {
+  //     this.router.navigate(['reports']);
+  //     this.menuService.toggleMenu();
+  //    }
   
-   gotoAccountManagement(): void {
-      this.router.navigate(['account-management']);
-      this.menuService.toggleMenu();
-     }
+  //  gotoAccountManagement(): void {
+  //     this.router.navigate(['account-management']);
+  //     this.menuService.toggleMenu();
+  //    }
   
-   gotoAccountMonitoring(): void {
-      this.router.navigate(['account-monitoring']);
-      this.menuService.toggleMenu();
-     }
+  //  gotoAccountMonitoring(): void {
+  //     this.router.navigate(['account-monitoring']);
+  //     this.menuService.toggleMenu();
+  //    }
 
-   gotoProductManagement(): void {
-      this.router.navigate(['product-management']);
-      this.menuService.toggleMenu();
-     }
+  //  gotoProductManagement(): void {
+  //     this.router.navigate(['product-management']);
+  //     this.menuService.toggleMenu();
+  //    }
 
-   /*gian changes
+   //gian changes
    gotoSupplies(): void {
     this.router.navigate(['supplies']);
     this.menuService.toggleMenu();
@@ -76,5 +76,5 @@ export class LeftsidebarComponent implements OnInit {
    gotoScrapping(): void {
     this.router.navigate(['scrapping']);
     this.menuService.toggleMenu();
-   }*/
+   }
 }
