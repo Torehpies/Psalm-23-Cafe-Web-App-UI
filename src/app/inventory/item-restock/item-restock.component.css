@@ -41,7 +41,7 @@ label {
     text-align: left;
 }
 
-input[type="number"], input[type="text"], input[type="date"] {
+input[type="number"], input[type="text"], input[type="date"], select{
     width: 55%; /* Set input width */
     padding: 8px;
     border-radius: 5px;

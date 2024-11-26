@@ -7,6 +7,7 @@
         </div>
       
         <form [formGroup]="restockForm" (ngSubmit) = "onSubmit()">
+          <div class="rsetock-table-container">
         <table class="restock-table">
           <thead>
             <tr>
@@ -20,18 +21,19 @@
           <tbody formArrayName="rows">
             <!-- Example of an item row, can be dynamically added using Angular -->
             <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
-              <td>{{row.value.name}}</td>
-              <td>{{row.value.quantity}}</td>
-              <td>{{row.value.expireDate}}</td>
-              <td>{{row.value.price}}</td>
+              <td><div class="cell-content">{{row.value.name}}</div></td>
+              <td><div class="cell-content">{{row.value.quantity}}</div></td>
+              <td><div class="cell-content">{{row.value.expireDate}}</div></td>
+              <td><div class="cell-content">{{row.value.price}}</div></td>
               <td>
-                <button class="edit-btn">Edit</button>
-                <button class="del-btn">Delete</button>
+                  <button class="edit-btn">Edit</button>
+                  <button class="del-btn">Delete</button>
               </td>
-              </tr>
+          </tr>
+          
           </tbody>
         </table>
-      
+      </div>
         <!-- Submit and Cancel buttons below the table -->
         <div class="form-buttons">
           <button type="submit" class="submit-btn">Submit</button>
