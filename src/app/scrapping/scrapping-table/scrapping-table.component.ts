@@ -9,6 +9,12 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './scrapping-table.component.css'
 })
 export class ScrappingTableComponent {
+
+  isAddActive: boolean = true; // Initial state: "ADD" is active
+
+  toggleView(): void {
+    this.isAddActive = !this.isAddActive;
+  }
   
   scrapData: { scrap_id: string; scrap_name: string; scrap_quantity: string; scrap_date: string }[] = [];
 

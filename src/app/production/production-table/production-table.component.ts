@@ -9,6 +9,12 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './production-table.component.css'
 })
 export class ProductionTableComponent {
+
+  isAddActive: boolean = true; // Initial state: "ADD" is active
+
+  toggleView(): void {
+    this.isAddActive = !this.isAddActive;
+  }
   
   productData: { product_item: string; product_quantity: string; product_date: string; product_expiration: string}[] = [];
 

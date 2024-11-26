@@ -1,4 +1,11 @@
 <div>
+    <div class="centered-toggle" (click)="toggleView()">
+        <div class="toggle-container">
+          <div class="toggle-option" [class.active]="isAddActive">ADD</div>
+          <div class="toggle-option" [class.active]="!isAddActive">VIEW</div>
+        </div>
+      </div>
+      
     <div class="table-section">
         <div class="supply-info">
         </div>

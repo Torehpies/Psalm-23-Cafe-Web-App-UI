@@ -10,6 +10,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SupplyTableComponent {
 
+  isAddActive: boolean = true; // Initial state: "ADD" is active
+
+  toggleView(): void {
+    this.isAddActive = !this.isAddActive;
+  }
+
+    
   supplyData: { supply_item: string; supply_quantity: string; supply_date: string }[] = [];
 
   constructor(private http: HttpClient) {}
