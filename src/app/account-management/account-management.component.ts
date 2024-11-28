@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { MenuService } from '../services/menu.service';
 import { DataService } from '../services/data.service';
 import { LeftsidebarComponent } from '../components/leftsidebar/leftsidebar.component';
@@ -23,10 +22,10 @@ export class AccountManagementComponent implements OnInit {
   isMenuActive: boolean = false;
   isLoading: boolean = true;
   errorMessage: string | null = null;
-  showPopup: boolean = false; 
-  showUpdateForm: boolean = false; 
-  showDeletePopup: boolean = false; 
-  showDisablePopup: boolean = false; 
+  showPopup: boolean = false;
+  showUpdateForm: boolean = false;
+  showDeletePopup: boolean = false;
+  showDisablePopup: boolean = false;
 
   dataItems: any[] = [];
 
@@ -42,16 +41,18 @@ export class AccountManagementComponent implements OnInit {
 
     this.menuService.changeHeaderText('Account Management');
 
-    this.dataService.getData().subscribe(
-      (data) => {
-        this.dataItems = data;
-        this.isLoading = false;
-      },
-      (error) => {
-        this.errorMessage = 'Failed to load data';
-        this.isLoading = false;
-      }
-    );
+    this.loadUserData();
+  }
+
+  loadUserData() {
+    setTimeout(() => {
+      this.dataItems = [
+        { id: 1, name: 'John Doe', role: 'Admin', email: 'john.doe@example.com' },
+        { id: 2, name: 'Jane Smith', role: 'User', email: 'jane.smith@example.com' },
+        { id: 3, name: 'Alice Johnson', role: 'Moderator', email: 'alice.johnson@example.com' },
+      ];
+      this.isLoading = false;
+    }, 1000);
   }
 
   openPopup() {
@@ -71,8 +72,8 @@ export class AccountManagementComponent implements OnInit {
   }
 
   deleteAccount(): void {
-    console.log("Account Deleted"); 
-    this.closeDeletePopup(); 
+    console.log('Account Deleted');
+    this.closeDeletePopup();
   }
 
   openDisablePopup(): void {
@@ -84,8 +85,8 @@ export class AccountManagementComponent implements OnInit {
   }
 
   disableAccount(): void {
-    console.log("Account Disabled");
-    this.closeDisablePopup(); 
+    console.log('Account Disabled');
+    this.closeDisablePopup();
   }
 
   showUpdateComponent() {
