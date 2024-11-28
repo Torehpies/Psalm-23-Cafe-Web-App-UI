@@ -62,7 +62,7 @@ export const routes: Routes = [
         loadComponent: () => {
             return import('./account-management/update/update.component').then((m) => m.AccountManagementUpdateComponent);
         },
-    },    
+    },
     {
         path: 'account-monitoring',
         loadComponent: () => {

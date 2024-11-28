@@ -6,7 +6,7 @@
 // @Component({
 //   selector: 'app-reset-password',
 //   standalone: true,
-//   imports: [FormsModule, CommonModule], 
+//   imports: [FormsModule, CommonModule],
 //   templateUrl: './resetpassword.component.html',
 //   styleUrls: ['./resetpassword.component.css']
 // })
@@ -42,19 +42,29 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../auth/auth.service'; 
+import { AuthService } from '../auth/auth.service';
 
 
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [FormsModule, CommonModule], 
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './resetpassword.component.html',
   styleUrls: ['./resetpassword.component.css'],
   providers: [AuthService],
 })
+
+export default class ResetPasswordComponent{
+  resetForm!: FormGroup;
+
+  reset(){
+
+  }
+}
+
+/*
 export class ResetPasswordComponent {
   email: string = '';  // Add email field
   password: string = '';
@@ -98,4 +108,4 @@ export class ResetPasswordComponent {
   confirmReset() {
     this.onSubmit();  // Call onSubmit when user confirms the reset in the popup
   }
-}
+  */
