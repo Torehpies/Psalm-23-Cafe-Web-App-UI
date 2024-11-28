@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 body {
     margin: 0;
     padding: 0;
