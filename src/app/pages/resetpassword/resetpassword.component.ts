@@ -40,11 +40,11 @@
 //   }
 // }
 
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 
 
 @Component({
@@ -56,8 +56,24 @@ import { AuthService } from '../auth/auth.service';
   providers: [AuthService],
 })
 
-export default class ResetPasswordComponent{
-  resetForm!: FormGroup;
+export default class ResetPasswordComponent implements OnInit {
+  resetPasswordForm!: FormGroup;
+  fb = inject(FormBuilder);
+  activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+
+  token!: string;
+
+  ngOnInit(): void{
+    this.activatedRoute.queryParams.subscribe(val => {
+      this.token = val['token'];
+    });
+
+    this.resetPasswordForm= this.fb.group({
+      password: [''],
+      confirmPassword: ['']
+    });
+  }
 
   reset(){
 

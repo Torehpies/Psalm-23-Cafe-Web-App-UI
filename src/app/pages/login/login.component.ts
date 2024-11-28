@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../auth/auth.service';
-import { AuthResponse } from '../auth/response.model';
+import { AuthService } from '../../auth/auth.service';
+import { AuthResponse } from '../../auth/response.model';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { AuthResponse } from '../auth/response.model';
   styleUrl: './login.component.css',
   providers: [AuthService],
 })
-export class LoginComponent {
+export default class LoginComponent {
   email: string = '';
   password: string = '';
   errorMessage: string | null = null;
@@ -24,9 +24,9 @@ export class LoginComponent {
 
   constructor(private router: Router, private authService: AuthService) {
     console.log('LoginComponent initialized');
-  }   
-  // constructor(private router: Router) {}  //swap if BE endpoint for login is okay  
-  
+  }
+  // constructor(private router: Router) {}  //swap if BE endpoint for login is okay
+
   navigateToForgotPassword() {
     this.router.navigate(['/forgot-password']);
   }
@@ -57,5 +57,5 @@ export class LoginComponent {
       }
     );
 
-  } 
+  }
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-create-account',
@@ -12,7 +12,7 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./create-account.component.css'],
   providers: [AuthService],
 })
-export class CreateAccountComponent {
+export default class CreateAccountComponent {
   firstName: string = '';
   lastName: string = '';
   email: string = '';

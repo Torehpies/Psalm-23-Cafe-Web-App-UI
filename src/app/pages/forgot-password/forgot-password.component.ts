@@ -11,7 +11,7 @@
 // export class ForgotPasswordComponent {
 
 //   // constructor(private router: Router, private authService: AuthService) {
-//   // }   
+//   // }
 //   constructor(private router: Router) {}
 
 //   onSubmit() {
@@ -22,20 +22,20 @@
 // }
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service'; 
+import { AuthService } from '../../auth/auth.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-password',
-  standalone: true, 
-  imports: [FormsModule],  
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css'],
   providers: [AuthService],
 })
-export class ForgotPasswordComponent {
-  email: string = '';  
-  errorMessage: string | null = null;  
+export default class ForgotPasswordComponent {
+  email: string = '';
+  errorMessage: string | null = null;
 
   // constructor(private router: Router) {}
   constructor(private router: Router, private authService: AuthService) {}
