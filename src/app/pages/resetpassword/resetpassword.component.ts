@@ -38,6 +38,6 @@ export default class ResetPasswordComponent implements OnInit {
   }
 
   reset(){
-
+    console.log(this.resetPasswordForm.value);
   }
 }
