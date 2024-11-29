@@ -1,24 +1,51 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../services/auth.service';
+import { confirmPasswordValidator } from '../../validators/confirm-password.validator';
 
 @Component({
   selector: 'app-create-account',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.css'],
   providers: [AuthService],
 })
-export default class CreateAccountComponent {
-  firstName: string = '';
-  lastName: string = '';
-  email: string = '';
-  password: string = '';
-  role: string = '';
-  errorMessage: string | null = null;
+export default class CreateAccountComponent implements OnInit {
+  fb = inject(FormBuilder);
+  authService = inject(AuthService);
+  createAccountForm !: FormGroup;
+
+  ngOnInit(): void{
+    this.createAccountForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      role: ['', Validators.required],
+    },
+    {
+        validator: confirmPasswordValidator('password','confirmPassword')
+    }
+    );
+  }
+
+  register(){
+    this.authService.registerService(this.createAccountForm.value)
+    .subscribe({
+        next:(res)=>{
+          alert("User Created")
+        },
+        error:(err)=>{
+          console.log(err);
+        }
+      })
+  }
+
+  /*
+    errorMessage: string | null = null;
 
   isPromptVisible: boolean = false;
 
@@ -60,4 +87,5 @@ export default class CreateAccountComponent {
     const inputField = (event.target as HTMLElement).previousElementSibling as HTMLInputElement;
     inputField.type = inputField.type === 'password' ? 'text' : 'password';
   }
+  */
 }
