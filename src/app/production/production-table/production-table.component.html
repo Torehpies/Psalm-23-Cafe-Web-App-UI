@@ -7,8 +7,25 @@
     </div>
 
     <div class="table-section">
-        <div class="product-info">
+        <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
+            <div class="date-filter">
+                <label for="fromDate">From:</label>
+                <input type="date" id="fromDate" [(ngModel)]="fromDate">
+                <label for="toDate">To:</label>
+                <input type="date" id="toDate" [(ngModel)]="toDate">
+            </div>
+            <div class="download-section">
+                <span class="download-title">Download:</span>
+                <div class="download-buttons">
+                    <button>Custom Download</button>
+                    <button>All Time</button>
+                    <button>Month to Date</button>
+                    <button>Today</button>
+                </div>
+            </div>
         </div>
+        
+        <div class="product-info"></div>
         <div class="table-container">
         <table>
             <thead>
@@ -17,7 +34,7 @@
                 <th>Quantity</th>
                 <th>Date Used</th>
                 <th>Expiration date</th>
-                <th>Action</th>
+                <th *ngIf="isAddActive">Action</th> <!-- Conditional rendering for the Action header -->
             </tr>
             </thead>
             <tbody>
@@ -26,18 +43,26 @@
                     <td>1 Kilogram</td>
                     <td>October 24, 2024</td>
                     <td>October 27, 2024</td>
+                    <td *ngIf="isAddActive"> 
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </td>   
                 </tr>
             <tr *ngFor="let record of productData">
                 <td>{{ record.product_item }}</td>
                 <td>{{ record.product_quantity }}</td>
                 <td>{{ record.product_date }}</td>
                 <td>{{ record.product_expiration }}</td>
+                <td *ngIf="isAddActive"> 
+                    <button>Edit</button>
+                    <button>Delete</button>
+                </td>   
             </tr>
             </tbody>
         </table>
         </div>
     </div>
-    <div class="submit">
+    <div class="submit" [ngClass]="{'hidden': !isAddActive}">
         <button>Submit</button>
     </div>
 </div>

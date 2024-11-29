@@ -6,9 +6,25 @@
         </div>
       </div>
       
-    <div class="table-section">
-        <div class="supply-info">
+      <div class="table-section">
+        <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
+            <div class="date-filter">
+                <label for="fromDate">From:</label>
+                <input type="date" id="fromDate" [(ngModel)]="fromDate">
+                <label for="toDate">To:</label>
+                <input type="date" id="toDate" [(ngModel)]="toDate">
+            </div>
+            <div class="download-section">
+                <span class="download-title">Download:</span>
+                <div class="download-buttons">
+                    <button>Custom Download</button>
+                    <button>All Time</button>
+                    <button>Month to Date</button>
+                    <button>Today</button>
+                </div>
+            </div>
         </div>
+        <div class="supply-info">
         <div class="table-container">
         <table>
             <thead>
@@ -16,7 +32,7 @@
                 <th>Item</th>
                 <th>Quantity</th>
                 <th>Date Used</th>
-                <th>Action</th>
+                <th *ngIf="isAddActive">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -24,18 +40,26 @@
                     <td>Flour</td>
                     <td>1 Kilogram</td>
                     <td>October 24, 2024</td>
-                    <td></td>
+                    <td *ngIf="isAddActive"> 
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </td>   
                 </tr>
             <tr *ngFor="let record of supplyData">
                 <td>{{ record.supply_item }}</td>
                 <td>{{ record.supply_quantity }}</td>
                 <td>{{ record.supply_date }}</td>
+                <td *ngIf="isAddActive"> 
+                    <button>Edit</button>
+                    <button>Delete</button>
+                </td>   
             </tr>
             </tbody>
         </table>
         </div>
     </div>
-    <div class="submit">
-        <button>Submit</button>
-    </div>
+
 </div>
+<div class="submit" [ngClass]="{'hidden': !isAddActive}">
+    <button>Submit</button>
+</div>  

@@ -1,7 +1,9 @@
-<app-header />
+<app-header></app-header>
 <div class="container">
-<app-leftsidebar />
-<div class="main-content" [class.active] = "isMenuActive">
-<app-production-table></app-production-table>
-</div>
+  <app-leftsidebar></app-leftsidebar>
+  <div class="main-content" [class.active]="isMenuActive">
+    <div class="button-container">
+    </div>
+    <app-production-table></app-production-table>
+  </div>
 </div>

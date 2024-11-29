@@ -1,16 +1,20 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'; // Import CommonModule
 
 @Component({
   selector: 'app-supply-table',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './supply-table.component.html',
   styleUrl: './supply-table.component.css'
 })
 export class SupplyTableComponent {
 
   isAddActive: boolean = true; // Initial state: "ADD" is active
+  fromDate: string = ''; // Initialize fromDate
+  toDate: string = ''; // Initialize toDate
 
   toggleView(): void {
     this.isAddActive = !this.isAddActive;

@@ -1,81 +1,111 @@
 .table-section {
-    width: 80%;
-    height: 60%;
-    background-color: white;
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    border-radius: 8px;
-    padding: 20px;
-    overflow: hidden;
-  }
+  width: 80%;
+  height: 60%;
+  background-color: white;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 8px;
+  padding: 20px;
+  overflow: hidden;
+}
 
-  .worker-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .worker-info img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-    border: 2px solid #fdd835;
-  }
-  
-  .supply-info h3 {
-    margin: 0;
-    font-size: 18px;
-  }
-  
-  .supply-info p {
-    margin: 0;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .table-container {
-    max-height: 250px;
-    overflow-y: auto;
-    margin-top: 10px;
-    border-top: 1px solid #ccc;
-  }
+.worker-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-  }
-  
-  thead th {
-    border-bottom: 1px solid #ccc;
-    background-color: #f9f9f9;
-    font-weight: bold;
-    padding: 10px 5px;
-  }
-  
-  tbody td {
-    padding: 8px 5px;
-    border-bottom: 1px solid #eee;
-    font-size: 14px;
-  }
-  
-  tbody tr:last-child td {
-    border-bottom: none;
-  }
+.product-info img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid #fdd835;
+}
+
+.product-info h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.product-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.table-container {
+  max-height: 250px;
+  overflow-y: auto;
+  margin-top: 10px;
+  border-top: 1px solid #ccc;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+thead th {
+  border-bottom: 1px solid #ccc;
+  background-color: #f9f9f9; /* New background color for header */
+  font-weight: bold;
+  padding: 10px 5px;
+  text-align: center; /* Center-align all header cells */
+  color: black; /* Text color to contrast with the background */
+}
+
+thead th:first-child {
+  padding-left: 20px; /* Adjust the padding to push the first header to the left */
+}
+
+tbody td {
+  padding: 8px 5px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  text-align: center; /* Center-align all data cells */
+}
+
+tbody td:first-child {
+  padding-left: 20px; /* Adjust the padding to match the header */
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Style for the action buttons */
+.action-buttons {
+  display: flex;
+  justify-content: space-around; /* Space the buttons evenly */
+}
+
+.action-buttons button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #f0f0f0;
+  color: #3C2100;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.action-buttons button:hover {
+  background-color: #b58213; /* Darker background on hover */
+}
 
 /* Style for the submit button */
 .submit {
   position: absolute;
-  top: 90%;
+  top: 93%;
   left: 42.5%;
-  
 }
 
 .submit button {
@@ -98,7 +128,7 @@
 /* Center the toggle horizontally with position fixed */
 .centered-toggle {
   position: fixed; /* Fixed position to stay centered */
-  top: 17%; /* Adjusted based on your image */
+  top: 16%; /* Adjusted based on your image */
   left: 50%;
   transform: translateX(-50%); /* Only horizontally center it */
   display: flex;
@@ -107,7 +137,7 @@
   width: 250px; /* Increased width for a better fit */
   height: 60px; /* Adjusted height for a better look */
   background-color: #f0f0f0;
-  border-radius: 30px; /* Increased radius for more rounded edges */
+  border-radius: 100px; /* Increased radius for more rounded edges */
   overflow: hidden;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -141,4 +171,68 @@
   border-right: 1px solid #ddd; /* Border between options */
 }
 
-  
+/* Style for the filter section */
+.filter-section {
+  display: flex;
+  justify-content: space-between; /* Spread out the elements */
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 0 20px;
+}
+
+.date-filter {
+  display: flex;
+  align-items: center;
+}
+
+.date-filter label {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.date-filter input[type="date"] {
+  margin-right: 20px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #C09216; /* Updated background color */
+  color: white; /* Adjusted text color for better contrast */
+}
+
+.download-section {
+  display: flex;
+  align-items: center;
+}
+
+.download-title {
+  font-size: 16px;
+  color: black;
+  margin-right: 10px;
+}
+
+.download-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.download-buttons button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #C09216; /* Updated background color */
+  transition: background-color 0.3s ease;
+  color: white; /* Adjusted text color for better contrast */
+}
+
+.download-buttons button:hover {
+  background-color: #b58213; /* Slightly darker background on hover */
+}
+
+/* Add hidden class */
+.hidden {
+  display: none;
+}

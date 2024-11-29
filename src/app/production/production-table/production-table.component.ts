@@ -1,16 +1,20 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'; // Import CommonModule
 
 @Component({
   selector: 'app-production-table',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CommonModule],  // Add CommonModule here
   templateUrl: './production-table.component.html',
   styleUrl: './production-table.component.css'
 })
 export class ProductionTableComponent {
 
   isAddActive: boolean = true; // Initial state: "ADD" is active
+  fromDate: string = ''; // Initialize fromDate
+  toDate: string = ''; // Initialize toDate
 
   toggleView(): void {
     this.isAddActive = !this.isAddActive;
