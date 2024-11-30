@@ -2,9 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { confirmPasswordValidator } from '../../validators/confirm-password.validator';
-
 
 @Component({
   selector: 'app-reset-password',
@@ -22,6 +21,7 @@ export default class ResetPasswordComponent implements OnInit {
   router = inject(Router);
 
   token!: string;
+  authService = inject(AuthService)
 
   ngOnInit(): void{
     this.resetPasswordForm = this.fb.group({
@@ -30,14 +30,31 @@ export default class ResetPasswordComponent implements OnInit {
     },
       {
         validator: confirmPasswordValidator('password','confirmPassword')
-      })
+      }
+    )
 
-    this.activatedRoute.queryParams.subscribe(val => {
+    this.activatedRoute.params.subscribe(val=>{
       this.token = val['token'];
+      console.log(this.token)
     })
   }
 
   reset(){
-    console.log(this.resetPasswordForm.value);
+    let resetObj = {
+      token: this.token,
+      password: this.resetPasswordForm.value.password
+    }
+    console.log(resetObj)
+    this.authService.resetPasswordService(resetObj)
+    .subscribe({
+      next:(res) => {
+        alert(res.message);
+        this.resetPasswordForm.reset();
+        this.router.navigate([''])
+      },
+      error:(err) => {
+        alert(err.error.message)
+      }
+    })
   }
 }
