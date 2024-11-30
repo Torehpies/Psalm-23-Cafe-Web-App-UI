@@ -1,9 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { apiUrls } from '../api.urls';
-//import { Observable } from 'rxjs';
-//import { tap } from 'rxjs/operators';
-//import { AuthResponse } from './response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +12,19 @@ export class AuthService {
   registerService(registerObj: any) {
     return this.http.post<any>(`${apiUrls.authServiceApi}register`, registerObj);
   }
+
+  loginService(loginObj: any) {
+    return this.http.post<any>(`${apiUrls.authServiceApi}login`, loginObj);
+  }
+  
+  sendEmailService(email: string){
+    return this.http.post<any>(`${apiUrls.authServiceApi}send-email`, {email: email});
+  }
+
+  resetPasswordService(resetObj: any){
+    return this.http.post<any>(`${apiUrls.authServiceApi}reset-password`, resetObj);
+  }
+
   /*
   private apiUrl = 'http://localhost:8800';
   private loginUrl = `${this.apiUrl}/api/auth/login`;

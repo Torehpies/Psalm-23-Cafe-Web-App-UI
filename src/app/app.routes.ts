@@ -5,7 +5,8 @@ export const routes: Routes = [
   {path:'', loadComponent: ()=> import('./pages/login/login.component')},
   {path:'create-account', loadComponent: ()=> import('./pages/create-account/create-account.component')},
   {path:'forgot-password', loadComponent: ()=> import('./pages/forgot-password/forgot-password.component')},
-  {path:'resetpassword', loadComponent: ()=> import('./pages/resetpassword/resetpassword.component')},
+  {path:'reset/:token', loadComponent: ()=> import('./pages/resetpassword/resetpassword.component')},
+  {path:'home', loadComponent: ()=> import('./pages/dashboard/dashboard.component')},
 ];
 
 /*
