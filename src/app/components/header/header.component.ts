@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -8,6 +9,7 @@ import { MenuService } from '../../services/menu.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
+
   isMenuActive: boolean = false;
 
   get headerText() {
