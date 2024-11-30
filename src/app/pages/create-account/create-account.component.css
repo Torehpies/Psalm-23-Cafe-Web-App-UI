@@ -4,7 +4,7 @@
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
   }
-  
+
 
   .container {
     display: flex;
@@ -13,7 +13,7 @@
     height: 100vh;
     background: linear-gradient(135deg, #f9da6c, #f6c88f);
   }
-  
+
 
   .form-wrapper {
     background-color: #F9C03F;
@@ -26,30 +26,30 @@
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   }
-  
+
   .form-header {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
   }
-  
+
   .back-arrow {
-    font-size: 28px; 
+    font-size: 28px;
     cursor: pointer;
     margin-right: 15px;
-    transition: transform 0.3s ease; 
+    transition: transform 0.3s ease;
   }
-  
+
 
   .back-arrow:hover {
     transform: scale(1.2);
   }
-  
+
   .form-header h2 {
     font-size: 24px;
     font-weight: bold;
   }
-  
+
   .form-text {
     font-size: 16px;
     line-height: 1.5;
@@ -60,7 +60,7 @@
     text-align: center;
     color: #333;
   }
-  
+
   .input-field {
     width: 100%;
     padding: 12px;
@@ -70,7 +70,7 @@
     margin-bottom: 15px;
     color: #333;
   }
-  
+
   .submit-button {
     width: 100%;
     padding: 12px;
@@ -84,11 +84,11 @@
     transition: background-color 0.3s ease;
     outline: 2px solid black;
   }
-  
+
   .submit-button:hover {
     background-color: #009688;
   }
-  
+
   .popup-backdrop {
     position: fixed;
     top: 0;
@@ -98,7 +98,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 10;
   }
-  
+
   .popup-modal {
     position: fixed;
     top: 50%;
@@ -111,22 +111,22 @@
     z-index: 1000;
     outline: 2px solid black;
   }
-  
+
   .popup-content p {
     margin-top: 15px;
   }
-  
+
   .popup-content h2 {
     margin-bottom: 15px;
   }
-  
+
   .button-group {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
     margin-top: 20px;
   }
-  
+
   .button-group button {
     padding: 10px 20px;
     font-size: 14px;
@@ -139,15 +139,11 @@
     transition: background-color 0.3s ease;
     outline: 2px solid black;
   }
-  
+
   .button-group button:hover {
     background-color: #009688;
   }
-   */
-   /* Added styles for first and last name side-by-side fields */
-/* General Styling */
-/* General styling for the form */
-/* General styling for the form */
+
 * {
   margin: 0;
   padding: 0;
@@ -160,7 +156,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(135deg, #f9da6c, #f6c88f); 
+  background: linear-gradient(135deg, #f9da6c, #f6c88f);
 }
 
 .create-account-form {
@@ -198,7 +194,7 @@
 }
 
 .name-fields .input-field {
-  width: 48%; 
+  width: 48%;
 }
 
 .input-field {
@@ -272,7 +268,7 @@
 }
 
 .go-back-btn i {
-  font-size: 24px; 
+  font-size: 24px;
 }
 
 .go-back-btn:hover {
@@ -332,3 +328,4 @@
 .button-group button:hover {
   background-color: #009688;
 }
+*/

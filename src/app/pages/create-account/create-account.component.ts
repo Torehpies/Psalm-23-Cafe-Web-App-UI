@@ -1,14 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { RouterModule, Router} from '@angular/router';
 import { confirmPasswordValidator } from '../../validators/confirm-password.validator';
 
 @Component({
   selector: 'app-create-account',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.css'],
   providers: [AuthService],
@@ -16,18 +16,20 @@ import { confirmPasswordValidator } from '../../validators/confirm-password.vali
 export default class CreateAccountComponent implements OnInit {
   fb = inject(FormBuilder);
   authService = inject(AuthService);
+  router = inject(Router);
   createAccountForm !: FormGroup;
 
   ngOnInit(): void{
     this.createAccountForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.required],
+      position: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.required],
-      role: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     },
     {
-        validator: confirmPasswordValidator('password','confirmPassword')
+      validators: confirmPasswordValidator('password','confirmPassword')
     }
     );
   }
@@ -37,6 +39,8 @@ export default class CreateAccountComponent implements OnInit {
     .subscribe({
         next:(res)=>{
           alert("User Created")
+          this.createAccountForm.reset();
+          this.router.navigate([''])
         },
         error:(err)=>{
           console.log(err);
