@@ -2,6 +2,7 @@
 <div class="lg:w-4/12 mt-40 p-10 rounded-lg shadow-lg mx-auto bg-white">
   <h3 class="text-3xl font-semibold py-5">Login</h3>
   <form [formGroup]="loginForm" class="flex flex-col">
+    <div *ngIf="errorMessage" class="text-red-500 m-0">{{ errorMessage }}</div>
     <div class="flex mb-4 flex-col mt-1">
       <input formControlName="email" type="text" class="p-2 border border-gray-300 rounded" placeholder="Email">
       <span *ngIf="loginForm.hasError('required','email') && loginForm.controls['email'].dirty" class="text-red-500 mt-1 text-sm">* Email is Required</span>
@@ -19,33 +20,3 @@
     <a routerLink="/create-account" class="ml-2 text-yellow-800 cursor-pointer">Create Account</a>
   </div>
 </div>
-<!--
-<body>
-  <div class="login-container">
-      <div class="login-image"></div>
-      <div class="login-form">
-          <h1>Psalm 23 Cafe</h1>
-          <form (ngSubmit)="onLogin()">
-              <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
-                <div class="input-container email">
-                    <label for="email">Email</label>
-                    <input type="email" [(ngModel)]="email" id="email" name="email" placeholder="Email@example.com" required>
-
-                </div>
-                <div class="input-container password">
-                    <label for="password">Password</label>
-                    <input type="password" [(ngModel)]="password" id="password" name="password" placeholder="Password" required>
-                </div>
-                <div class="button-container">
-                <button type="submit" class="login-button">Log In</button>
-                <button type="button" class="signup-button" (click)="navigateToCreateAccount()">Sign Up</button>
-              </div>
-            </form>
-          <p>
-            <a (click)="navigateToForgotPassword()" class="forgot-password">Forgot Password?</a>
-          </p>
-      </div>
-  </div>
-</body>
-
--->

@@ -18,6 +18,7 @@ export default class LoginComponent implements OnInit {
   router = inject(Router);
 
   loginForm !: FormGroup;
+  errorMessage: string | null = null;
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -35,9 +36,10 @@ export default class LoginComponent implements OnInit {
         this.authService.isLoggedIn$.next(true);
         this.router.navigate(['home'])
         this.loginForm.reset();
+        this.errorMessage = null;
       },
       error:(err) => {
-        alert(err.error)
+        this.errorMessage = err.error.message;
       }
     })
   }
