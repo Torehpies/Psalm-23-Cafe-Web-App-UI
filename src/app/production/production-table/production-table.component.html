@@ -10,9 +10,9 @@
         <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
             <div class="date-filter">
                 <label for="fromDate">From:</label>
-                <input type="date" id="fromDate" [(ngModel)]="fromDate">
+                <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()">
                 <label for="toDate">To:</label>
-                <input type="date" id="toDate" [(ngModel)]="toDate">
+                <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()">
             </div>
             <div class="download-section">
                 <span class="download-title">Download:</span>
@@ -38,26 +38,16 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Pandesal</td>
-                    <td>1 Kilogram</td>
-                    <td>October 24, 2024</td>
-                    <td>October 27, 2024</td>
+                <tr *ngFor="let record of isAddActive ? productData : filteredProductData">
+                    <td>{{ record.product_item }}</td>
+                    <td>{{ record.product_quantity }}</td>
+                    <td>{{ record.product_date }}</td>
+                    <td>{{ record.product_expiration }}</td>
                     <td *ngIf="isAddActive"> 
                         <button>Edit</button>
                         <button>Delete</button>
                     </td>   
                 </tr>
-            <tr *ngFor="let record of productData">
-                <td>{{ record.product_item }}</td>
-                <td>{{ record.product_quantity }}</td>
-                <td>{{ record.product_date }}</td>
-                <td>{{ record.product_expiration }}</td>
-                <td *ngIf="isAddActive"> 
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </td>   
-            </tr>
             </tbody>
         </table>
         </div>

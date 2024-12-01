@@ -1,8 +1,8 @@
 <div>
     <div class="centered-toggle" (click)="toggleView()">
         <div class="toggle-container">
-          <div class="toggle-option" [class.active]="isAddActive">ADD</div>
-          <div class="toggle-option" [class.active]="!isAddActive">VIEW</div>
+            <div class="toggle-option" [class.active]="isAddActive">ADD</div>
+            <div class="toggle-option" [class.active]="!isAddActive">VIEW</div>
         </div>
     </div>
 
@@ -10,9 +10,9 @@
         <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
             <div class="date-filter">
                 <label for="fromDate">From:</label>
-                <input type="date" id="fromDate" [(ngModel)]="fromDate">
+                <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()">
                 <label for="toDate">To:</label>
-                <input type="date" id="toDate" [(ngModel)]="toDate">
+                <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()">
             </div>
             <div class="download-section">
                 <span class="download-title">Download:</span>
@@ -25,43 +25,34 @@
             </div>
         </div>
         <div class="scrapping-info">
-        <div class="table-container">
-        <table>
-            <thead>
-            <tr>
-                <th>Product ID</th>
-                <th>Product Name</th>
-                <th>Quantity</th>
-                <th>Scrapping Date</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>B-001</td>
-                    <td>Pan de coco</td>
-                    <td>200</td>
-                    <td>10-25-24</td>
-                    <td *ngIf="isAddActive"> 
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </td>   
-                </tr>
-            <tr *ngFor="let record of scrapData">
-                <td>{{ record.scrap_id }}</td>
-                <td>{{ record.scrap_name }}</td>
-                <td>{{ record.scrap_quantity }}</td>
-                <td>{{ record.scrap_date }}</td>
-                <td *ngIf="isAddActive"> 
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </td>   
-            </tr>
-            </tbody>
-        </table>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Scrapping Date</th>
+                            <th *ngIf="isAddActive">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let record of isAddActive ? scrapData : filteredScrapData">
+                            <td>{{ record.scrap_id }}</td>
+                            <td>{{ record.scrap_name }}</td>
+                            <td>{{ record.scrap_quantity }}</td>
+                            <td>{{ record.scrap_date }}</td>
+                            <td *ngIf="isAddActive"> 
+                                <button>Edit</button>
+                                <button>Delete</button>
+                            </td>   
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
-<div class="submit">
-    <button>Submit</button>
+    <div *ngIf="isAddActive" class="submit">
+        <button>Submit</button>
+    </div>
 </div>

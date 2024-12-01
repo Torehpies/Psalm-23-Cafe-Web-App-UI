@@ -4,15 +4,15 @@
           <div class="toggle-option" [class.active]="isAddActive">ADD</div>
           <div class="toggle-option" [class.active]="!isAddActive">VIEW</div>
         </div>
-      </div>
+    </div>
       
-      <div class="table-section">
+    <div class="table-section">
         <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
             <div class="date-filter">
                 <label for="fromDate">From:</label>
-                <input type="date" id="fromDate" [(ngModel)]="fromDate">
+                <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()">
                 <label for="toDate">To:</label>
-                <input type="date" id="toDate" [(ngModel)]="toDate">
+                <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()">
             </div>
             <div class="download-section">
                 <span class="download-title">Download:</span>
@@ -25,41 +25,32 @@
             </div>
         </div>
         <div class="supply-info">
-        <div class="table-container">
-        <table>
-            <thead>
-            <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Date Used</th>
-                <th *ngIf="isAddActive">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Flour</td>
-                    <td>1 Kilogram</td>
-                    <td>October 24, 2024</td>
-                    <td *ngIf="isAddActive"> 
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </td>   
-                </tr>
-            <tr *ngFor="let record of supplyData">
-                <td>{{ record.supply_item }}</td>
-                <td>{{ record.supply_quantity }}</td>
-                <td>{{ record.supply_date }}</td>
-                <td *ngIf="isAddActive"> 
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </td>   
-            </tr>
-            </tbody>
-        </table>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Date Used</th>
+                            <th *ngIf="isAddActive">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let record of isAddActive ? supplyData : filteredSupplyData">
+                            <td>{{ record.supply_item }}</td>
+                            <td>{{ record.supply_quantity }}</td>
+                            <td>{{ record.supply_date }}</td>
+                            <td *ngIf="isAddActive"> 
+                                <button>Edit</button>
+                                <button>Delete</button>
+                            </td>   
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-
+    <div class="submit" [ngClass]="{'hidden': !isAddActive}">
+        <button>Submit</button>
+    </div>
 </div>
-<div class="submit" [ngClass]="{'hidden': !isAddActive}">
-    <button>Submit</button>
-</div>  
