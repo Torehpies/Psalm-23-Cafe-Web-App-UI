@@ -1,12 +1,13 @@
-import { NgModule } from '@angular/core';
 import { Routes } from '@angular/router';
+import { AuthGuardService } from './guards/auth.guard';
 
 export const routes: Routes = [
   {path:'', loadComponent: ()=> import('./pages/login/login.component')},
   {path:'create-account', loadComponent: ()=> import('./pages/create-account/create-account.component')},
   {path:'forgot-password', loadComponent: ()=> import('./pages/forgot-password/forgot-password.component')},
   {path:'reset/:token', loadComponent: ()=> import('./pages/resetpassword/resetpassword.component')},
-  {path:'home', loadComponent: ()=> import('./pages/dashboard/dashboard.component')},
+  {path:'home', loadComponent: ()=> import('./pages/dashboard/dashboard.component'), canActivate: [AuthGuardService]},
+  { path: '**', redirectTo: '' },
 ];
 
 /*

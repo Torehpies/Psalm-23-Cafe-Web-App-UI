@@ -18,6 +18,8 @@ export default class ForgotPasswordComponent implements OnInit{
   authService = inject(AuthService);
   forgotPasswordForm !: FormGroup;
   router = inject(Router);
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
 
   ngOnInit(): void {
     this.forgotPasswordForm = this.fb.group({
@@ -31,9 +33,12 @@ export default class ForgotPasswordComponent implements OnInit{
       next: (res) => {
         alert(res.message);
         this.forgotPasswordForm.reset();
+        this.errorMessage = null;
+        this.successMessage = "Email sent successfully";
       },
       error: (err) => {
-        alert(err.error.message)
+        this.successMessage = null;
+        this.errorMessage = err.error.message;
       }
     })
   }

@@ -5,6 +5,10 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { confirmPasswordValidator } from '../../validators/confirm-password.validator';
 
+interface ResetResponse {
+  message: string;
+}
+
 @Component({
   selector: 'app-reset-password',
   standalone: true,
@@ -47,12 +51,12 @@ export default class ResetPasswordComponent implements OnInit {
     console.log(resetObj)
     this.authService.resetPasswordService(resetObj)
     .subscribe({
-      next:(res) => {
+      next:(res: ResetResponse) => {
         alert(res.message);
         this.resetPasswordForm.reset();
-        this.router.navigate([''])
+        this.router.navigate(['login'])
       },
-      error:(err) => {
+      error:(err: { error: ResetResponse }) => {
         alert(err.error.message)
       }
     })

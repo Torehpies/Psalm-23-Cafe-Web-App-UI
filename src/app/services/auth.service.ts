@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable, map, catchError, of } from 'rxjs';
 import { apiUrls } from '../api.urls';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +9,30 @@ import { BehaviorSubject } from 'rxjs';
 
 export class AuthService {
   http = inject(HttpClient);
-  isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
+  private tokenKey = 'authToken';
+
+  constructor() {}
+
+  // Save token
+  setToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+  }
+
+  // Get token
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
   registerService(registerObj: any) {
     return this.http.post<any>(`${apiUrls.authServiceApi}register`, registerObj);
   }
 
   loginService(loginObj: any) {
-    return this.http.post<any>(`${apiUrls.authServiceApi}login`, loginObj);
+    return this.http.post<any>(`${apiUrls.authServiceApi}login`, loginObj)
+  }
+
+  logoutService() {
+    localStorage.removeItem(this.tokenKey);
   }
   
   sendEmailService(email: string){
@@ -27,9 +43,15 @@ export class AuthService {
     return this.http.post<any>(`${apiUrls.authServiceApi}reset-password`, resetObj);
   }
 
-  isLoggedIn(){
-    return !!localStorage.getItem("user_id");
+  isLoggedIn(): boolean {
+    const token = this.getToken();
+    // Optionally validate token with a library like jwt-decode
+    return !!token;
   }
+
+  // isLoggedIn(){
+  //   return !!localStorage.getItem("user_id");
+  // }
 
   /*
   private apiUrl = 'http://localhost:8800';

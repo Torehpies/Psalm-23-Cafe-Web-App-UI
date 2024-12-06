@@ -40,7 +40,8 @@ export default class CreateAccountComponent implements OnInit {
         next:(res)=>{
           alert("User Created")
           this.createAccountForm.reset();
-          this.router.navigate([''])
+          this.router.navigate(['']);
+          
         },
         error:(err)=>{
           console.log(err);

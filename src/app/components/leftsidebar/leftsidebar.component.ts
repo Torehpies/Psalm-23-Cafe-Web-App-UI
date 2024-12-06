@@ -16,14 +16,10 @@ export class LeftsidebarComponent implements OnInit {
   isMenuActive: boolean = false;
 
   authService = inject(AuthService);
-  isLoggedIn: boolean = false;
 
   constructor(private menuService: MenuService) {}
 
   ngOnInit() {
-    this.authService.isLoggedIn$.subscribe(res=>{
-      this.isLoggedIn = this.authService.isLoggedIn();
-    });
     this.menuService.isMenuActive$.subscribe((status) => {
         this.isMenuActive = status;
     });
@@ -32,8 +28,8 @@ export class LeftsidebarComponent implements OnInit {
    logout(){
     this.menuService.toggleMenu();
     this.router.navigate(['']);
-    localStorage.removeItem("user_id");
-    this.authService.isLoggedIn$.next(false);
+    this.authService.logoutService();
+    // localStorage.removeItem("authToken");
    }
 
    gotoDashboard(): void {
