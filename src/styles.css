@@ -20,3 +20,8 @@ body {
     pointer-events: none;
     opacity: 0.5;
 }
+.sticky-header {
+    position: sticky;
+    top: 0;
+  }
+  

@@ -1,4 +1,4 @@
-<app-header />
+<app-header class="sticky-header"/>
 <div class="container">
   <app-leftsidebar/>
   <div class="main-content" [class.active]="isMenuActive">
@@ -18,7 +18,7 @@
       <div class="card" *ngFor="let item of items" (click)="showItemDetails(item)">
         <span>{{ item.category }}</span>
         <h1>{{ item.name }}</h1>
-        <p>{{ item.stock || 0 }} {{ item.unit }}</p>
+        <p>{{ item.currentStock || 0 }} {{ item.unit }}</p>
       </div>
     </div>
   </div>

@@ -3,6 +3,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmModalComponent } from '../../components/confirm-modal/confirm-modal.component';
 import { ItemTestService } from '../../services/item-test.service';
+import { SuppliesService } from '../../services/supplies.service';
+import { Supplies } from '../../models/supplies.model';
 
 @Component({
   selector: 'app-item-form',
@@ -13,12 +15,12 @@ import { ItemTestService } from '../../services/item-test.service';
 })
 export class ItemFormComponent {
   @Output() visible = new EventEmitter<void>();
-  @Output() itemAdded = new EventEmitter<any>();
+  @Output() itemAdded = new EventEmitter<Supplies>();
 
   addItemForm: FormGroup;
   categories: string[] = ['Ingredient', 'Supply']
   unitsByCategory: { [key: string]: string[] } = {
-    Ingredient: ['kilograms', 'grams', 'liters', 'milliliters'],
+    Ingredient: ['Kilograms', 'Grams', 'Liters', 'Mililiters'],
     Supply: ['pieces', 'packs', 'rolls'],
   };
   units: string[] = [];
@@ -28,7 +30,7 @@ export class ItemFormComponent {
   isPromptVisible: boolean = false;
   isSubmitAction: boolean = false;  // New flag to track whether the modal is for submission
 
-  constructor(private fb: FormBuilder, private itemTestService: ItemTestService) {
+  constructor(private fb: FormBuilder, private suppliesService: SuppliesService) {
     this.addItemForm = this.fb.group({
       name: ['', Validators.required],
       category: ['', Validators.required],
@@ -46,15 +48,30 @@ export class ItemFormComponent {
 
   onUnitChange(event: any): void {
     const selectedUnit = event.target.value;
+  
     if (selectedUnit === 'custom') {
       this.isCustomUnitSelected = true;
-      // Assign the custom unit value to the unit field directly
-      this.addItemForm.get('unit')?.setValue(this.addItemForm.get('customUnit')?.value || ''); // Set custom unit in the unit field
+      this.addItemForm.get('unit')?.setValue('custom'); // Set unit to custom
+      const customUnitControl = this.addItemForm.get('customUnit');
+      
+      // Make customUnit required when "Custom Unit" is selected
+      customUnitControl?.setValidators([Validators.required]);
+      customUnitControl?.updateValueAndValidity();
     } else {
       this.isCustomUnitSelected = false;
       this.addItemForm.get('customUnit')?.setValue(''); // Clear the custom unit field
+      const customUnitControl = this.addItemForm.get('customUnit');
+      
+      // Make customUnit not required when another unit is selected
+      customUnitControl?.setValidators(null);
+      customUnitControl?.updateValueAndValidity();
     }
+  
+    // Ensure 'unit' validation is updated
+    this.addItemForm.get('unit')?.updateValueAndValidity();
   }
+  
+  
 
   openCancelModal(): void {
     this.modalMessage = 'Are you sure you want to cancel? All changes will be lost.';
@@ -82,12 +99,24 @@ export class ItemFormComponent {
             formData.unit = formData.customUnit;
           }
 
-          // Add item to the service
-          this.itemTestService.additem({ ...formData, stock: 0, par: formData.parLevel });
+           // Map form data to Supplies model
+           const supply: Supplies = {
+            name: formData.name,
+            category: formData.category,
+            unit: formData.unit,
+            currentStock: 0, // Initialize current stock to 0
+            par: formData.parLevel,
+          };
 
-          // Emit the item added (optional, in case you need to update UI elsewhere)
-          this.itemAdded.emit(formData);
-          
+          this.suppliesService.addSupply(supply).subscribe(
+            (response) => {
+              console.log('Supply added:', response); // Log the plain text response
+              this.itemAdded.emit(response); // Emit the added supply to update the UI
+            },
+            (error) => {
+              console.error('Error adding supply:', error);
+            }
+          );
         } else {
           console.log('Form is not valid!');
         }
@@ -99,6 +128,11 @@ export class ItemFormComponent {
       this.addItemForm.reset();
     }
     this.visible.emit();
+    this.reloadPage();
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 
   onModalCancel(): void {

@@ -1,7 +1,18 @@
-<app-header />
+<app-header class="sticky-header"/>
 <div class="container">
 <app-leftsidebar />
 <div class="main-content" [class.active] = "isMenuActive">
-<p>product management works</p>
+    <div class="button-container">
+        <button>+ Add Product</button>
+      </div>
+
+      <div class="card-container">
+        <!--div class="card" *ngFor="let item of items$ | async" (click)="showItemDetails(item)"-->
+        <div class="card">
+          <span></span>
+          <h1></h1>
+          <p></p>
+        </div>
+      </div>
 </div>
 </div>

@@ -5,7 +5,7 @@
       <form [formGroup]="restockForm" (ngSubmit)="submitRestock()">
         <div class="form-group">
           <label for="name">Item Name:</label>
-          <select id="name" formControlName="name">
+          <select id="name" formControlName="name" (change)="onItemSelected($event)">
             <option value="" disabled selected>Select Item</option>
             <option *ngFor="let item of items" [value]="item.name">{{item.name}}</option>
           </select>

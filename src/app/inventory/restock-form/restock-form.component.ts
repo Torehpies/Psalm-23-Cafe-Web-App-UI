@@ -4,7 +4,7 @@ import { ConfirmModalComponent } from '../../components/confirm-modal/confirm-mo
 import { MenuService } from '../../services/menu.service';
 import { ItemRestockComponent } from '../item-restock/item-restock.component';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
-import { ItemTestService } from '../../services/item-test.service';
+import { SuppliesService } from '../../services/supplies.service';
 
 @Component({
   selector: 'app-restock-form',
@@ -15,6 +15,7 @@ import { ItemTestService } from '../../services/item-test.service';
 })
 export class RestockFormComponent {
   @Output() visible = new EventEmitter<void>();
+  @Output() restockConfirmed = new EventEmitter<void>();
   isMenuActive: boolean = false;
   showModal: boolean = false;
   modalMessage: string = '';
@@ -22,7 +23,7 @@ export class RestockFormComponent {
   showRestock: boolean = false;
   restockForm: FormGroup;
 
-  constructor(private menuService: MenuService, private fb: FormBuilder, private ItemTestService: ItemTestService) {
+  constructor(private menuService: MenuService, private fb: FormBuilder, private suppliesService: SuppliesService) {
     this.restockForm = this.fb.group({
       rows: this.fb.array([])
     })
@@ -71,6 +72,7 @@ export class RestockFormComponent {
 
 
   addRestockItem(row: {
+    _id: string;
     name: string;
     quanitity: number;
     expireDate: string; 
@@ -84,11 +86,14 @@ export class RestockFormComponent {
       if (this.isSubmitAction) {
         const restocks = this.restockForm.value.rows;
         restocks.forEach((restock : any) => {
-          this.ItemTestService.updateItem(restock.name, restock.quantity);
-          this.ItemTestService.addHistory({
-            ...restock,
-            dateAdded: new Date().toLocaleDateString(),
-          });
+          this.suppliesService.updateSupply(restock._id, { currentStock: restock.quantity }).subscribe();
+          this.suppliesService.addStockHistory({
+            ingredient: { _id: restock._id },
+            Price: restock.price,
+            Quantity: restock.quantity,
+            Date: new Date(),
+            ExpiryDate: new Date(restock.expireDate)
+          }).subscribe();
         });
       }
       this.showModal = false;
@@ -96,6 +101,8 @@ export class RestockFormComponent {
         this.restockForm.reset();
       }
       this.visible.emit();
+      this.restockConfirmed.emit(this.restockForm.value.rows); // Emit event with updated restock items
+      this.reloadPage();
     }
   }
 
@@ -105,5 +112,28 @@ export class RestockFormComponent {
 
   closeRestockForm() {
     this.visible.emit();
+  }
+
+  reloadPage() {
+    window.location.reload();
+  }
+
+  debugRestock() {
+    console.log('Restock Form Values:', this.restockForm.value);
+    const restocks = this.restockForm.value.rows;
+    restocks.forEach((restock: any) => {
+      this.suppliesService.updateSupply(restock._id, { currentStock: restock.quantity }).subscribe(response => {
+        console.log('Update Supply Response:', response);
+      });
+      this.suppliesService.addStockHistory({
+        ingredient: { _id: restock._id },
+        Price: restock.price,
+        Quantity: restock.quantity,
+        Date: new Date(),
+        ExpiryDate: new Date(restock.expireDate)
+      }).subscribe(response => {
+        console.log('Add Stock History Response:', response);
+      });
+    });
   }
 }

@@ -7,7 +7,7 @@
 
     <!-- Stocks and Restock Button (aligned) -->
     <div class="stocks-container">
-      <p>Stocks: {{ item.stock }} {{ item.unit }}</p>
+      <p>Stocks: {{ item.currentStock }} {{ item.unit }}</p>
       <button class="restock-btn" (click)="openRestock()">Restock</button>
     </div>
 
@@ -23,10 +23,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let history of restockHistory">
-          <td>{{ history.quantity }}</td>
-          <td>{{ history.dateAdded }}</td>
-          <td>{{ history.expireDate }}</td>
-          <td>{{ history.price | currency: 'PHP' }}</td>
+          <td>{{ history.Quantity }}</td>
+          <td>{{ history.Date | date: 'yyyy/MM/dd' }}</td>
+          <td>{{ history.ExpiryDate | date: 'yyyy/MM/dd' }}</td>
+          <td>{{ history.Price | currency: 'PHP' }}</td>
         </tr>
       </tbody>
     </table>

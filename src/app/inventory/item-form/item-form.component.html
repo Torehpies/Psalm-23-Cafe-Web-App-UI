@@ -33,12 +33,16 @@
         <div *ngIf="addItemForm.get('unit')?.touched && addItemForm.get('unit')?.invalid">
           <small class="error">Unit is required</small>
         </div>
-        
+      
         <!-- Show the custom unit input if "Custom Unit" is selected -->
         <div *ngIf="isCustomUnitSelected">
           <input formControlName="customUnit" type="text" placeholder="Enter custom unit" />
+          <div *ngIf="addItemForm.get('customUnit')?.touched && addItemForm.get('customUnit')?.invalid">
+            <small class="error">Custom Unit is required</small>
+          </div>
         </div>
       </div>
+      
 
       <!-- PAR Level input field -->
       <div>

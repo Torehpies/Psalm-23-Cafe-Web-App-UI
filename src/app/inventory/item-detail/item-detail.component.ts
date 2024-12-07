@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ItemTestService } from '../../services/item-test.service';
+import { SuppliesService } from '../../services/supplies.service';
 
 @Component({
   selector: 'app-item-detail',
@@ -16,18 +16,22 @@ export class ItemDetailComponent {
 
   restockHistory: any[] = []; // Filtered restock history for the current item
 
-  constructor(private itemTestService: ItemTestService) {}
+  constructor(private suppliesService: SuppliesService) {}
 
   ngOnInit() {
     if (this.item) {
-      this.loadRestockHistory(this.item.name); // Load the item's history on initialization
+      console.log('Item:', this.item); // Debug: Log the item
+      this.loadRestockHistory(this.item._id); // Load the item's history on initialization
     }
   }
 
   // Fetch and filter history for the specific item
-  loadRestockHistory(itemName: string) {
-    const allHistory = this.itemTestService.getHistory();
-    this.restockHistory = allHistory.filter((history) => history.name === itemName);
+  loadRestockHistory(itemId: string) {
+    this.suppliesService.getsupplyHistory().subscribe((allHistory: any[]) => {
+      console.log('All History:', allHistory); // Debug: Log all history data
+      this.restockHistory = allHistory.filter((history) => history.ingredient._id._id === itemId);
+      console.log('Filtered History:', this.restockHistory); // Debug: Log filtered history data
+    });
   }
 
   closeModal() {
