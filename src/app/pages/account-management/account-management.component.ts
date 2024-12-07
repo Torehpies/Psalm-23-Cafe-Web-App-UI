@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { MenuService } from '../services/menu.service';
-import { DataService } from '../services/data.service';
-import { LeftsidebarComponent } from '../components/leftsidebar/leftsidebar.component';
-import { HeaderComponent } from '../components/header/header.component';
+import { MenuService } from '../../services/menu.service';
+import { DataService } from '../../services/data.service';
+import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
+import { HeaderComponent } from '../../components/header/header.component';
 import { CommonModule } from '@angular/common';
 import { AccountManagementUpdateComponent } from './update/update.component';
 
@@ -19,7 +18,7 @@ import { AccountManagementUpdateComponent } from './update/update.component';
   templateUrl: './account-management.component.html',
   styleUrls: ['./account-management.component.css'],
 })
-export class AccountManagementComponent implements OnInit {
+export default class AccountManagementComponent implements OnInit {
   isMenuActive: boolean = false;
   isLoading: boolean = true;
   errorMessage: string | null = null;

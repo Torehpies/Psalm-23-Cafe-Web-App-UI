@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MenuService } from '../services/menu.service';
-import { LeftsidebarComponent } from '../components/leftsidebar/leftsidebar.component';
-import { HeaderComponent } from '../components/header/header.component';
+import { MenuService } from '../../services/menu.service';
+import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-account-monitoring',
@@ -17,7 +17,7 @@ import { HeaderComponent } from '../components/header/header.component';
   templateUrl: './account-monitoring.component.html',
   styleUrls: ['./account-monitoring.component.css'],
 })
-export class AccountMonitoringComponent implements OnInit {
+export default class AccountMonitoringComponent implements OnInit {
   isMenuActive: boolean = false;
   startDate: string = ''; 
   endDate: string = ''; 
