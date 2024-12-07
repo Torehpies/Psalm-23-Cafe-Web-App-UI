@@ -23,6 +23,20 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
+
+  getUserRole(): string | null {
+    const token = this.getToken();
+    if (token) {
+      const payload = this.decodeToken(token);
+      return payload.role; // Assuming the role is stored in the 'role' field of the token
+    }
+    return null; // Return null if no token is found
+  }
+
+  private decodeToken(token: string): any {
+    const payload = token.split('.')[1]; // Get the payload part of the JWT
+    return JSON.parse(atob(payload)); // Decode and parse the payload
+  }
   registerService(registerObj: any) {
     return this.http.post<any>(`${apiUrls.authServiceApi}register`, registerObj);
   }
