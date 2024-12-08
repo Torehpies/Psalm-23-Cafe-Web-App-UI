@@ -1,11 +1,11 @@
 <div class="sidebar" [class.active]="isMenuActive">
     <ul>
         <li (click)="gotoDashboard()">Dashboard</li>
-        <li (click)="gotoInventory()">Inventory</li>
-        <li (click)="gotoReports()">Reports</li>
-        <li (click)="gotoAccountManagement()">Account Management</li>
-        <li (click)="gotoAccountMonitoring()">Attendance Monitoring</li>
-        <li (click)="gotoProductManagement()">Product Management</li>
+        <li *ngIf="production_roles.includes(userRole)" (click)="gotoInventory()">Inventory</li>
+        <li *ngIf="admin_roles.includes(userRole)" (click)="gotoReports()">Reports</li>
+        <li *ngIf="admin_roles.includes(userRole)" (click)="gotoAccountManagement()">Account Management</li>
+        <li *ngIf="admin_roles.includes(userRole)" (click)="gotoAccountMonitoring()">Attendance Monitoring</li>
+        <li *ngIf="admin_roles.includes(userRole)" (click)="gotoProductManagement()">Product Management</li>
         <!--
         <li (click)="gotoSupplies()">Supplies</li>
         <li (click)="gotoclockin()">Clock-in</li>

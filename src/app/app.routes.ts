@@ -1,10 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthGuardService } from './guards/auth.guard';
 import { RoleGuardService } from './guards/role.guard';
-
-const ADMIN_ROLES = ['manager', 'admin'];
-const PRODUCTION_ROLES = ['baker', 'barista', 'helper'];
-const COUNTER_ROLES = ['cashier', 'barista'];
+import { ADMIN_ROLES, COUNTER_ROLES, PRODUCTION_ROLES } from './models/role/role.model';
 
 export const routes: Routes = [
   { 
