@@ -17,13 +17,14 @@ export class ScrappingTableComponent {
   toDate: string = ''; // Initialize toDate
   showAddForm: boolean = false; // State to control visibility of the form
   showEditForm: boolean = false; // State to control visibility of the edit form
+  showDeleteConfirm: boolean = false; // State to control visibility of the delete confirmation
 
   scrapData: { scrap_id: string; scrap_name: string; scrap_quantity: string; scrap_date: string }[] = [];
   filteredScrapData: { scrap_id: string; scrap_name: string; scrap_quantity: string; scrap_date: string }[] = [];
   addItemForm: FormGroup; // Form Group for adding items
   editItemForm: FormGroup; // Form Group for editing items
   products: string[] = ['Pandesal', 'Monay', 'Pan de coco']; // Sample products
-  currentItem: any = null; // To hold the item being edited
+  currentItem: any = null; // To hold the item being edited or deleted
 
   constructor(private http: HttpClient, private fb: FormBuilder) {
     this.addItemForm = this.fb.group({
@@ -41,35 +42,6 @@ export class ScrappingTableComponent {
 
   ngOnInit(): void {
     this.loadscrapData();
-    // Adding sample data for testing
-
-    this.scrapData = [
-        { scrap_id: 'B-001', scrap_name: 'Pan de Coco', scrap_quantity: '200', scrap_date: '2024-10-25' },
-        { scrap_id: 'B-002', scrap_name: 'Pandesal', scrap_quantity: '300', scrap_date: '2024-10-30' },
-        { scrap_id: 'B-003', scrap_name: 'Monay', scrap_quantity: '400', scrap_date: '2024-11-05' },
-        { scrap_id: 'B-004', scrap_name: 'Ensaymada', scrap_quantity: '150', scrap_date: '2024-11-30' },
-        { scrap_id: 'B-005', scrap_name: 'Spanish Bread', scrap_quantity: '220', scrap_date: '2024-11-15' },
-        { scrap_id: 'B-006', scrap_name: 'Cheese Roll', scrap_quantity: '180', scrap_date: '2024-11-20' },
-        { scrap_id: 'B-007', scrap_name: 'Putok', scrap_quantity: '190', scrap_date: '2024-12-01' },
-        { scrap_id: 'B-008', scrap_name: 'Kalihim', scrap_quantity: '210', scrap_date: '2024-12-05' },
-        { scrap_id: 'B-009', scrap_name: 'Kabayan', scrap_quantity: '175', scrap_date: '2024-12-10' },
-        { scrap_id: 'B-010', scrap_name: 'Tasty', scrap_quantity: '250', scrap_date: '2024-12-15' },
-        { scrap_id: 'B-011', scrap_name: 'Pinagong', scrap_quantity: '300', scrap_date: '2024-12-20' },
-        { scrap_id: 'B-012', scrap_name: 'Pan de Sal', scrap_quantity: '350', scrap_date: '2024-12-25' },
-        { scrap_id: 'B-013', scrap_name: 'Pan Americano', scrap_quantity: '120', scrap_date: '2025-01-01' },
-        { scrap_id: 'B-014', scrap_name: 'Pan Sikal', scrap_quantity: '140', scrap_date: '2025-01-05' },
-        { scrap_id: 'B-015', scrap_name: 'Pan Silyo', scrap_quantity: '160', scrap_date: '2025-01-10' },
-        { scrap_id: 'B-016', scrap_name: 'Pan Siko', scrap_quantity: '180', scrap_date: '2025-01-15' },
-        { scrap_id: 'B-017', scrap_name: 'Pan Siko-Siko', scrap_quantity: '200', scrap_date: '2025-01-20' },
-        { scrap_id: 'B-018', scrap_name: 'Pan Tasty', scrap_quantity: '220', scrap_date: '2025-01-25' },
-        { scrap_id: 'B-019', scrap_name: 'Pan Elim', scrap_quantity: '240', scrap_date: '2025-01-30' },
-        { scrap_id: 'B-020', scrap_name: 'Pan Maria', scrap_quantity: '260', scrap_date: '2025-02-05' },
-        { scrap_id: 'B-021', scrap_name: 'Pan de Regla', scrap_quantity: '280', scrap_date: '2025-02-10' },
-        { scrap_id: 'B-022', scrap_name: 'Pan de Putok', scrap_quantity: '300', scrap_date: '2025-02-15' },
-        { scrap_id: 'B-023', scrap_name: 'Pan de Pugon', scrap_quantity: '320', scrap_date: '2025-02-20' },
-        { scrap_id: 'B-024', scrap_name: 'Pan de Bagong', scrap_quantity: '340', scrap_date: '2025-02-25' }
-      ];
-      
     this.applyDateFilter(); // Apply initial filter
   }
 
@@ -112,6 +84,10 @@ export class ScrappingTableComponent {
     this.showEditForm = !this.showEditForm;
   }
 
+  toggleShowDeleteConfirm(): void {
+    this.showDeleteConfirm = !this.showDeleteConfirm;
+  }
+
   editItem(item: any): void {
     this.currentItem = item;
     this.editItemForm.patchValue({
@@ -122,17 +98,58 @@ export class ScrappingTableComponent {
     this.toggleShowEditScrapForm();
   }
 
+  deleteItem(item: any): void {
+    this.currentItem = item;
+    this.toggleShowDeleteConfirm();
+  }
+
+  confirmDelete(): void {
+    const index = this.scrapData.findIndex(item => item.scrap_id === this.currentItem.scrap_id);
+    if (index !== -1) {
+      this.scrapData.splice(index, 1);
+      this.applyDateFilter(); // Update the filtered data
+    }
+    this.toggleShowDeleteConfirm(); // Close the delete confirmation
+  }
+
+  cancelDelete(): void {
+    this.currentItem = null;
+    this.toggleShowDeleteConfirm(); // Close the delete confirmation
+  }
+
   onSubmit(): void {
     if (this.addItemForm.valid) {
-      console.log(this.addItemForm.value);
-      // Add functionality here
+      const newItem = {
+        scrap_id: 'B-' + (this.scrapData.length + 1).toString().padStart(3, '0'), // Generate new ID
+        scrap_name: this.addItemForm.value.productName,
+        scrap_quantity: this.addItemForm.value.quantity,
+        scrap_date: this.addItemForm.value.scrapDate
+      };
+
+      this.scrapData.push(newItem);
+      this.applyDateFilter(); // Update the filtered data
+
+      this.addItemForm.reset(); // Clear the form
+      this.toggleShowAddScrapForm(); // Close the add form
     }
   }
 
   onUpdate(): void {
     if (this.editItemForm.valid) {
-      console.log(this.editItemForm.value);
-      // Update functionality here
+      const index = this.scrapData.findIndex(item => item.scrap_id === this.currentItem.scrap_id);
+      if (index !== -1) {
+        this.scrapData[index] = {
+          scrap_id: this.currentItem.scrap_id,
+          scrap_name: this.editItemForm.value.productName,
+          scrap_quantity: this.editItemForm.value.quantity,
+          scrap_date: this.editItemForm.value.scrapDate
+        };
+
+        this.applyDateFilter(); // Update the filtered data
+
+        this.editItemForm.reset(); // Clear the form
+        this.toggleShowEditScrapForm(); // Close the edit form
+      }
     }
   }
 }

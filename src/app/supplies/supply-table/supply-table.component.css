@@ -1,3 +1,126 @@
+/* Add Item Button */
+.add-item-btn {
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  position: absolute; /* To position it absolutely within the container */
+  top: 16%; /* Adjust to match the height positioning in the picture */
+  right: 5%; /* Adjust to the right edge */
+  transition: background-color 0.3s ease;
+}
+
+.add-item-btn:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* Add Item Modal */
+.popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.popup-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #FDCB58; /* Updated background color */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  outline: 2px solid black;
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popup-content h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.popup-content form div {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.popup-content form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.popup-content form input,
+.popup-content form select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.add-btn {
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  width: 48%;
+}
+
+.cancel-btn {
+  background-color: #f44336; /* Red background */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  width: 48%;
+}
+
+/* Edit Modal */
+.update-btn {
+  background-color: orange; /* Orange background */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  width: 48%;
+}
+
+/* Delete Confirmation Modal */
+.confirm-delete-btn {
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  width: 48%;
+}
+
+/* Existing styles for the table section */
 .table-section {
   width: 80%;
   height: 60%;
@@ -55,50 +178,39 @@ table {
 
 thead th {
   border-bottom: 1px solid #ccc;
-  background-color: #f9f9f9; /* New background color for header */
+  background-color: #f9f9f9;
   font-weight: bold;
   padding: 10px 5px;
-  text-align: center; /* Center-align all header cells */
-  color: black; /* Text color to contrast with the background */
-}
-
-thead th:first-child {
-  padding-left: 20px; /* Adjust the padding to push the first header to the left */
 }
 
 tbody td {
   padding: 8px 5px;
   border-bottom: 1px solid #eee;
   font-size: 14px;
-  text-align: center; /* Center-align all data cells */
-}
-
-tbody td:first-child {
-  padding-left: 20px; /* Adjust the padding to match the header */
 }
 
 tbody tr:last-child td {
   border-bottom: none;
 }
 
-/* Style for the action buttons */
-.action-buttons {
-  display: flex;
-  justify-content: space-around; /* Space the buttons evenly */
-}
-
-.action-buttons button {
-  padding: 5px 10px;
+/* Update for Edit and Delete buttons */
+.edit-btn {
+  background-color: blue; /* Blue background */
+  color: white;
   border: none;
-  background-color: #f0f0f0;
-  color: #3C2100;
+  padding: 5px 10px;
   cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+  border-radius: 3px;
+  margin-right: 5px;
 }
 
-.action-buttons button:hover {
-  background-color: #b58213; /* Darker background on hover */
+.delete-btn {
+  background-color: red; /* Red background */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
 }
 
 /* Style for the submit button */

@@ -6,6 +6,10 @@
         </div>
     </div>
 
+    <div>
+      <button (click)="toggleShowAddProductForm()" class="add" *ngIf="isAddActive">+ Add Item</button>
+    </div>
+
     <div class="table-section">
         <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
             <div class="date-filter">
@@ -34,7 +38,7 @@
                 <th>Quantity</th>
                 <th>Date Used</th>
                 <th>Expiration date</th>
-                <th *ngIf="isAddActive">Action</th> <!-- Conditional rendering for the Action header -->
+                <th *ngIf="isAddActive">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -44,15 +48,133 @@
                     <td>{{ record.product_date }}</td>
                     <td>{{ record.product_expiration }}</td>
                     <td *ngIf="isAddActive"> 
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        <button (click)="editItem(record)" class="edit-btn">Edit</button>
+                        <button (click)="deleteItem(record)" class="delete-btn">Delete</button>
                     </td>   
                 </tr>
             </tbody>
         </table>
         </div>
     </div>
-    <div class="submit" [ngClass]="{'hidden': !isAddActive}">
-        <button>Submit</button>
+    <div *ngIf="isAddActive" class="submit">
+      <button>Submit</button>
+    </div>
+</div>
+
+<!-- Edit Item Modal -->
+<div class="popup-backdrop" *ngIf="showEditForm"></div>
+<div class="popup-modal" *ngIf="showEditForm">
+    <div class="popup-content">
+      <h2>Edit Item</h2>
+      <form [formGroup]="editItemForm" (ngSubmit)="onUpdate()">
+        <div>
+          <label for="editItemName">Item:</label>
+          <select formControlName="itemName" id="editItemName">
+            <option value="" disabled>Select Item</option>
+            <option value="Pandesal">Pandesal</option>
+            <option value="Monay">Monay</option>
+            <option value="Kababayan">Kababayan</option>
+            <option value="Ensaymada">Ensaymada</option>
+            <option value="Putok">Putok</option>
+          </select>
+          <div *ngIf="editItemForm.get('itemName')?.touched && editItemForm.get('itemName')?.invalid">
+            <small class="error">Item name is required</small>
+          </div>
+        </div>
+
+        <div>
+          <label for="editQuantity">Quantity:</label>
+          <input formControlName="quantity" id="editQuantity" type="number" placeholder="Enter quantity" />
+          <div *ngIf="editItemForm.get('quantity')?.touched && editItemForm.get('quantity')?.invalid">
+            <small class="error">Quantity is required</small>
+          </div>
+        </div>
+
+        <div>
+          <label for="editDateProduced">Date Produced:</label>
+          <input formControlName="dateProduced" id="editDateProduced" type="date" />
+          <div *ngIf="editItemForm.get('dateProduced')?.touched && editItemForm.get('dateProduced')?.invalid">
+            <small class="error">Date produced is required</small>
+          </div>
+        </div>
+
+        <div>
+          <label for="editExpirationDate">Expiration Date:</label>
+          <input formControlName="expirationDate" id="editExpirationDate" type="date" />
+          <div *ngIf="editItemForm.get('expirationDate')?.touched && editItemForm.get('expirationDate')?.invalid">
+            <small class="error">Expiration date is required</small>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" [disabled]="!editItemForm.valid" class="update-btn">Update</button>
+          <button type="button" (click)="toggleShowEditProductForm()" class="cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="popup-backdrop" *ngIf="showDeleteConfirm"></div>
+<div class="popup-modal" *ngIf="showDeleteConfirm">
+    <div class="popup-content">
+      <h2>Are you sure?</h2>
+      <div class="button-group">
+        <button (click)="confirmDelete()" class="confirm-delete-btn">Yes</button>
+        <button (click)="cancelDelete()" class="cancel-btn">No</button>
+      </div>
+    </div>
+</div>
+
+<!-- Add Item Modal -->
+<div class="popup-backdrop" *ngIf="showAddForm"></div>
+<div class="popup-modal" *ngIf="showAddForm">
+    <div class="popup-content">
+      <h2>Add Item</h2>
+      <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+        <div>
+          <label for="itemName">Item:</label>
+          <select formControlName="itemName" id="itemName">
+            <option value="" disabled>Select Item</option>
+            <option value="Pandesal">Pandesal</option>
+            <option value="Monay">Monay</option>
+            <option value="Kababayan">Kababayan</option>
+            <option value="Ensaymada">Ensaymada</option>
+            <option value="Putok">Putok</option>
+          </select>
+          <div *ngIf="addItemForm.get('itemName')?.touched && addItemForm.get('itemName')?.invalid">
+            <small class="error">Item name is required</small>
+          </div>
+        </div>
+
+        <div>
+          <label for="quantity">Quantity:</label>
+          <input formControlName="quantity" id="quantity" type="number" placeholder="Enter quantity" />
+          <div *ngIf="addItemForm.get('quantity')?.touched && addItemForm.get('quantity')?.invalid">
+            <small class="error">Quantity is required</small>
+          </div>
+        </div>
+
+        <div>
+          <label for="dateProduced">Date Produced:</label>
+          <input formControlName="dateProduced" id="dateProduced" type="date" />
+          <div *ngIf="addItemForm.get('dateProduced')?.touched && addItemForm.get('dateProduced')?.invalid">
+            <small class="error">Date produced is required</small>
+          </div>
+        </div>
+
+        <div>
+          <label for="expirationDate">Expiration Date:</label>
+          <input formControlName="expirationDate" id="expirationDate" type="date" />
+          <div *ngIf="addItemForm.get('expirationDate')?.touched && addItemForm.get('expirationDate')?.invalid">
+            <small class="error">Expiration date is required</small>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" [disabled]="!addItemForm.valid" class="add-btn">Add</button>
+          <button type="button" (click)="toggleShowAddProductForm()" class="cancel-btn">Cancel</button>
+        </div>
+      </form>
     </div>
 </div>

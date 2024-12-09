@@ -1,9 +1,12 @@
 <div>
-    <div class="centered-toggle" (click)="toggleView()">
+    <div class="centered-toggle">
         <div class="toggle-container">
-          <div class="toggle-option" [class.active]="isAddActive">ADD</div>
-          <div class="toggle-option" [class.active]="!isAddActive">VIEW</div>
+            <div class="toggle-option" [class.active]="isAddActive" (click)="toggleView()">ADD</div>
+            <div class="toggle-option" [class.active]="!isAddActive" (click)="toggleView()">VIEW</div>
         </div>
+    </div>
+    <div>
+        <button (click)="toggleShowAddSupplyForm()" class="add-item-btn">+ Add Item</button>
     </div>
       
     <div class="table-section">
@@ -40,9 +43,9 @@
                             <td>{{ record.supply_item }}</td>
                             <td>{{ record.supply_quantity }}</td>
                             <td>{{ record.supply_date }}</td>
-                            <td *ngIf="isAddActive"> 
-                                <button>Edit</button>
-                                <button>Delete</button>
+                            <td *ngIf="isAddActive">
+                                <button class="edit-btn" (click)="editItem(record)">Edit</button>
+                                <button class="delete-btn" (click)="deleteItem(record)">Delete</button>
                             </td>   
                         </tr>
                     </tbody>
@@ -52,5 +55,105 @@
     </div>
     <div class="submit" [ngClass]="{'hidden': !isAddActive}">
         <button>Submit</button>
+    </div>
+</div>
+
+<!-- Add Item Modal -->
+<div class="popup-backdrop" *ngIf="showAddForm"></div>
+<div class="popup-modal" *ngIf="showAddForm">
+    <div class="popup-content">
+      <h2>Add Supply</h2>
+      <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+        <div>
+          <label for="itemName">Item:</label>
+          <select formControlName="itemName" id="itemName">
+            <option value="" disabled>Select Item</option>
+            <option value="Flour">Flour</option>
+            <option value="Sugar">Sugar</option>
+            <option value="Salt">Salt</option>
+            <option value="Butter">Butter</option>
+          </select>
+          <div *ngIf="addItemForm.get('itemName')?.touched && addItemForm.get('itemName')?.invalid">
+            <small class="error">Item name is required</small>
+          </div>
+        </div>
+
+        <div>
+          <label for="quantity">Quantity:</label>
+          <input formControlName="quantity" id="quantity" type="number" placeholder="Enter quantity" />
+          <div *ngIf="addItemForm.get('quantity')?.touched && addItemForm.get('quantity')?.invalid">
+            <small class="error">Quantity is required</small>
+          </div>
+        </div>
+
+        <div>
+          <label for="dateProduced">Date Produced:</label>
+          <input formControlName="dateProduced" id="dateProduced" type="date" />
+          <div *ngIf="addItemForm.get('dateProduced')?.touched && addItemForm.get('dateProduced')?.invalid">
+            <small class="error">Date produced is required</small>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" [disabled]="!addItemForm.valid" class="add-btn">Add</button>
+          <button type="button" (click)="toggleShowAddSupplyForm()" class="cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+</div>
+
+<!-- Edit Item Modal -->
+<div class="popup-backdrop" *ngIf="showEditForm"></div>
+<div class="popup-modal" *ngIf="showEditForm">
+    <div class="popup-content">
+      <h2>Edit Supply</h2>
+      <form [formGroup]="editItemForm" (ngSubmit)="onUpdate()">
+        <div>
+          <label for="editItemName">Item:</label>
+          <select formControlName="itemName" id="editItemName">
+            <option value="" disabled>Select Item</option>
+            <option value="Flour">Flour</option>
+            <option value="Sugar">Sugar</option>
+            <option value="Salt">Salt</option>
+            <option value="Butter">Butter</option>
+          </select>
+          <div *ngIf="editItemForm.get('itemName')?.touched && editItemForm.get('itemName')?.invalid">
+            <small class="error">Item name is required</small>
+          </div>
+        </div>
+
+        <div>
+          <label for="editQuantity">Quantity:</label>
+          <input formControlName="quantity" id="editQuantity" type="number" placeholder="Enter quantity" />
+          <div *ngIf="editItemForm.get('quantity')?.touched && editItemForm.get('quantity')?.invalid">
+            <small class="error">Quantity is required</small>
+          </div>
+        </div>
+
+        <div>
+          <label for="editDateProduced">Date Produced:</label>
+          <input formControlName="dateProduced" id="editDateProduced" type="date" />
+          <div *ngIf="editItemForm.get('dateProduced')?.touched && editItemForm.get('dateProduced')?.invalid">
+            <small class="error">Date produced is required</small>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" [disabled]="!editItemForm.valid" class="update-btn">Update</button>
+          <button type="button" (click)="toggleShowEditSupplyForm()" class="cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="popup-backdrop" *ngIf="showDeleteConfirm"></div>
+<div class="popup-modal" *ngIf="showDeleteConfirm">
+    <div class="popup-content">
+      <h2>Are you sure?</h2>
+      <div class="button-group">
+        <button (click)="confirmDelete()" class="confirm-delete-btn">Yes</button>
+        <button (click)="cancelDelete()" class="cancel-btn">No</button>
+      </div>
     </div>
 </div>
