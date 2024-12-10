@@ -1,0 +1,36 @@
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductService {
+  constructor(private http: HttpClient) {}
+
+  getProducts() {
+    return this.http.get<Response<Product[]>>('http://localhost:8800/api/products');
+  }
+
+  saveProductsToLocal() {
+    // console.log(this.getProducts);
+    // localStorage.setItem('products', JSON.stringify(this.getProducts));
+  }
+}
+
+export type Response<T> = {
+  success: boolean;
+  status: number;
+  message: string;
+  data: T
+}
+
+export type Product = {
+  _id: string;
+  name: string;
+  unit: string;
+  Category: string;
+  price: number;
+  status: string;
+  currentStock: number;
+  par: number
+}
