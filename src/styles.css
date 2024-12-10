@@ -16,12 +16,13 @@ body {
     transition: margin-left 0.3s ease; /* Smooth transition for margin */
 }
 .main-content.active {
-    margin-left: 300px; /* Shift main content to the right when sidebar is active */
+    /*margin-left: 300px; /* Shift main content to the right when sidebar is active */
     pointer-events: none;
     opacity: 0.5;
 }
 .sticky-header {
     position: sticky;
     top: 0;
+    z-index: 5;
   }
   

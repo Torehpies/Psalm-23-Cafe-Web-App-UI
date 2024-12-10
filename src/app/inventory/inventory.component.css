@@ -57,6 +57,8 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: flex-start; /* Align the cards from left to right */
+  margin-left: 50px; /* Apply left margin */
 }
 
 .card {

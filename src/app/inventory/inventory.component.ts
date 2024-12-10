@@ -53,7 +53,6 @@ export class InventoryComponent {
         console.log('Backend response (add item):', response);
         // Immediately push the new item to the local array
         this.items.push(response); // Add the item directly to the local array
-        setTimeout(() => this.reloadPage(), 500); // Automatically reload the page after a short delay
       },
       (error) => {
         console.error('Error adding item:', error);
@@ -102,6 +101,5 @@ export class InventoryComponent {
     });
     this.items = [...this.items]; // Trigger change detection
     this.showRestockForm = false; // Close the restock form
-    setTimeout(() => this.reloadPage(), 500); // Automatically reload the page after a short delay
   }
 }
