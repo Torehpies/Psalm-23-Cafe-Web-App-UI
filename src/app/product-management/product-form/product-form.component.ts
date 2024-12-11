@@ -85,6 +85,11 @@ export class ProductFormComponent {
       this.addProductForm.reset();
     }
     this.visible.emit();
+    //this.reloadPage();
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 
   onModalCancel(): void {

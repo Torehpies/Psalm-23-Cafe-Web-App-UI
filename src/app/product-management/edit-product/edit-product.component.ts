@@ -138,6 +138,11 @@ export class EditProductComponent {
       this.editProductForm.reset();
     }
     this.visible.emit();
+    this.reloadPage();
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 
   onModalCancel(): void {
