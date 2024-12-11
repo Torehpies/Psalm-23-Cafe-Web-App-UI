@@ -3,6 +3,8 @@ import { ProductItemComponent } from '../product-item/product-item.component';
 import { CommonModule } from '@angular/common';
 import { Product, ProductService } from '../../../services/product.service';
 import { RouterModule } from '@angular/router';
+import { CategoryPanelComponent } from '../category-panel/category-panel.component';
+import { CategoryService } from '../../../services/category.service';
 
 
 @Component({
@@ -15,11 +17,24 @@ import { RouterModule } from '@angular/router';
 export class ProductGridPanelComponent implements OnInit{
 
   private productService = inject(ProductService)
+  private categoryService = inject(CategoryService)
+  
   products: Product[] = [];
+  filteredProducts: Product[] = [];
+  // category = 'bread'
 
   ngOnInit(): void {
     this.saveProducts();
+    // this.category = this.categoryPicker.selectedCategory
+
+    this.categoryService.selectedCategory$.subscribe((category) => {
+      this.filteredProducts = category
+        ? this.products.filter((item) => item.Category === category)
+        : this.products;
+    });
   }
+
+
 
   saveProducts(){
     this.productService.getProducts()

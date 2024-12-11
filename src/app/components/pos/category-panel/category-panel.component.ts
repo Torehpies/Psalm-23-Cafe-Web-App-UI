@@ -1,16 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CategoryService } from '../../../services/category.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-category-panel',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './category-panel.component.html',
   styleUrl: './category-panel.component.css'
 })
 export class CategoryPanelComponent {
 
-  selectCategory(category: string){
+  categories = ['Bread','Cake','Milktea','Coffee']
 
+  categoryService = inject(CategoryService)
+  
+  selectCategory(category: string): void {
+    this.categoryService.setCategory(category);
   }
   
 

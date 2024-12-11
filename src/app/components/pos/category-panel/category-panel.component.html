@@ -1,6 +1,8 @@
 <div class="flex flex-col space-y-2 m-2 justify-center h-full">
-    <button class="bg-amber-800 focus:bg-amber-600 text-white p-2 rounded-lg" (click)="selectCategory('Bread')">Bread</button>
-    <button class="bg-amber-800 focus:bg-amber-600 text-white p-2 rounded-lg" (click)="selectCategory('Cake')">Cake</button>
-    <button class="bg-amber-800 focus:bg-amber-600 text-white p-2 rounded-lg" (click)="selectCategory('Coffee')">Coffee</button>
-    <button class="bg-amber-800 focus:bg-amber-600 text-white p-2 rounded-lg" (click)="selectCategory('Pastry')">Pastry</button>
+    <button 
+        *ngFor="let category of categories" 
+        (click)="selectCategory(category)"
+        class="bg-amber-700 rounded-xl p-2 font-medium text-white cursor-pointer focus:bg-amber-500">
+        {{ category }}
+    </button>
 </div> 
