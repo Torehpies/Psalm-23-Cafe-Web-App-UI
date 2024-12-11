@@ -11,9 +11,17 @@ export class ProductService {
     return this.http.get<Response<Product[]>>('http://localhost:8800/api/products');
   }
 
-  saveProductsToLocal() {
-    // console.log(this.getProducts);
-    // localStorage.setItem('products', JSON.stringify(this.getProducts));
+  saveProducts(){
+    this.getProducts()
+    .subscribe({
+      next:(res) => {
+        localStorage.setItem('products', JSON.stringify(res.data));
+        // this.products = res.data
+      },
+      error: (err) => {
+        console.log(err.errorMessage)
+      }
+    })
   }
 }
 

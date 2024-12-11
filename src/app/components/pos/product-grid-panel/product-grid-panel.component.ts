@@ -16,7 +16,7 @@ import { CategoryService } from '../../../services/category.service';
 })
 export class ProductGridPanelComponent implements OnInit{
 
-  private productService = inject(ProductService)
+  // private productService = inject(ProductService)
   private categoryService = inject(CategoryService)
   
   products: Product[] = [];
@@ -24,9 +24,9 @@ export class ProductGridPanelComponent implements OnInit{
   // category = 'bread'
 
   ngOnInit(): void {
-    this.saveProducts();
+    // this.saveProducts();
     // this.category = this.categoryPicker.selectedCategory
-
+    this.loadProductsFromLocalStorage();
     this.categoryService.selectedCategory$.subscribe((category) => {
       this.filteredProducts = category
         ? this.products.filter((item) => item.Category === category)
@@ -35,17 +35,15 @@ export class ProductGridPanelComponent implements OnInit{
   }
 
 
-
-  saveProducts(){
-    this.productService.getProducts()
-    .subscribe({
-      next:(res) => {
-        localStorage.setItem('products', JSON.stringify(res.data));
-        this.products = res.data
-      },
-      error: (err) => {
-        console.log(err.errorMessage)
-      }
-    })
+  loadProductsFromLocalStorage(): void {
+    const productsData = localStorage.getItem('products');
+    if (productsData) {
+      this.products = JSON.parse(productsData) as Product[];
+    }
   }
+
+
+
+
+  
 }
