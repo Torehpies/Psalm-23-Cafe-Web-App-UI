@@ -1,7 +1,17 @@
-<app-header />
+<app-header></app-header>
 <div class="container">
-<app-leftsidebar />
-<div class="main-content" [class.active] = "isMenuActive">
-<p>reports works</p>
-</div>
+  <app-leftsidebar></app-leftsidebar>
+  <div class="main-content" [class.active]="isMenuActive">
+    <div class="navbar">
+      <div class="nav-buttons">
+        <button class="nav-btn" [routerLink]="['/reports']">Charts</button>
+        <button class="nav-btn" [routerLink]="['/reports/transaction']">Transaction</button>
+        <button class="nav-btn" [routerLink]="['/reports/product-performance']">Product Performance</button>
+        <button class="nav-btn" [routerLink]="['/reports/financial-reports']">Financial Reports</button>
+      </div>
+    </div>
+    
+    <!-- Dynamic Router Outlet for child routes -->
+    <router-outlet></router-outlet>
+  </div>
 </div>

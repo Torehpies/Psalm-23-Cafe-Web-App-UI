@@ -1,103 +1,115 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+  // Login route
   {
-      path:'',
-      pathMatch:'full',
-      loadComponent: () => {
-          return import('./login/login.component').then((m) => m.LoginComponent)
+    path: '',
+    pathMatch: 'full',
+    loadComponent: () => import('./login/login.component').then(m => m.LoginComponent),
+  },
+  
+  // Verification routes
+  {
+    path: 'verify-code',
+    loadComponent: () => import('./verification/verification.component').then(m => m.VerificationComponent),
+  },
+  {
+    path: 'create-account',
+    loadComponent: () => import('./create-account/create-account.component').then(m => m.CreateAccountComponent),
+  },
+  {
+    path: 'forgot-password',
+    loadComponent: () => import('./forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
+  },
+  {
+    path: 'resetpassword',
+    loadComponent: () => import('./resetpassword/resetpassword.component').then(m => m.ResetPasswordComponent),
+  },
+  
+  // Dashboard
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
+  },
+  
+  // Inventory
+  {
+    path: 'inventory',
+    loadComponent: () => import('./inventory/inventory.component').then(m => m.InventoryComponent),
+  },
+  
+  // Reports with child routes
+  {
+    path: 'reports',
+    loadComponent: () => import('./reports/reports.component').then(m => m.ReportsComponent),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () =>
+          import('./reports/charts/charts.component').then(m => m.ChartsComponent),
       },
+      {
+        path: 'transaction',
+        loadComponent: () =>
+          import('./reports/transaction/transaction.component').then(m => m.TransactionComponent),
+      },
+      {
+        path: 'product-performance',
+        loadComponent: () =>
+          import('./reports/product-performance/product-performance.component').then(m => m.ProductPerformanceComponent),
+      },
+      {
+        path: 'financial-reports',
+        loadComponent: () =>
+          import('./reports/financial-reports/financial-reports.component').then(m => m.FinancialReportsComponent),
+      },
+    ],
+  },
+  
+  // Account Management
+  {
+    path: 'account-management',
+    loadComponent: () => import('./account-management/account-management.component').then(m => m.AccountManagementComponent),
   },
   {
-      path:'verify-code',
-      loadComponent: () => {
-          return import('./verification/verification.component').then((m) => m.VerificationComponent)
-      }
+    path: 'account-management/update',
+    loadComponent: () => import('./account-management/update/update.component').then(m => m.AccountManagementUpdateComponent),
   },
+  
+  // Account Monitoring
   {
-    path:'create-account',
-    loadComponent: () => {
-        return import('./create-account/create-account.component').then((m) => m.CreateAccountComponent)
-    }
-    },
+    path: 'account-monitoring',
+    loadComponent: () => import('./account-monitoring/account-monitoring.component').then(m => m.AccountMonitoringComponent),
+  },
+  
+  // Product Management
   {
-    path:'forgot-password',
-    loadComponent: () => {
-        return import('./forgot-password/forgot-password.component').then((m) => m.ForgotPasswordComponent)
-    }
-},
-{
-    path:'resetpassword',
-    loadComponent: () => {
-        return import('./resetpassword/resetpassword.component').then((m) => m.ResetPasswordComponent)
-    }
-},
-    {
-        path: 'dashboard',
-        loadComponent: () => {
-            return import('./dashboard/dashboard.component').then((m) => m.DashboardComponent);
-        },
-    },
-    {
-        path: 'inventory',
-        loadComponent: () => {
-            return import('./inventory/inventory.component').then((m) => m.InventoryComponent);
-        },
-    },
-    {
-        path: 'reports',
-        loadComponent: () => {
-            return import('./reports/reports.component').then((m) => m.ReportsComponent);
-        },
-    },
-    {
-        path: 'account-management',
-        loadComponent: () => {
-            return import('./account-management/account-management.component').then((m) => m.AccountManagementComponent);
-        },
-    },
-    {
-        path: 'account-management/update',
-        loadComponent: () => {
-            return import('./account-management/update/update.component').then((m) => m.AccountManagementUpdateComponent);
-        },
-    },    
-    {
-        path: 'account-monitoring',
-        loadComponent: () => {
-            return import('./account-monitoring/account-monitoring.component').then((m) => m.AccountMonitoringComponent);
-        },
-    },
-    {
-        path:'product-management',
-        loadComponent: () => {
-            return import('./product-management/product-management.component').then((m) => m.ProductManagementComponent)
-        },
-    },
-    {
-        path:'supplies',
-        loadComponent: () => {
-            return import('./supplies/supplies.component').then((m) => m.SuppliesComponent)
-        },
-    },
-    {
-        path:'clock-in',
-        loadComponent: () => {
-            return import('./clock-in/clock-in.component').then((m) => m.ClockInComponent)
-        },
-    },
-    {
-        path:'production',
-        loadComponent: () => {
-            return import('./production/production.component').then((m) => m.ProductionComponent)
-        },
-    },
-    {
-        path:'scrapping',
-        loadComponent: () => {
-            return import('./scrapping/scrapping.component').then((m) => m.ScrappingComponent)
-        },
-    },
+    path: 'product-management',
+    loadComponent: () => import('./product-management/product-management.component').then(m => m.ProductManagementComponent),
+  },
+  
+  // Supplies
+  {
+    path: 'supplies',
+    loadComponent: () => import('./supplies/supplies.component').then(m => m.SuppliesComponent),
+  },
+  
+  // Clock-In
+  {
+    path: 'clock-in',
+    loadComponent: () => import('./clock-in/clock-in.component').then(m => m.ClockInComponent),
+  },
+  
+  // Production
+  {
+    path: 'production',
+    loadComponent: () => import('./production/production.component').then(m => m.ProductionComponent),
+  },
+  
+  // Scrapping
+  {
+    path: 'scrapping',
+    loadComponent: () => import('./scrapping/scrapping.component').then(m => m.ScrappingComponent),
+  },
 ];
-
