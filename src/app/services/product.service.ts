@@ -19,7 +19,7 @@ export class ProductService {
         // this.products = res.data
       },
       error: (err) => {
-        console.log(err.errorMessage)
+        console.log(err)
       }
     })
   }
