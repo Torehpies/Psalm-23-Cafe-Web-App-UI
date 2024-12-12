@@ -1,0 +1,98 @@
+<div class="lg:w-4/12 mt-10 mx-auto p-10 rounded-lg shadow-lg bg-white">
+  <h3 class="text-3xl font-semibold py-5">Create Your Account</h3>
+  <form [formGroup]="createAccountForm" class="flex flex-col">
+    <div class="flex flex-col mt-4 mb-1">
+      <input formControlName="firstName" type="text" class="p-2 border border-gray-300 rounded" placeholder="First Name">
+      <span *ngIf="createAccountForm.hasError('required','firstName') && createAccountForm.controls['firstName'].dirty"
+        class="text-red-500 mt-1 text-sm">* First Name is Required</span>
+    </div>
+    <div class="flex flex-col mt-4 mb-1">
+      <input formControlName="lastName" type="text" class="p-2 border border-gray-300 rounded" placeholder="Last Name">
+      <span *ngIf="createAccountForm.hasError('required','lastName') && createAccountForm.controls['lastName'].dirty"
+        class="text-red-500 mt-1 text-sm">* Last Name is Required</span>
+    </div>
+   <div class="flex flex-col mt-4 mb-1">
+      <select formControlName="position" class="p-2 border border-gray-300 rounded">
+        <option value="" disabled selected>Select the role</option>
+        <option value="Admin">Admin</option>
+        <option value="Baker">Baker</option>
+        <option value="Barista">Barista</option>
+        <option value="Cashier">Cashier</option>
+        <option value="Helper">Helper</option>
+      </select>
+      <span *ngIf="createAccountForm.hasError('required','position') && createAccountForm.controls['position'].dirty"
+        class="text-red-500 mt-1 text-sm">* Position is Required</span>
+    </div>
+    <div class="flex flex-col mt-4 mb-1">
+      <input formControlName="email" type="text" class="p-2 border border-gray-300 rounded" placeholder="Email">
+      <span *ngIf="createAccountForm.hasError('required','email') && createAccountForm.controls['email'].dirty" class="text-red-500 mt-1 text-sm">* Email is Required</span>
+      <span *ngIf="createAccountForm.hasError('email','email')" class="text-red-500 mt-1 text-sm">* Email is Invalid</span>
+    </div>
+    <div class="flex flex-col mt-4 mb-1">
+      <input formControlName="password" type="password" class="p-2 border border-gray-300 rounded" placeholder="Password">
+      <span *ngIf="createAccountForm.hasError('required','password') && createAccountForm.controls['password'].dirty"
+        class="text-red-500 mt-1 text-sm">* Password is Required</span>
+    </div>
+    <div class="flex flex-col mt-4 mb-1">
+      <input formControlName="confirmPassword" type="password" class="p-2 border border-gray-300 rounded" placeholder="Confirm Password">
+      <span *ngIf="createAccountForm.hasError('required','confirmPassword') && createAccountForm.controls['confirmPassword'].dirty"
+        class="text-red-500 mt-1 text-sm">* Confirm Password is Required</span>
+      <span *ngIf="createAccountForm.hasError('confirmPasswordValidator','confirmPassword')"
+        class="text-red-500 mt-1 text-sm">* Password didn't matched</span>
+    </div>
+    <button [disabled]="createAccountForm.invalid" [class.disabled]="createAccountForm.invalid" (click)="register()" class="bg-yellow-900 p-2 rounded mt-3 text-white">Submit</button>
+  </form>
+  <div class="flex justify-center mt-5">
+    <span>Already have an account?</span> <a routerLink="/" class="ml-2 text-yellow-800 cursor-pointer">Login here</a>
+  </div>
+</div>
+<!--
+<div class="container">
+    <div class="create-account-form">
+      <div class="form-header">
+        <i (click)="goBack()">&#8592;</i>
+        <h2>Register Account</h2>
+      </div>
+
+      <div class="name-fields">
+        <input type="text" [(ngModel)]="firstName" name="firstName" placeholder="First Name" class="input-field" />
+        <input type="text" [(ngModel)]="lastName" name="lastName" placeholder="Last Name" class="input-field" />
+      </div>
+
+      <div class="role-field">
+        <select [(ngModel)]="role" name="role" class="input-field">
+          <option value="">Select Role</option>
+          <option value="Baker">Baker</option>
+          <option value="Assistant Baker">Assistant Baker</option>
+          <option value="Cashier">Cashier</option>
+        </select>
+      </div>
+
+      <div class="email-field">
+        <input type="email" [(ngModel)]="email" name="email" placeholder="Email" class="input-field" />
+      </div>
+
+      <div class="password-field">
+        <input type="password" [(ngModel)]="password" name="password" placeholder="Password" class="input-field" />
+        <button type="button" class="toggle-password" (click)="togglePasswordVisibility($event)">👁️</button>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <button type="button" (click)="showPopup()" class="submit-button">Register Account</button>
+    </div>
+
+    <div class="popup-backdrop" *ngIf="isPromptVisible" (click)="closePopup()"></div>
+    <div class="popup-modal" *ngIf="isPromptVisible">
+      <div class="popup-content">
+        <p>Are you sure you want to register the account?</p>
+        <div class="button-group">
+          <button (click)="confirmSubmit()">Yes</button>
+          <button (click)="closePopup()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+-->

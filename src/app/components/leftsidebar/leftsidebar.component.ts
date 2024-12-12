@@ -1,30 +1,42 @@
-
 import { Component, inject, OnInit,} from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
+import { ADMIN_ROLES, PRODUCTION_ROLES, COUNTER_ROLES } from '../../models/role/role.model';
 
 @Component({
   selector: 'app-leftsidebar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './leftsidebar.component.html',
   styleUrl: './leftsidebar.component.css'
 })
 export class LeftsidebarComponent implements OnInit {
   router = inject(Router);
   isMenuActive: boolean = false;
+  userRole: string = "";
+
+  authService = inject(AuthService);
+
+  admin_roles: string[] = ADMIN_ROLES;
+  production_roles: string[] = PRODUCTION_ROLES;
+  counter_roles: string[] = COUNTER_ROLES;
 
   constructor(private menuService: MenuService) {}
 
   ngOnInit() {
-      this.menuService.isMenuActive$.subscribe((status) => {
-          this.isMenuActive = status;
-      });
+    this.menuService.isMenuActive$.subscribe((status) => {
+        this.isMenuActive = status;
+    });
+    this.userRole = this.authService.getUserRole() ?? "";
   }
   
-   logout(): void {
+   logout(){
     this.menuService.toggleMenu();
     this.router.navigate(['']);
+    this.authService.logoutService();
+    // localStorage.removeItem("authToken");
    }
 
    gotoDashboard(): void {
