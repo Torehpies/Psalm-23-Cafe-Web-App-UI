@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ import { Router, RouterModule } from '@angular/router';
 export default class LoginComponent implements OnInit {
   fb = inject(FormBuilder);
   authService = inject(AuthService);
+  productService = inject(ProductService);
   router = inject(Router);
 
   loginForm !: FormGroup;
@@ -35,14 +37,19 @@ export default class LoginComponent implements OnInit {
     this.authService.loginService(this.loginForm.value)
     .subscribe({
       next:(res) => {
-        this.authService.setToken(res.token);
+        localStorage.setItem('authToken', res.token);
+        
         this.router.navigate(['home']);
+        
         this.loginForm.reset();
         this.errorMessage = null;
+        this.productService.saveProducts();
       },
       error: (err) => {
         this.errorMessage = err.error.message;
       }
     })
   }
+
+  
 }

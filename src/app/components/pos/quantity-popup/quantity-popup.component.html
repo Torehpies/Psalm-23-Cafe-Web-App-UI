@@ -1,0 +1,15 @@
+<div class="modal" *ngIf="product">
+  <div class="modal-content">
+    <h2>Select Quantity for {{ product.name }}</h2>
+    <input type="number" min="1" [(ngModel)]="quantity" 
+      class="border-2 border-black rounded-lg mr-2 w-24 p-2" 
+      placeholder="Quantity" required/>
+    <span *ngIf="quantity < 1" >Minimum quantity is 1</span>
+    <button 
+      class="p-2 bg-green-500 rounded-xl mr-2 text-white" 
+      (click)="onConfirm()"
+      [disabled]="quantity < 1"
+      [class.disabled]="quantity < 1">Confirm</button>
+    <button class="p-2 bg-red-500 rounded-xl text-white" (click)="onCancel()">Cancel</button>
+  </div>
+</div>

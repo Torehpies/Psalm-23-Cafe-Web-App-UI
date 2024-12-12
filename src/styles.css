@@ -23,6 +23,7 @@ body {
     padding: 20px;
     margin-left: 0; /* No margin by default */
     transition: margin-left 0.3s ease; /* Smooth transition for margin */
+    
 }
 .main-content.active {
     /*margin-left: 300px; /* Shift main content to the right when sidebar is active */

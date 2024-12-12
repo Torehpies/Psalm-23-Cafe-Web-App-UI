@@ -10,7 +10,7 @@
     </div>
     <div class="flex mb-4 flex-col mt-1">
       <input formControlName="password" type="password" class="p-2 border border-gray-300 rounded" placeholder="Password">
-      <span *ngIf="loginForm.hasError('required','lastName') && loginForm.controls['password'].dirty"
+      <span *ngIf="loginForm.hasError('required','password') && loginForm.controls['password'].dirty"
         class="text-red-500 mt-1 text-sm">* Password is Required</span>
     </div>
     <button [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="login()" class="bg-yellow-900 p-2 rounded mt-1 text-white">Login</button>

@@ -1,32 +1,21 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, effect, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, catchError, of } from 'rxjs';
 import { apiUrls } from '../api.urls';
-
+import { ProductService } from './product.service';
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
   http = inject(HttpClient);
+  productService = inject(ProductService)
 
-  private tokenKey = 'authToken';
-
-  constructor() {}
-
-  // Save token
-  setToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
-  }
-
-  // Get token
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
-  }
+  // isUserIn$ = new BehaviorSubject<boolean>(false);
+  // isLoggedInSignal = signal<boolean>(false);
 
   getUserRole(): string | null {
-    const token = this.getToken();
-    if (token) {
+  const token = localStorage.getItem('authToken');
+  if (token) {
       const payload = this.decodeToken(token);
       return payload.role; // Assuming the role is stored in the 'role' field of the token
     }
@@ -42,11 +31,12 @@ export class AuthService {
   }
 
   loginService(loginObj: any) {
-    return this.http.post<any>(`${apiUrls.authServiceApi}login`, loginObj)
+    return this.http.post<any>(`${apiUrls.authServiceApi}login`, loginObj);
   }
 
   logoutService() {
-    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('products');
   }
   
   sendEmailService(email: string){
@@ -58,9 +48,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    const token = this.getToken();
-    // Optionally validate token with a library like jwt-decode
-    return !!token;
+    return !!localStorage.getItem('authToken');
   }
 
   // isLoggedIn(){

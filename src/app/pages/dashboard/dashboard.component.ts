@@ -29,4 +29,11 @@ export default class DashboardComponent {
 
       this.menuService.changeHeaderText('Welcome, ' + this.role + '!');
   }
+
+  // update(){
+  //   this.authService.isUserIn$.next(true);
+  // }
+  // unupdate(){
+  //   this.authService.isUserIn$.next(false);
+  // }
 }

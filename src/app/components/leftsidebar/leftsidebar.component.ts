@@ -69,6 +69,11 @@ export class LeftsidebarComponent implements OnInit {
       this.menuService.toggleMenu();
      }
 
+    gotoPos(): void {
+      this.router.navigate(['pos']);
+      this.menuService.toggleMenu();
+    }
+
    /*gian changes
    gotoSupplies(): void {
     this.router.navigate(['supplies']);

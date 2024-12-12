@@ -1,3 +1,20 @@
-// This file can be deleted since we're using standalone components
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { AuthGuardService } from './guards/auth.guard';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
-// The bootstrapping is handled in main.ts using bootstrapApplication()
+@NgModule({
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    AuthGuardService
+    
+  ],
+})
+export class AppModule { }
