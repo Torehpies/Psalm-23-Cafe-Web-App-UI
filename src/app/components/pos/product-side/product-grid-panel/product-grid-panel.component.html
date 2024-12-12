@@ -7,6 +7,6 @@
   *ngIf="selectedProduct"
   [product]="selectedProduct"
   (close)="onCloseModal()"
-  (quantitySelected)="onQuantitySelected($event)">
+  (lineItemConfirm)="onLineItemConfirm($event)">
 </app-quantity-popup>
 

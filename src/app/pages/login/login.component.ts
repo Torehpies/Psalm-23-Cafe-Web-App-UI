@@ -40,9 +40,10 @@ export default class LoginComponent implements OnInit {
         localStorage.setItem('authToken', res.token);
         
         this.router.navigate(['home']);
-        this.productService.saveProducts();
+        
         this.loginForm.reset();
         this.errorMessage = null;
+        this.productService.saveProducts();
       },
       error: (err) => {
         this.errorMessage = err.error.message;

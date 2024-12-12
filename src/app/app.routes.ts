@@ -27,9 +27,9 @@ export const routes: Routes = [
   },
   { 
     path: 'inventory', 
-    loadComponent: () => import('./pages/dashboard/dashboard.component'), 
+    loadComponent: () => import('./inventory/inventory.component'), 
     canActivate: [AuthGuardService, RoleGuardService],  
-    data: { expectedRoles: ADMIN_ROLES, PRODUCTION_ROLES } 
+    data: { expectedRoles: [...PRODUCTION_ROLES, ...ADMIN_ROLES] } 
   },
   { 
     path: 'reports', 

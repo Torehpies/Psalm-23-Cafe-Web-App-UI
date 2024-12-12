@@ -27,7 +27,7 @@ interface Item {
   templateUrl: './inventory.component.html',
   styleUrl: './inventory.component.css'
 })
-export class InventoryComponent {
+export default class InventoryComponent {
   router = inject(Router);
 
   isMenuActive: boolean = false;

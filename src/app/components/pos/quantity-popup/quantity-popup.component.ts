@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { Product } from '../../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LineItem } from '../../../models/lineItem/lineItem.model';
 
 @Component({
   standalone: true,
@@ -14,12 +15,19 @@ import { FormsModule } from '@angular/forms';
 export class QuantityPopupComponent {
   @Input() product: Product | null = null;
   @Output() close = new EventEmitter<void>();
-  @Output() quantitySelected = new EventEmitter<number>();
+  @Output() lineItemConfirm = new EventEmitter<LineItem>();
 
   quantity: number = 1;
 
+  lineItem: LineItem = {
+    _id: this.product?._id,
+    name: this.product?.name,
+    quantity: this.quantity,
+    price: this.product?.price
+  }
+
   onConfirm() {
-    this.quantitySelected.emit(this.quantity);
+    this.lineItemConfirm.emit(this.lineItem);
     this.close.emit();
   }
 

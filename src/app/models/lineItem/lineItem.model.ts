@@ -1,0 +1,6 @@
+export type LineItem = {
+    _id: string | undefined;
+    name: string | undefined;
+    quantity: number | null;
+    price: number | undefined;
+}

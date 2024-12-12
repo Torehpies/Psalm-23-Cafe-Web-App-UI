@@ -1,9 +1,9 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { ProductItemComponent } from '../product-item/product-item.component';
 import { CommonModule } from '@angular/common';
-import { Product, ProductService } from '../../../../services/product.service';
+import { Product} from '../../../../services/product.service';
 import { RouterModule } from '@angular/router';
-import { CategoryPanelComponent } from '../category-panel/category-panel.component';
+import { LineItem } from '../../../../models/lineItem/lineItem.model';
 import { CategoryService } from '../../../../services/category.service';
 import { QuantityPopupComponent } from '../../quantity-popup/quantity-popup.component';
 
@@ -48,8 +48,8 @@ export class ProductGridPanelComponent implements OnInit {
     this.selectedProduct = null;
   }
 
-  onQuantitySelected(quantity: number) {
-    console.log(`Selected quantity for ${this.selectedProduct?.name}: ${quantity}`);
+  onLineItemConfirm(lineItem: LineItem) {
+    console.log(`Selected quantity for ${this.selectedProduct?.name}: ${lineItem.quantity}`);
     this.selectedProduct = null;
   }
 }
