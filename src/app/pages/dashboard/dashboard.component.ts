@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
 import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
 import { MenuService } from '../../services/menu.service';
@@ -16,15 +16,18 @@ import { AuthService } from '../../services/auth.service';
 })
 export default class DashboardComponent {
   isMenuActive: boolean = false;
-  authService = inject(AuthService);
+  role: string= "";
 
-  constructor(private menuService: MenuService) {}
+  constructor(private menuService: MenuService, private authService: AuthService) {}
 
   ngOnInit() {
+      this.role = this.authService.getUserRole() ?? "";
+
       this.menuService.isMenuActive$.subscribe((status) => {
           this.isMenuActive = status;
       });
-      this.menuService.changeHeaderText('Welcome, Baker!');
+
+      this.menuService.changeHeaderText('Welcome, ' + this.role + '!');
   }
 
   // update(){

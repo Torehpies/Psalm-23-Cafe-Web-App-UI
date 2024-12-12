@@ -1,0 +1,42 @@
+<div class="popup-backdrop" *ngIf="visible"></div>
+<div class="popup-modal" *ngIf="visible">
+  <div class="popup-content">
+    <h2>Add Product</h2>
+    <form [formGroup]="addProductForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name">Name</label>
+        <input formControlName="name" id="name" type="text" placeholder="Enter Product Name" />
+        <div *ngIf="addProductForm.get('name')?.touched && addProductForm.get('name')?.invalid">
+          <small class="error">Product Name is required</small>
+        </div>
+      </div>
+      <div>
+        <label for="category">Category</label>
+        <select formControlName="category" id="category">
+          <option value="" disabled>Select Category</option>
+          <option *ngFor="let category of categories" [value]="category">{{ category | titlecase }}</option>
+        </select>
+        <div *ngIf="addProductForm.get('category')?.touched && addProductForm.get('category')?.invalid">
+          <small class="error">Category is required</small>
+        </div>
+      </div>
+      <div>
+        <label for="price">Price (PHP)</label>
+        <input id="price" formControlName="price" type="number" min="0" placeholder="Enter Price" />
+        <div *ngIf="addProductForm.get('price')?.invalid && addProductForm.get('price')?.touched">
+          <small class="error">Please enter a valid price (non-negative number).</small>
+        </div>
+      </div>
+      <div class="button-group">
+        <button type="submit" [disabled]="!addProductForm.valid">Add Product</button>
+        <button type="button" (click)="openCancelModal()" class="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+<app-confirm-modal
+  *ngIf="showModal"
+  [message]="modalMessage"
+  (confirmed)="onConfirmed($event)"
+  (canceled)="onModalCancel()"
+></app-confirm-modal>

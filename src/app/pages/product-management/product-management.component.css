@@ -1,0 +1,77 @@
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns the button to the right */
+    margin: 25px 100px 25px; /* Optional: add some space below the button */
+    gap: 60px;
+  }
+  
+  button {
+    /* Optional: style your button */
+    padding: 10px 20px;
+    background-color: #FFF940; /* Bootstrap primary color */
+    color: black;
+    border: none;
+    border-radius: 5px;
+    font-size: large;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    transform: translateY(-2px);
+  }
+  
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start; /* Align the cards from left to right */
+    margin-left: 50px; /* Apply left margin */
+  }
+  
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    width: 200px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    position: relative;
+    overflow: hidden; /* Prevents overflow from visible beyond card boundaries */
+    min-height: 200px;
+  }
+  
+  .card h1 {
+    margin: 0;
+    font-size: clamp(1rem, 5vw, 1.5rem);
+    line-height: 1.5;
+    margin-top: auto;
+    margin-bottom: 10px;
+    overflow-wrap: break-word; /* Allows long words to break */
+    word-wrap: break-word; /* Fallback */
+    word-break: break-word; /* More aggressive word breaking */
+  }
+  
+  .card span {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: auto;
+    margin-top: 10px;
+  }
+  
+  .card p {
+    margin: 0;
+    font-size: 1rem;
+    color: gray;
+    margin-top: auto;
+    padding-top: 5px;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }

@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Output, EventEmitter} from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConfirmModalComponent } from '../../components/confirm-modal/confirm-modal.component';
-import { ItemTestService } from '../../services/item-test.service';
+import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm-modal.component';
+import { SuppliesService } from '../../../services/supplies.service';
+
 @Component({
   selector: 'app-item-restock',
   standalone: true,
@@ -19,10 +20,11 @@ export class ItemRestockComponent {
   showModal: boolean = false;  // Flag to control modal visibility
   modalMessage: string = '';  // The message to be displayed in the modal
 
-  items: {name: string}[] = [];
+  items: {_id: string, name: string}[] = [];
 
-  constructor(private fb: FormBuilder, private itemTestService: ItemTestService) {
+  constructor(private fb: FormBuilder, private suppliesService: SuppliesService) {
     this.restockForm = this.fb.group({
+      _id: ['', Validators.required], // Include _id in the form
       name: ['', Validators.required],
       quantity: [0, [Validators.required, Validators.min(1)]],
       expireDate: ['', Validators.required],
@@ -31,9 +33,22 @@ export class ItemRestockComponent {
   }
 
   ngOnInit() {
-    this.items = this.itemTestService.getItem().map((item) => ({
-      name: item.name,
-    }))
+    this.suppliesService.getSupplies().subscribe((items) => {
+      this.items = items
+        .filter(item => item._id) // Filter out items without _id
+        .map((item) => ({
+          _id: item._id as string, // Type assertion to ensure _id is a string
+          name: item.name,
+        }));
+    });
+  }
+
+   // Handle item selection and populate _id
+   onItemSelected(event: any) {
+    const selectedItem = this.items.find(item => item.name === event.target.value);
+    if (selectedItem) {
+      this.restockForm.patchValue({ _id: selectedItem._id });
+    }
   }
 
   // Trigger the confirmation modal

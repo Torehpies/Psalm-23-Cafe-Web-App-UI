@@ -1,0 +1,68 @@
+<app-header class="sticky top-0 z-10 bg-yellow-400" />
+<div class="flex flex-col lg:flex-row">
+  <app-leftsidebar/>
+  <div class="flex-grow px-6 main-content" [class.active]="isMenuActive">
+    <!-- Button Container -->
+    <div
+      class="flex justify-end space-x-6 mt-6"
+      *ngIf="!showRestockForm"
+    >
+      <button
+        (click)="toggleShowItemForm()"
+        class="px-6 py-2 bg-yellow-400 text-black font-bold rounded hover:-translate-y-1 transform transition"
+      >
+        + Add Item
+      </button>
+      <button
+        (click)="toggleRestockForm()"
+        class="px-6 py-2 bg-yellow-400 text-black font-bold rounded hover:-translate-y-1 transform transition"
+      >
+        Restock
+      </button>
+    </div>
+
+    <!-- Restock Form -->
+    <app-restock-form
+      *ngIf="showRestockForm"
+      (visible)="toggleRestockForm()"
+    ></app-restock-form>
+
+    <!-- Card Container -->
+    <div
+  class="flex justify-center mt-6"
+  *ngIf="!showRestockForm"
+>
+  <div
+    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-16"
+  >
+    <div
+      class="border border-gray-300 rounded-lg shadow-md flex flex-col items-center text-center hover:scale-105 transition-transform cursor-pointer min-w-[250px] min-h-[250px] p-4"
+      *ngFor="let item of items"
+      (click)="showItemDetails(item)"
+    >
+      <span class="text-lg font-bold">{{ item.category }}</span>
+      <h1 class="text-xl font-semibold mt-2 mb-4 flex-grow flex items-center justify-center">
+        {{ item.name }}
+      </h1>
+      <p class="text-gray-500 mt-auto">
+        {{ item.currentStock || 0 }} {{ item.unit }}
+      </p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Popup for Item Details -->
+<app-item-detail
+  *ngIf="showItemDetail"
+  [item]="selectedItem"
+  (visible)="toggleRestockForm()"
+  (close)="closeItemDetailsModal()"
+></app-item-detail>
+
+<!-- Item Form -->
+<app-item-form
+  *ngIf="showItemForm"
+  (visible)="toggleShowItemForm()"
+  (itemAdded)="onItemAdded($event)"
+></app-item-form>

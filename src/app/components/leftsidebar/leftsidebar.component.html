@@ -6,7 +6,7 @@
         <li *ngIf="admin_roles.includes(userRole)" (click)="gotoAccountManagement()">Account Management</li>
         <li *ngIf="admin_roles.includes(userRole)" (click)="gotoAccountMonitoring()">Attendance Monitoring</li>
         <li *ngIf="admin_roles.includes(userRole)" (click)="gotoProductManagement()">Product Management</li>
-        <li (click)="gotoPos()">POS</li>
+        <li *ngIf="counter_roles.includes(userRole)" (click)="gotoPos()">POS</li>
         <!--
         <li (click)="gotoSupplies()">Supplies</li>
         <li (click)="gotoclockin()">Clock-in</li>

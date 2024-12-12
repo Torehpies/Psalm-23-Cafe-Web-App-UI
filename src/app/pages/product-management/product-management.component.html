@@ -1,7 +1,29 @@
-<app-header />
+<app-header class="sticky-header"/>
 <div class="container">
-<app-leftsidebar />
-<div class="main-content" [class.active] = "isMenuActive">
-<p>product management works</p>
+  <app-leftsidebar />
+  <div class="main-content" [class.active]="isMenuActive">
+    <div class="button-container">
+      <button (click)="toggleShowProductForm()">+ Add Product</button>
+    </div>
+
+    <div class="card-container">
+      <div class="card" *ngFor="let product of products" (click)="showProductDetails(product)">
+        <span>{{ product.Category }}</span>
+        <h1>{{ product.name }}</h1>
+        <p>{{ product.price | currency: 'PHP' }}</p>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
+
+<app-product-form
+  *ngIf="showProductForm"
+  (visible)="toggleShowProductForm()"
+  (productAdded)="onProductAdded($event)"
+></app-product-form>
+
+<app-product-detail
+  *ngIf="showProductDetail"
+  [product]="selectedProduct"
+  (visible)="closeProductDetails()"
+></app-product-detail>
