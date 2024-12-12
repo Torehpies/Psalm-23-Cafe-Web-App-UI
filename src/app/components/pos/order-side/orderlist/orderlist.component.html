@@ -5,16 +5,12 @@
     <p class="col-span-1 font-semibold">Del</p> 
 </div>
 <hr class="border-t border-gray-900 mb-1" />    
-<ng-container *ngIf="lineItems.length === 0">
-    <p class="text-center text-gray-500 font-semibold">Choose items on the left</p>
-</ng-container>
-<ng-container *ngIf="lineItems.length > 0">
-    <div *ngFor="let item of lineItems; let i = index" class="col-span-8 grid grid-cols-8">
-        <p class="col-span-4">{{ item.name }}</p>
-        <p class="col-span-1">{{ item.quantity }}</p>
-        <p class="col-span-2">{{ item.price | currency:'PHP':'symbol'}}</p>
-        <button (click)="removeLineItem(item)" class="col-span-1 bg-red-500 rounded-full">X</button>
-    </div>
-</ng-container>
-<hr class="border-t border-gray-900 mb-1" />
+<p *ngIf="lineItems.length === 0" class="text-center text-gray-500 font-semibold">Choose items on the left</p>
+<div *ngFor="let item of lineItems; let i = index" class="grid grid-cols-8 m-1">
+    <p class="col-span-4">{{ item.name }}</p>
+    <p class="col-span-1">{{ item.quantity }}</p>
+    <p class="col-span-2">{{ item.price | currency:'PHP':'symbol'}}</p>
+    <button (click)="removeLineItem(item)" class="col-span-1 bg-red-500 rounded-full">X</button>
+</div>
 <p class="text-right font-semibold">Total: {{ getTotalAmount() | currency:'PHP':'symbol' }}</p>
+<hr class="border-t border-gray-900 mb-1" />
