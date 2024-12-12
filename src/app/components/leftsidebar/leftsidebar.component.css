@@ -1,6 +1,6 @@
 .sidebar {
     background-color: white;
-    height: 100vh;
+    height: calc(100% - var(--header-height)); /* Adjust height to occupy remaining space */
     width: 100%;
     max-width: 300px;
     position: fixed;
@@ -10,9 +10,11 @@
     text-align: center;
     transition: .3s ease;
     z-index: 1000; /* Ensure it stays below the sidebar */
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 .sidebar.active {
     left: 0;
+    
 }
 .sidebar ul {
     list-style-type: none;

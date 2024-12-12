@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --header-height: 60px; /* Adjust this value to match your header height */
+}
+
 .disabled{
   opacity: 0.6;
   cursor: not-allowed;
@@ -36,4 +40,4 @@ body {
     top: 0;
     z-index: 5;
   }
-  
+
