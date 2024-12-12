@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ValidationErrors,AbstractControl,ValidatorFn} from '@angular/forms';
-import { ProductsService } from '../../services/products.service';
-import { Products } from '../../models/products.model';
-import { ConfirmModalComponent } from '../../components/confirm-modal/confirm-modal.component';
+import { ProductsService } from '../../../services/products.service';
+import { Products } from '../../../models/products.model';
+import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-edit-product',

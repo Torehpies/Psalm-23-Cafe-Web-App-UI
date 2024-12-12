@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProductManagementComponent } from './product-management.component';
+import  ProductManagementComponent  from './product-management.component';
 
 describe('ProductManagementComponent', () => {
   let component: ProductManagementComponent;

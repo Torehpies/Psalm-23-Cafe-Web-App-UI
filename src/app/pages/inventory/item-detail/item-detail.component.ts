@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SuppliesService } from '../../services/supplies.service';
+import { SuppliesService } from '../../../services/supplies.service';
 
 @Component({
   selector: 'app-item-detail',

@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ConfirmModalComponent } from '../../components/confirm-modal/confirm-modal.component';
-import { MenuService } from '../../services/menu.service';
+import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm-modal.component';
+import { MenuService } from '../../../services/menu.service';
 import { ItemRestockComponent } from '../item-restock/item-restock.component';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
-import { SuppliesService } from '../../services/supplies.service';
+import { SuppliesService } from '../../../services/supplies.service';
 
 @Component({
   selector: 'app-restock-form',
@@ -22,6 +22,7 @@ export class RestockFormComponent {
   isSubmitAction: boolean = false;
   showRestock: boolean = false;
   restockForm: FormGroup;
+  rowToDelete: number | null = null;
 
   constructor(private menuService: MenuService, private fb: FormBuilder, private suppliesService: SuppliesService) {
     this.restockForm = this.fb.group({
@@ -81,8 +82,25 @@ export class RestockFormComponent {
     this.rows.push(this.fb.group(row));
   }
 
+  confirmDeleteRow(index: number): void {
+    this.modalMessage = 'Are you sure you want to delete this item?';
+    this.isSubmitAction = false;  // Set to false for delete action
+    this.rowToDelete = index;
+    this.showModal = true;
+  }
+
+  deleteRow(index: number): void {
+    this.rows.removeAt(index);
+  }
+
   onConfirmed(isConfirmed: boolean): void {
     if (isConfirmed) {
+      if (this.rowToDelete != null) {
+        this.deleteRow(this.rowToDelete);
+        this.rowToDelete = null;
+        this.showModal = false;
+        return
+      }
       if (this.isSubmitAction) {
         const restocks = this.restockForm.value.rows;
         restocks.forEach((restock : any) => {

@@ -1,66 +1,62 @@
 <div class="popup-backdrop" *ngIf="visible"></div>
 <div class="popup-modal" *ngIf="visible">
-  <div class="popup-content">
     <h2>Add Item</h2>
     <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
-      
-      <div>
+      <div class="form-group">
         <label for="name">Name</label>
         <input formControlName="name" id="name" type="text" placeholder="Enter Item Name" />
-        <div *ngIf="addItemForm.get('name')?.touched && addItemForm.get('name')?.invalid">
-          <small class="error">Item Name is required</small>
-        </div>
+      </div>
+      <div *ngIf="addItemForm.get('name')?.touched && addItemForm.get('name')?.invalid">
+        <small class="error">Item Name is required</small>
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="category">Category</label>
         <select formControlName="category" id="category">
           <option value="" disabled>Select Category</option>
           <option *ngFor="let category of categories" [value]="category">{{ category | titlecase }}</option>
         </select>
-        <div *ngIf="addItemForm.get('category')?.touched && addItemForm.get('category')?.invalid">
-          <small class="error">Category is required</small>
-        </div>
+      </div>
+      <div *ngIf="addItemForm.get('category')?.touched && addItemForm.get('category')?.invalid">
+        <small class="error">Category is required</small>
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="unit">Unit</label>
         <select formControlName="unit" id="unit" (change)="onUnitChange($event)">
           <option value="" disabled>Select Unit</option>
           <option *ngFor="let unit of units" [value]="unit">{{ unit | titlecase }}</option>
           <option value="custom">Custom Unit</option>
         </select>
-        <div *ngIf="addItemForm.get('unit')?.touched && addItemForm.get('unit')?.invalid">
-          <small class="error">Unit is required</small>
-        </div>
-      
-        <!-- Show the custom unit input if "Custom Unit" is selected -->
-        <div *ngIf="isCustomUnitSelected">
-          <input formControlName="customUnit" type="text" placeholder="Enter custom unit" />
-          <div *ngIf="addItemForm.get('customUnit')?.touched && addItemForm.get('customUnit')?.invalid">
-            <small class="error">Custom Unit is required</small>
-          </div>
-        </div>
+      </div>
+      <div *ngIf="addItemForm.get('unit')?.touched && addItemForm.get('unit')?.invalid">
+        <small class="error">Unit is required</small>
       </div>
       
+      <!-- Show the custom unit input if "Custom Unit" is selected -->
+      <div *ngIf="isCustomUnitSelected" class="form-group">
+        <input formControlName="customUnit" type="text" placeholder="Enter custom unit" />
+      </div>
+      <div *ngIf="addItemForm.get('customUnit')?.touched && addItemForm.get('customUnit')?.invalid">
+        <small class="error">Custom Unit is required</small>
+      </div>
 
       <!-- PAR Level input field -->
-      <div>
+      <div class="form-group">
         <label for="parLevel">PAR Level</label>
         <input id="parLevel" formControlName="parLevel" type="number" min="0" placeholder="Enter PAR level" />
-        <div *ngIf="addItemForm.get('parLevel')?.invalid && addItemForm.get('parLevel')?.touched">
-          <small class="error">Please enter a valid PAR level (non-negative number).</small>
-        </div>
+      </div>
+      <div *ngIf="addItemForm.get('parLevel')?.invalid && addItemForm.get('parLevel')?.touched">
+        <small class="error">Please enter a valid PAR level (non-negative number).</small>
       </div>
 
       <!-- Wrap the buttons in a div for side-by-side display -->
       <div class="button-group">
-        <button type="submit" [disabled]="!addItemForm.valid">Add Item</button>
-        <button type="button" (click)="openCancelModal()" class="cancel-btn">Cancel</button>
+        <button type="submit" [disabled]="!addItemForm.valid" class="btn-submit">Add Item</button>
+        <button type="button" (click)="openCancelModal()" class="btn-cancel">Cancel</button>
       </div>
     </form>
   </div>
-</div>
 
 <app-confirm-modal
   *ngIf="showModal"

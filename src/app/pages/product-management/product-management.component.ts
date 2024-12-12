@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from '../components/header/header.component';
-import { LeftsidebarComponent } from '../components/leftsidebar/leftsidebar.component';
-import { MenuService } from '../services/menu.service';
+import { HeaderComponent } from '../../components/header/header.component';
+import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
+import { MenuService } from '../../services/menu.service';
 import { CommonModule } from '@angular/common';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { Products } from '../models/products.model';
-import { ProductsService } from '../services/products.service';
+import { Products } from '../../models/products.model';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-product-management',
   standalone: true,
-  imports: [HeaderComponent, LeftsidebarComponent, CommonModule, ProductFormComponent, ProductDetailComponent],
+  imports: [HeaderComponent, LeftsidebarComponent,CommonModule, ProductFormComponent, ProductDetailComponent],
   templateUrl: './product-management.component.html',
   styleUrl: './product-management.component.css'
 })
-export class ProductManagementComponent {
+export default class ProductManagementComponent {
   isMenuActive: boolean = false;
   showProductForm: boolean = false;
   showProductDetail: boolean = false;
@@ -51,7 +51,7 @@ export class ProductManagementComponent {
       this.productsService.getProducts().subscribe({
           next: (response) => {
               console.log('Backend response (get products):', response);
-              this.products = response;
+              this.products = response.data;
           },
           error: (error) => {
               console.error('Error getting products:', error);

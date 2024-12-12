@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ProductsService } from '../../services/products.service';
+import { ProductsService } from '../../../services/products.service';
 import { CommonModule } from '@angular/common';
 import { EditProductComponent } from '../edit-product/edit-product.component';
 

@@ -26,8 +26,8 @@
               <td><div class="cell-content">{{row.value.expireDate}}</div></td>
               <td><div class="cell-content">{{row.value.price}}</div></td>
               <td>
-                  <button class="edit-btn">Edit</button>
-                  <button class="del-btn">Delete</button>
+                  <button type="button" class="edit-btn">Edit</button>
+                  <button type="button"(click)="confirmDeleteRow(i)" class="del-btn">Delete</button>
               </td>
           </tr>
           

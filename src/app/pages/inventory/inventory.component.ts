@@ -1,15 +1,15 @@
 import { Component, inject } from '@angular/core';
-import { LeftsidebarComponent } from '../components/leftsidebar/leftsidebar.component';
-import { HeaderComponent } from '../components/header/header.component';
-import { MenuService } from '../services/menu.service';
+import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { MenuService } from '../../services/menu.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
 import { RestockFormComponent } from './restock-form/restock-form.component';
-import { SuppliesService } from '../services/supplies.service';
-import { Supplies } from '../models/supplies.model';
+import { SuppliesService } from '../../services/supplies.service';
+import { Supplies } from '../../models/supplies.model';
 
 @Component({
   selector: 'app-inventory',
@@ -18,7 +18,7 @@ import { Supplies } from '../models/supplies.model';
   templateUrl: './inventory.component.html',
   styleUrl: './inventory.component.css'
 })
-export class InventoryComponent {
+export default class InventoryComponent {
   router = inject(Router);
 
   isMenuActive: boolean = false;

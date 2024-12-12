@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Output, EventEmitter} from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConfirmModalComponent } from '../../components/confirm-modal/confirm-modal.component';
-import { SuppliesService } from '../../services/supplies.service';
+import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm-modal.component';
+import { SuppliesService } from '../../../services/supplies.service';
 
 @Component({
   selector: 'app-item-restock',
