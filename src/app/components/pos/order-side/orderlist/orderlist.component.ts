@@ -25,4 +25,8 @@ export class OrderlistComponent implements OnInit{
   removeLineItem(lineItem: LineItem): void {
     this.orderService.removeLineItem(lineItem);
   }
+
+  getTotalAmount(): number {
+    return this.lineItems.reduce((acc, item) => acc + (item.price ?? 0) * (item.quantity ?? 0), 0);
+  }
 }

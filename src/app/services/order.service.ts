@@ -20,4 +20,6 @@ export class OrderService {
     const newLineItems = currentLineItems.filter((item) => item !== lineItem);
     this.lineItemsSubject.next(newLineItems);
   }
+
+  
 }
