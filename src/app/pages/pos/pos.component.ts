@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
 import { HeaderComponent } from '../../components/header/header.component';
-import { OrderPanelComponent } from '../../components/pos/order-panel/order-panel.component';
-import { ProductPanelComponent } from '../../components/pos/product-panel/product-panel.component';
+import { OrderPanelComponent } from '../../components/pos/order-side/order-panel/order-panel.component';
+import { ProductPanelComponent } from '../../components/pos/product-side/product-panel/product-panel.component';
 
 @Component({
   selector: 'app-pos',

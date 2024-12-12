@@ -1,0 +1,12 @@
+<div class="rounded-xl p-3 overflow-auto h-[600px] flex flex-wrap">
+  <div *ngFor="let product of filteredProducts" class="m-1">
+    <app-product-item [product]="product" (productClicked)="onProductClicked($event)"></app-product-item>
+  </div>
+</div>
+<app-quantity-popup
+  *ngIf="selectedProduct"
+  [product]="selectedProduct"
+  (close)="onCloseModal()"
+  (quantitySelected)="onQuantitySelected($event)">
+</app-quantity-popup>
+

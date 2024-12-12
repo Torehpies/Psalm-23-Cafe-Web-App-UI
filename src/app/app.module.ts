@@ -1,3 +1,12 @@
-// This file can be deleted since we're using standalone components
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
-// The bootstrapping is handled in main.ts using bootstrapApplication()
+@NgModule({
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  // other properties
+})
+export class AppModule { }

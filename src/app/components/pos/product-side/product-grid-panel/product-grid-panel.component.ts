@@ -1,27 +1,26 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { ProductItemComponent } from '../product-item/product-item.component';
 import { CommonModule } from '@angular/common';
-import { Product, ProductService } from '../../../services/product.service';
+import { Product, ProductService } from '../../../../services/product.service';
 import { RouterModule } from '@angular/router';
 import { CategoryPanelComponent } from '../category-panel/category-panel.component';
-import { CategoryService } from '../../../services/category.service';
-
+import { CategoryService } from '../../../../services/category.service';
+import { QuantityPopupComponent } from '../../quantity-popup/quantity-popup.component';
 
 @Component({
   selector: 'app-product-grid-panel',
   standalone: true,
-  imports: [ProductItemComponent, CommonModule, RouterModule],
+  imports: [ProductItemComponent, CommonModule, RouterModule, QuantityPopupComponent],
   templateUrl: './product-grid-panel.component.html',
   styleUrl: './product-grid-panel.component.css'
 })
-export class ProductGridPanelComponent implements OnInit{
+export class ProductGridPanelComponent implements OnInit {
 
-  // private productService = inject(ProductService)
   private categoryService = inject(CategoryService)
-  
+
   products: Product[] = [];
   filteredProducts: Product[] = [];
-  // category = 'bread'
+  selectedProduct: Product | null = null;
 
   ngOnInit(): void {
     // this.saveProducts();
@@ -34,7 +33,6 @@ export class ProductGridPanelComponent implements OnInit{
     });
   }
 
-
   loadProductsFromLocalStorage(): void {
     const productsData = localStorage.getItem('products');
     if (productsData) {
@@ -42,8 +40,16 @@ export class ProductGridPanelComponent implements OnInit{
     }
   }
 
+  onProductClicked(product: Product) {
+    this.selectedProduct = product;
+  }
 
+  onCloseModal() {
+    this.selectedProduct = null;
+  }
 
-
-  
+  onQuantitySelected(quantity: number) {
+    console.log(`Selected quantity for ${this.selectedProduct?.name}: ${quantity}`);
+    this.selectedProduct = null;
+  }
 }
