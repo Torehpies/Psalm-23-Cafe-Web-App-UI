@@ -1,6 +1,15 @@
-<div class="grid grid-cols-7">
+<div class="grid grid-cols-8">
     <p class="col-span-4">Name</p>
     <p class="col-span-1">Qty.</p>
-    <p class="col-span-1">P</p> 
-    <hr class="border-t border-gray-900 col-span-7" />
+    <p class="col-span-2">Price</p> 
+    <p class="col-span-1">Del</p> 
+    <hr class="border-t border-gray-900 col-span-8 mb-1" />
+    
+    <div *ngFor="let item of lineItems; let i = index" class="col-span-8 grid grid-cols-8">
+        <p class="col-span-4">{{ item.name }}</p>
+        <p class="col-span-1">{{ item.quantity }}</p>
+        <p class="col-span-2">{{ item.price | currency:'PHP':'symbol'}}</p>
+        <button (click)="removeLineItem(item)" class="col-span-1 bg-red-500 rounded-xl">X</button>
+    </div>
+    
 </div>

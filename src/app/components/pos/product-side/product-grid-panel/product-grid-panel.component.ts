@@ -5,6 +5,7 @@ import { Product} from '../../../../services/product.service';
 import { RouterModule } from '@angular/router';
 import { LineItem } from '../../../../models/lineItem/lineItem.model';
 import { CategoryService } from '../../../../services/category.service';
+import { OrderService } from '../../../../services/order.service';
 import { QuantityPopupComponent } from '../../quantity-popup/quantity-popup.component';
 
 @Component({
@@ -17,6 +18,7 @@ import { QuantityPopupComponent } from '../../quantity-popup/quantity-popup.comp
 export class ProductGridPanelComponent implements OnInit {
 
   private categoryService = inject(CategoryService)
+  private orderService = inject(OrderService)
 
   products: Product[] = [];
   filteredProducts: Product[] = [];
@@ -49,7 +51,9 @@ export class ProductGridPanelComponent implements OnInit {
   }
 
   onLineItemConfirm(lineItem: LineItem) {
-    console.log(`Selected quantity for ${this.selectedProduct?.name}: ${lineItem.quantity}`);
+    // console.log(`Selected quantity for ${this.selectedProduct?.name}: ${lineItem.quantity}`);
+    this.orderService.addLineItem(lineItem);
+    console.log(lineItem)
     this.selectedProduct = null;
   }
 }

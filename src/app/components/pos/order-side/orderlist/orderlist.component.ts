@@ -1,12 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { LineItem } from '../../../../models/lineItem/lineItem.model';
+import { OrderService } from '../../../../services/order.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-orderlist',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './orderlist.component.html',
   styleUrl: './orderlist.component.css'
 })
-export class OrderlistComponent {
+export class OrderlistComponent implements OnInit{
+  
+  lineItems: LineItem[] = [];
 
+  orderService = inject(OrderService);
+
+  ngOnInit(): void {
+    this.orderService.lineItems$.subscribe((lineItems) => {
+      this.lineItems = lineItems;
+    });
+  }
+
+  removeLineItem(lineItem: LineItem): void {
+    this.orderService.removeLineItem(lineItem);
+  }
 }
