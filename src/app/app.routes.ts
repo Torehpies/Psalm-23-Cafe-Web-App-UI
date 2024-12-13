@@ -59,7 +59,7 @@ export const routes: Routes = [
     path: 'pos', 
     loadComponent: () => import('./pages/pos/pos.component'), 
     canActivate: [AuthGuardService, RoleGuardService],  
-     data: { expectedRoles: COUNTER_ROLES}
+     data: { expectedRoles: [...ADMIN_ROLES, ...COUNTER_ROLES]}
   },
   { 
     path: '**', 

@@ -13,12 +13,16 @@ import { CommonModule } from '@angular/common';
 export class OrderlistComponent implements OnInit{
   
   lineItems: LineItem[] = [];
+  totalAmount: number = 0;
 
   orderService = inject(OrderService);
 
   ngOnInit(): void {
     this.orderService.lineItems$.subscribe((lineItems) => {
       this.lineItems = lineItems;
+    });
+    this.orderService.totalAmount$.subscribe((totalAmount) => {
+      this.totalAmount = totalAmount;
     });
   }
 
@@ -27,6 +31,7 @@ export class OrderlistComponent implements OnInit{
   }
 
   getTotalAmount(): number {
-    return this.lineItems.reduce((acc, item) => acc + (item.price ?? 0) * (item.quantity ?? 0), 0);
+    return this.totalAmount;
   }
+
 }

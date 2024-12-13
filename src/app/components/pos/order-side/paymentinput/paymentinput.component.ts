@@ -1,12 +1,59 @@
 import { Component } from '@angular/core';
+import { PaymentInputService } from '../../../../services/paymentinput.service';
+import { OrderService } from '../../../../services/order.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-paymentinput',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, CommonModule],
   templateUrl: './paymentinput.component.html',
   styleUrl: './paymentinput.component.css'
 })
 export class PaymentinputComponent {
+  private _payment: number = 0;
+  get payment(): number {
+    return this._payment;
+  }
+  set payment(value: number) {
+    this._payment = value;
+    this.paymentInputService.setPayment(value);
+    this.calculateChange();
+  }
+  change: number = 0;
+  total: number = 0;
+
+  constructor(
+    private paymentInputService: PaymentInputService,
+    private orderService: OrderService
+  ) {}
+  ngOnInit() {
+    // Subscribe to the payment input value
+    this.paymentInputService.payment$.subscribe((payment) => {
+      this.payment = payment;
+      this.calculateChange();
+    });
+
+    // Subscribe to total amount (optional, in case the total changes dynamically)
+    this.orderService.totalAmount$.subscribe(() => {
+      this.total = this.orderService.getTotalAmount();
+      this.calculateChange();
+    });
+  }
+
+  addBill(amount: number) {
+    this.paymentInputService.addPayment(amount);
+  }
+
+  clearPayment() {
+    this.paymentInputService.clearPayment();
+  }
+
+  calculateChange() {
+    console.log(this.change)
+    const total = this.orderService.getTotalAmount();
+    this.change = this.payment - total;
+  }
 
 }
