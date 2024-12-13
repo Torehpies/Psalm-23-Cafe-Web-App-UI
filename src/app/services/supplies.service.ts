@@ -38,9 +38,30 @@ export class SuppliesService {
     return this.http.post(this.createStockHistory, history, { responseType: 'text' as 'json'}); // Add a new stock history to the backend
   }
 
-  // Add a new supply to the backend
+  // Check for duplicate supplies
+  private isDuplicateSupply(newSupply: Supplies, existingSupplies: Supplies[]): boolean {
+    return existingSupplies.some(supply => supply.name === newSupply.name);
+  }
+
+  // Add a new supply to the backend with validation
   addSupply(supply: Supplies): Observable<any> {
-    return this.http.post(this.createSupply, supply, { responseType: 'text' as 'json'});
+    return new Observable(observer => {
+      this.getSupplies().subscribe(existingSupplies => {
+        if (this.isDuplicateSupply(supply, existingSupplies)) {
+          observer.error('Duplicate supply found');
+        } else {
+          this.http.post(this.createSupply, supply, { responseType: 'text' as 'json'}).subscribe(
+            response => {
+              observer.next(response);
+              observer.complete();
+            },
+            error => {
+              observer.error(error);
+            }
+          );
+        }
+      });
+    });
   }
   
 

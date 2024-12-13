@@ -3,14 +3,14 @@
     <div class="popup-content">
       <h2>Edit Product</h2>
       <form [formGroup]="editProductForm" (ngSubmit)="onSubmit()">
-        <div>
+        <div class="form-group">
           <label for="name">Name</label>
           <input formControlName="name" id="name" type="text" placeholder="Enter Product Name" />
           <div *ngIf="editProductForm.get('name')?.touched && editProductForm.get('name')?.invalid">
             <small class="error">Product Name is required</small>
           </div>
         </div>
-        <div>
+        <div class="form-group">
           <label for="category">Category</label>
           <select formControlName="category" id="category">
             <option value="" disabled>Select Category</option>
@@ -20,19 +20,19 @@
             <small class="error">Category is required</small>
           </div>
         </div>
-        <div>
+        <div class="form-group">
           <label for="price">Price (PHP)</label>
           <input id="price" formControlName="price" type="number" min="0" placeholder="Enter Price" />
           <div *ngIf="editProductForm.get('price')?.invalid && editProductForm.get('price')?.touched">
             <small class="error">Please enter a valid price (non-negative number).</small>
           </div>
         </div>
-        <div *ngIf="editProductForm.errors?.['unchanged']">
+        <div *ngIf="editProductForm.errors?.['unchanged']" class="form-group">
           <small class="error">No changes detected in the form.</small>
         </div>
         <div class="button-group">
-          <button type="submit" [disabled]="!editProductForm.valid">Update Product</button>
-          <button type="button" (click)="openCancelModal()" class="cancel-btn">Cancel</button>
+          <button type="submit" [disabled]="!editProductForm.valid" class="btn-submit">Update Product</button>
+          <button type="button" (click)="openCancelModal()" class="btn-cancel">Cancel</button>
         </div>
       </form>
     </div>

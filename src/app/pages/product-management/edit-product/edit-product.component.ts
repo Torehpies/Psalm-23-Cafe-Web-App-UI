@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ValidationErro
 import { ProductsService } from '../../../services/products.service';
 import { Products } from '../../../models/products.model';
 import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm-modal.component';
+import { switchMap, debounceTime } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-edit-product',
@@ -27,7 +29,7 @@ export class EditProductComponent {
       name: ['', Validators.required],
       category: ['', Validators.required],
       price: ['', [Validators.required, Validators.min(0)]],
-    }, { validators: this.unchangedValidator() });
+    }, { validators: [this.unchangedValidator()] });
   }
 
   ngOnInit() {
@@ -107,8 +109,6 @@ export class EditProductComponent {
       if (this.isSubmitAction) {
         if (this.isFormDirtyButUnchanged()) {
           console.log('Form is dirty but unchanged.');
-          this.showModal = false;
-          return;
         }
         if (this.editProductForm.valid) {
           const formData = this.editProductForm.value;
@@ -136,6 +136,8 @@ export class EditProductComponent {
     this.showModal = false;
     if (!this.isSubmitAction) {
       this.editProductForm.reset();
+      this.visible.emit();
+      return;
     }
     this.visible.emit();
     this.reloadPage();
@@ -147,6 +149,5 @@ export class EditProductComponent {
 
   onModalCancel(): void {
     this.showModal = false;
-    this.editProductForm.reset();
   }
 }

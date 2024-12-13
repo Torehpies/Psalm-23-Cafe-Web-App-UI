@@ -2,23 +2,31 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 10;
 }
 
 .popup-modal {
   position: fixed;
+  background-color: #f9c03f;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #F9C03F;
-  padding: 20px;
+  padding: 30px;
   border-radius: 8px;
+  width: 400px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  outline: 2px solid black;
+  text-align: center;
+  z-index: 20;
+}
+
+.popup-modal h2 {
+  margin-bottom: 20px;
 }
 
 .popup-content p {
@@ -30,65 +38,59 @@
 }
 
 form {
-  width: 300px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
+  width: 100%;
 }
 
-div {
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 15px;
 }
 
 label {
-  display: block;
-  margin-bottom: 5px;
+  font-weight: bold;
+  width: 40%; /* Set label width */
+  text-align: left;
 }
 
-select, input {
-  width: 100%;
+input[type="number"], input[type="text"], input[type="date"], select{
+  width: 55%; /* Set input width */
   padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
   box-sizing: border-box;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-}
-
-button:disabled {
-  background-color: #ccc;
-}
-
-/* Styling for button group */
 .button-group {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
 
-.button-group button {
-  width: 48%; /* Make each button take up 48% of the container width */
-}
-
-.cancel-btn {
-  background-color: #f44336;
-  color: white;
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 button:hover {
   opacity: 0.8;
 }
 
-input[type="text"] {
-  display: block;
-  margin-top: 5px;
+.btn-submit {
+  background-color: #4CAF50;
+  color: white;
+  flex: 1;
+  margin-right: 10px;
+}
+
+.btn-cancel {
+  background-color: #f44336;
+  color: white;
+  flex: 1;
+  margin-left: 10px;
 }

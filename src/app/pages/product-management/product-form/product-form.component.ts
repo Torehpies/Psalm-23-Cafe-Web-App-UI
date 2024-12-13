@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ProductsService } from '../../../services/products.service';
 import { Products } from '../../../models/products.model';
 import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm-modal.component';
+import { switchMap, debounceTime } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-product-form',
@@ -21,6 +23,7 @@ export class ProductFormComponent {
   showModal: boolean = false;
   modalMessage: string = '';
   isSubmitAction: boolean = false;
+  isDuplicateProduct: boolean = false; // New flag for duplicate product validation
 
   constructor(private fb: FormBuilder, private productsService: ProductsService) {
     this.addProductForm = this.fb.group({
@@ -28,6 +31,14 @@ export class ProductFormComponent {
       category: ['', Validators.required],
       price: ['', [Validators.required, Validators.min(0)]],
     });
+
+     // Listen for changes to the name and category fields for instant duplicate validation
+     this.addProductForm.valueChanges
+     .pipe(
+       debounceTime(100), // Add debounce time to delay validation
+       switchMap(() => this.checkForDuplicateProduct())
+     )
+     .subscribe();
   }
 
   toggleVisible() {
@@ -46,7 +57,35 @@ export class ProductFormComponent {
     this.showModal = true;
   }
 
+  checkForDuplicateProduct() {
+    const formData = this.addProductForm.value;
+    if (formData.name && formData.category) {
+      return this.productsService.getProducts().pipe(
+        switchMap((response) => {
+          const products: Products[] = response.data; // Adjust to match the response type
+          console.log('Products:', products);
+          const inputName = formData.name.toLowerCase();
+          const inputCategory = formData.category.toLowerCase();
+          this.isDuplicateProduct = products.some(product => 
+            product.name.toLowerCase() === inputName && product.Category.toLowerCase() === inputCategory
+          );
+          if (this.isDuplicateProduct) {
+            this.addProductForm.setErrors({ duplicate: true }); // Mark form as invalid
+          } else {
+            this.addProductForm.setErrors(null); // Clear duplicate error if no duplicate found
+          }
+          return of([]);
+        })
+      );
+    }
+    return of([]);
+  }
+
   onSubmit(): void {
+    if (this.addProductForm.invalid) {
+      console.log('Form is invalid!');
+      return;
+    }
     this.openSubmitModal();
   }
 
@@ -85,7 +124,7 @@ export class ProductFormComponent {
       this.addProductForm.reset();
     }
     this.visible.emit();
-    //this.reloadPage();
+    this.reloadPage();
   }
 
   reloadPage() {

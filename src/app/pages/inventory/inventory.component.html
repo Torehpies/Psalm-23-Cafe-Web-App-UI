@@ -36,12 +36,12 @@
     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-16"
   >
     <div
-      class="border border-gray-300 rounded-lg shadow-md flex flex-col items-center text-center hover:scale-105 transition-transform cursor-pointer min-w-[250px] min-h-[250px] p-4"
+      class="border border-gray-300 rounded-lg shadow-md flex flex-col items-center text-center hover:scale-105 transition-transform cursor-pointer min-w-[250px] max-w-[250px] min-h-[250px] p-4"
       *ngFor="let item of items"
       (click)="showItemDetails(item)"
     >
       <span class="text-lg font-bold">{{ item.category }}</span>
-      <h1 class="text-xl font-semibold mt-2 mb-4 flex-grow flex items-center justify-center">
+      <h1 class="text-xl font-semibold mt-2 mb-4 flex-grow flex items-center justify-center break-words">
         {{ item.name }}
       </h1>
       <p class="text-gray-500 mt-auto">

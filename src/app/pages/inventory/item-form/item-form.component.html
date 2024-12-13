@@ -50,9 +50,14 @@
         <small class="error">Please enter a valid PAR level (non-negative number).</small>
       </div>
 
+      <!-- Validation message for duplicate supplies -->
+      <div *ngIf="isDuplicateSupply" class="form-group">
+        <small class="error">This item already exists in the inventory.</small>
+      </div>
+
       <!-- Wrap the buttons in a div for side-by-side display -->
       <div class="button-group">
-        <button type="submit" [disabled]="!addItemForm.valid" class="btn-submit">Add Item</button>
+        <button type="submit" [disabled]="!addItemForm.valid || isDuplicateSupply" class="btn-submit">Add Item</button>
         <button type="button" (click)="openCancelModal()" class="btn-cancel">Cancel</button>
       </div>
     </form>

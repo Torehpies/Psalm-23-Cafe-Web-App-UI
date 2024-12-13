@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm-modal.component';
 import { SuppliesService } from '../../../services/supplies.service';
 import { Supplies } from '../../../models/supplies.model';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-item-form',
@@ -28,6 +29,7 @@ export class ItemFormComponent {
   modalMessage: string = '';
   isPromptVisible: boolean = false;
   isSubmitAction: boolean = false;  // New flag to track whether the modal is for submission
+  isDuplicateSupply: boolean = false; // New flag for duplicate supply validation
 
   constructor(private fb: FormBuilder, private suppliesService: SuppliesService) {
     this.addItemForm = this.fb.group({
@@ -43,6 +45,33 @@ export class ItemFormComponent {
       this.units = this.unitsByCategory[selectedCategory] || [];
       this.addItemForm.get('unit')?.setValue(''); // Reset the unit field
     });
+
+   // Listen for changes to the name and category fields for instant duplicate validation
+   this.addItemForm.get('name')?.valueChanges
+   .pipe(debounceTime(100))
+   .subscribe(() => this.checkForDuplicateSupply());
+ this.addItemForm.get('category')?.valueChanges
+   .pipe(debounceTime(100))
+   .subscribe(() => this.checkForDuplicateSupply());
+  }
+
+  checkForDuplicateSupply(): void {
+    const formData = this.addItemForm.value;
+    if (formData.name && formData.category) {
+      this.suppliesService.getSupplies().subscribe((supplies) => {
+        console.log('Supplies:', supplies);
+        const inputName = formData.name.toLowerCase();
+        const inputCategory = formData.category.toLowerCase();
+        this.isDuplicateSupply = supplies.some(supply => 
+          supply.name.toLowerCase() === inputName && supply.category.toLowerCase() === inputCategory
+        );
+        if (this.isDuplicateSupply) {
+          this.addItemForm.setErrors({ duplicate: true }); // Mark form as invalid
+        } else {
+          this.addItemForm.setErrors(null); // Clear duplicate error if no duplicate found
+        }
+      });
+    }
   }
 
   onUnitChange(event: any): void {
@@ -85,6 +114,10 @@ export class ItemFormComponent {
   }
 
   onSubmit(): void {
+    if (this.isDuplicateSupply) {
+      console.log('Duplicate supply found!');
+      return;
+    }
     this.openSubmitModal();
   }
 
