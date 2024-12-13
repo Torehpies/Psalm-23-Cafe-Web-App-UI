@@ -6,4 +6,5 @@ export type LineItem = {
     quantity: number | null;
     price: number | undefined;
     sizes: Size[] | undefined;
+    selectedSize: string | undefined; // Add selectedSize property
 }

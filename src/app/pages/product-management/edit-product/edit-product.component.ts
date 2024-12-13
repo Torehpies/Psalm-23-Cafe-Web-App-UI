@@ -27,6 +27,7 @@ export class EditProductComponent {
       name: ['', Validators.required],
       category: ['', Validators.required],
       price: ['', [Validators.required, Validators.min(0)]],
+      sizes: this.fb.array([]) // Add sizes form array
     }, { validators: this.unchangedValidator() });
   }
 
@@ -36,6 +37,7 @@ export class EditProductComponent {
         name: this.product.name,
         category: this.product.Category,
         price: this.product.price,
+        sizes: this.product.sizes // Patch sizes
       });
 
       this.editProductForm.updateValueAndValidity();

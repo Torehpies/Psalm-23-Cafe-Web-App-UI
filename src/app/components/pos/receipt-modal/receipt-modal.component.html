@@ -18,7 +18,7 @@
           <span class="col-span-1">Price</span>
         <!-- </li> -->
         <ng-container *ngFor="let item of lineItems" class="">
-          <span class="col-span-3 truncate">{{ item.name }}</span>
+          <span class="col-span-3 truncate">{{ item.name }} {{ item.selectedSize }}</span>
           <span class="col-span-1">{{ item.quantity }}</span>
           <span class="col-span-1">{{ item.price | currency:'PHP':'symbol' }}</span>
         </ng-container>

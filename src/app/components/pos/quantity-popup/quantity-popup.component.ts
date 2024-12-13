@@ -19,13 +19,15 @@ export class QuantityPopupComponent implements OnInit{
   @Output() lineItemConfirm = new EventEmitter<LineItem>();
 
   quantity: number = 1;
+  selectedSize: string | undefined = '';
 
   lineItem: LineItem = {
     _id: this.product?._id,
     name: this.product?.name,
     quantity: this.quantity,
     price: this.product?.price,
-    sizes: this.product?.sizes
+    sizes: this.product?.sizes,
+    selectedSize: this.selectedSize
   }
 
   ngOnInit(): void {
@@ -35,13 +37,22 @@ export class QuantityPopupComponent implements OnInit{
         name: this.product.name,
         quantity: this.quantity,
         price: this.product.price,
-        sizes: this.product.sizes
+        sizes: this.product.sizes,
+        selectedSize: this.selectedSize
+      };
+      if (this.product.sizes && this.product.sizes.length > 0) {
+        this.selectedSize = this.product.sizes[0].size; // Set default size
       }
     }
   }
 
   onConfirm() {
     this.lineItem.quantity = this.quantity;
+    this.lineItem.selectedSize = this.selectedSize;
+    const selectedSizeObj = this.product?.sizes.find(size => size.size === this.selectedSize);
+    if (selectedSizeObj) {
+      this.lineItem.price = selectedSizeObj.price;
+    }
     this.lineItemConfirm.emit(this.lineItem);
     this.close.emit();
   }
