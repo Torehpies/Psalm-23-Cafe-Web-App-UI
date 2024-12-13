@@ -50,11 +50,13 @@
         {{paymentType}}
     </button>
 </div>
+<!-- <button (click)="confirmPayment()" class="bg-green-500 text-white p-2 rounded mt-2">Confirm Payment</button> -->
 <app-receipt-modal 
     *ngIf="showModal" 
     [lineItems]="orderService.lineItems$ | async" 
     [totalAmount]="total" 
     [paymentType]="selectedPaymentType" 
     [change]="change"
-    (close)="closeModal()">
+    (close)="closeModal()"
+    (confirmPayment)="handleConfirmPayment()">
 </app-receipt-modal>

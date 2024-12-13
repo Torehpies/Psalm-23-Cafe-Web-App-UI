@@ -15,8 +15,13 @@ export class ReceiptModalComponent {
   @Input() paymentType: string = '';
   @Input() change: number = 0;
   @Output() close = new EventEmitter<void>();
+  @Output() confirmPayment = new EventEmitter<void>();
 
   closeModal() {
     this.close.emit();
+  }
+
+  confirmPaymentHandler() {
+    this.confirmPayment.emit();
   }
 }

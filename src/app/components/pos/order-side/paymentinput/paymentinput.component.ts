@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { PaymentInputService } from '../../../../services/paymentinput.service';
 import { OrderService } from '../../../../services/order.service';
+import { AuthService } from '../../../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReceiptModalComponent } from '../../receipt-modal/receipt-modal.component';
@@ -31,6 +32,7 @@ export class PaymentinputComponent {
 
   private paymentInputService: PaymentInputService = inject(PaymentInputService);
   orderService: OrderService = inject(OrderService);
+  private authService: AuthService = inject(AuthService);
   
   constructor() {}
 
@@ -71,4 +73,19 @@ export class PaymentinputComponent {
     this.showModal = false;
   }
 
+  handleConfirmPayment() {
+    const employeeId = this.authService.getUserId(); // Replace with actual employee ID if available
+    this.orderService.sendOrder(this.total, this.selectedPaymentType, employeeId)
+      .subscribe({
+        next: (response) => {
+          this.showModal = false;
+          this.paymentInputService.clearPayment(); // Clear payment after successful order
+          this.orderService.clearLineItems(); // Clear line items after successful order
+          // Additional logic to handle successful order submission
+        },
+        error: (error) => {
+          console.error('Error sending order:', error);
+        }
+      });
+  }
 }

@@ -52,7 +52,6 @@ export class ProductGridPanelComponent implements OnInit {
 
   onLineItemConfirm(lineItem: LineItem) {
     this.orderService.addLineItem(lineItem);
-    console.log(lineItem)
     this.selectedProduct = null;
   }
 }

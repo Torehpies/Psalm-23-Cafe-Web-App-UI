@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { LineItem } from '../models/lineItem/lineItem.model';
 import { BehaviorSubject } from 'rxjs';
+import { apiUrls } from '../api.urls';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,8 @@ export class OrderService {
 
   private totalAmountSubject = new BehaviorSubject<number>(0);
   totalAmount$ = this.totalAmountSubject.asObservable();
+
+  constructor(private http: HttpClient) {}
 
   addLineItem(lineItem: LineItem): void {
     const currentLineItems = this.lineItemsSubject.value;
@@ -27,6 +31,11 @@ export class OrderService {
     this.computeTotalAmount(newLineItems);
   }
 
+  clearLineItems(): void {
+    this.lineItemsSubject.next([]);
+    this.computeTotalAmount([]);
+  }
+
   setTotalAmount(amount: number) {
     this.totalAmountSubject.next(amount);
   }
@@ -38,6 +47,22 @@ export class OrderService {
   private computeTotalAmount(lineItems: LineItem[]): void {
     const total = lineItems.reduce((acc, item) => acc + (item.price ?? 0) * (item.quantity ?? 0), 0);
     this.totalAmountSubject.next(total);
+  }
+
+  sendOrder(totalAmount: number, paymentMethod: string, employeeId: string | null) {
+    const order = {
+      Date: new Date().toISOString(), // Add date and time
+      TotalAmount: totalAmount,
+      PaymentMethod: paymentMethod,
+      EmployeeId: employeeId,
+      products: this.lineItemsSubject.value.map(item => ({
+        _id: item._id,
+        Quantity: item.quantity,
+        size: item.selectedSize
+      }))
+    };
+
+    return this.http.post(`${apiUrls.orderServiceApi}create`, order);
   }
 
 }
