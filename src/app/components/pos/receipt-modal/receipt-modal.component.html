@@ -1,0 +1,19 @@
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+  <div class="bg-white p-5 rounded-lg shadow-lg w-1/2">
+    <h2 class="text-2xl font-bold mb-4">Receipt</h2>
+    <div class="mb-4">
+      <p class="font-semibold">Payment Type: {{ paymentType }}</p>
+      <p class="font-semibold">Total Amount: {{ totalAmount | currency:'PHP':'symbol' }}</p>
+      <p class="font-semibold">Change: {{ change | currency:'PHP':'symbol' }}</p>
+    </div>
+    <div class="mb-4">
+      <h3 class="font-semibold">Items:</h3>
+      <ul>
+        <li *ngFor="let item of lineItems">
+          {{ item.name }} - {{ item.quantity }} x {{ item.price | currency:'PHP':'symbol' }}
+        </li>
+      </ul>
+    </div>
+    <button (click)="closeModal()" class="bg-blue-500 text-white p-2 rounded">Close</button>
+  </div>
+</div>

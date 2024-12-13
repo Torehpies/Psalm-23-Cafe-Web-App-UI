@@ -31,6 +31,7 @@ export class PaymentInputService {
   }
 
   setPayment(amount: number) {
+    console.log('Setting payment to: ', amount);
     this.paymentSubject.next(amount);
   }
 }

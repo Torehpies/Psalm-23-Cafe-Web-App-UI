@@ -45,3 +45,11 @@
         {{paymentType}}
     </button>
 </div>
+<app-receipt-modal 
+    *ngIf="showModal" 
+    [lineItems]="orderService.lineItems$ | async" 
+    [totalAmount]="total" 
+    [paymentType]="selectedPaymentType" 
+    [change]="change"
+    (close)="closeModal()">
+</app-receipt-modal>
