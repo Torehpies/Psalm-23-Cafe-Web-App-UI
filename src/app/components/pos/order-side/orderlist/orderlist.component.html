@@ -14,5 +14,8 @@
         <button (click)="removeLineItem(item)" class="col-span-1 bg-red-500 rounded-full">X</button>
     </div>
 </div>
-<p class="text-right font-semibold text-xl">Total: {{ getTotalAmount() | currency:'PHP':'symbol' }}</p>
+<div class="flex justify-between mb-2">
+    <button (click)="clearAllLineItems()" class="bg-red-500 text-white rounded-lg px-2 ml-2 flex items-center">Clear Items</button>
+    <p class="text-right font-semibold text-xl">Total: {{ getTotalAmount() | currency:'PHP':'symbol' }}</p>
+</div>
 <hr class="border-t border-gray-900 mb-1" />

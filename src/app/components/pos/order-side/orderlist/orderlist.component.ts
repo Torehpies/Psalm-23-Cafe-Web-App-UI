@@ -30,6 +30,10 @@ export class OrderlistComponent implements OnInit{
     this.orderService.removeLineItem(lineItem);
   }
 
+  clearAllLineItems(): void {
+    this.lineItems.forEach(item => this.orderService.removeLineItem(item));
+  }
+
   getTotalAmount(): number {
     return this.totalAmount;
   }

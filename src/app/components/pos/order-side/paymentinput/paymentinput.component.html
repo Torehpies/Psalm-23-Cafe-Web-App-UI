@@ -41,7 +41,12 @@
     <button 
         *ngFor="let paymentType of paymentTypes"
         (click)="setPaymentType(paymentType)"
-        class=" bg-green-500 p-1 text-white font-bold rounded-xl w-20">
+        [disabled]="!(orderService.lineItems$ | async)?.length || (paymentType === 'Cash' && (payment === 0 || payment < total))"
+        [ngClass]="{
+            'bg-gray-400': !(orderService.lineItems$ | async)?.length || (paymentType === 'Cash' && (payment === 0 || payment < total)), 
+            'bg-green-500': (orderService.lineItems$ | async)?.length && !(paymentType === 'Cash' && (payment === 0 || payment < total))
+        }"
+        class="p-1 text-white font-bold rounded-lg w-24">
         {{paymentType}}
     </button>
 </div>
