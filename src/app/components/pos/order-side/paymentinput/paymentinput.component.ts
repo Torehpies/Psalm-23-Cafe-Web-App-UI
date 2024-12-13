@@ -12,6 +12,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './paymentinput.component.css'
 })
 export class PaymentinputComponent {
+
+  paymentTypes: string[] = ['Cash', 'Paymaya', 'GCash'];
+
   private _payment: number = 0;
   get payment(): number {
     return this._payment;
@@ -40,6 +43,10 @@ export class PaymentinputComponent {
       this.total = this.orderService.getTotalAmount();
       this.calculateChange();
     });
+  }
+
+  setPaymentType(paymentType: string) {
+    this.paymentInputService.setPaymentType(paymentType);
   }
 
   addBill(amount: number) {
