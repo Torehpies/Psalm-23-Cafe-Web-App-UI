@@ -8,7 +8,7 @@
 
     <div class="card-container">
       <div class="card" *ngFor="let product of products" (click)="showProductDetails(product)">
-        <span>{{ product.Category }}</span>
+        <span>{{ product.category }}</span>
         <h1>{{ product.name }}</h1>
         <p>{{ product.price | currency: 'PHP' }}</p>
       </div>

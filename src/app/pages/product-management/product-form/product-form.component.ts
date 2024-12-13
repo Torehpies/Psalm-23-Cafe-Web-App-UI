@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductsService } from '../../../services/products.service';
-import { Products } from '../../../models/products.model';
+import { Product } from '../../../models/product/product.model';
 import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm-modal.component';
 
 @Component({
@@ -13,7 +13,7 @@ import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm
   styleUrl: './product-form.component.css'
 })
 export class ProductFormComponent {
-  @Output() productAdded = new EventEmitter<Products>();
+  @Output() productAdded = new EventEmitter<Product>();
   @Output() visible = new EventEmitter<void>();
 
   addProductForm: FormGroup;
@@ -56,14 +56,15 @@ export class ProductFormComponent {
         if (this.addProductForm.valid) {
           const formData = this.addProductForm.value;
 
-          const product: Products = {
+          const product: Product = {
             name: formData.name,
-            Category: formData.category,
+            category: formData.category,
             price: formData.price,
             unit: 'Pieces',
             status: 'Inactive',
             currentStock: 0,
             par: 0,
+            sizes: []
           };
           this.productsService.addProduct(product).subscribe(
             (response) => {

@@ -1,5 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Product } from '../models/product/product.model';
+import { Response } from '../models/response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,20 +27,20 @@ export class ProductService {
   }
 }
 
-export type Response<T> = {
-  success: boolean;
-  status: number;
-  message: string;
-  data: T
-}
+// export type Response<T> = {
+//   success: boolean;
+//   status: number;
+//   message: string;
+//   data: T
+// }
 
-export type Product = {
-  _id: string;
-  name: string;
-  unit: string;
-  Category: string;
-  price: number;
-  status: string;
-  currentStock: number;
-  par: number
-}
+// export type Product = {
+//   _id: string;
+//   name: string;
+//   unit: string;
+//   Category: string;
+//   price: number;
+//   status: string;
+//   currentStock: number;
+//   par: number
+// }

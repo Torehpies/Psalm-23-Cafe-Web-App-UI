@@ -1,9 +1,9 @@
-
 import { Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import { Product } from '../../../services/product.service';
+import { Product } from '../../../models/product/product.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LineItem } from '../../../models/lineItem/lineItem.model';
+import { Size } from '../../../models/product/product.model';
 
 @Component({
   standalone: true,
@@ -24,7 +24,8 @@ export class QuantityPopupComponent implements OnInit{
     _id: this.product?._id,
     name: this.product?.name,
     quantity: this.quantity,
-    price: this.product?.price
+    price: this.product?.price,
+    sizes: this.product?.sizes
   }
 
   ngOnInit(): void {
@@ -33,16 +34,11 @@ export class QuantityPopupComponent implements OnInit{
         _id: this.product._id,
         name: this.product.name,
         quantity: this.quantity,
-        price: this.product.price
+        price: this.product.price,
+        sizes: this.product.sizes
       }
     }
   }
-  // lineItem: LineItem = {
-  //   _id: this.product?._id,
-  //   name: this.product?.name,
-  //   quantity: this.quantity,
-  //   price: this.product?.price
-  // }
 
   onConfirm() {
     this.lineItem.quantity = this.quantity;

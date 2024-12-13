@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ValidationErrors,AbstractControl,ValidatorFn} from '@angular/forms';
 import { ProductsService } from '../../../services/products.service';
-import { Products } from '../../../models/products.model';
+import { Product } from '../../../models/product/product.model';
 import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm-modal.component';
 
 @Component({
@@ -113,9 +113,9 @@ export class EditProductComponent {
         if (this.editProductForm.valid) {
           const formData = this.editProductForm.value;
 
-          const updatedProduct: Partial<Products> = {
+          const updatedProduct: Partial<Product> = {
             name: formData.name,
-            Category: formData.category,
+            category: formData.category,
             price: formData.price,
           };
           this.productsService.updateProduct(this.product._id, updatedProduct).subscribe(

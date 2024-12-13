@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Products } from '../models/products.model';
+import { Product } from '../models/product/product.model';
 import { Response } from '../models/response.model';
 
 @Injectable({
@@ -16,18 +16,18 @@ export class ProductsService {
   constructor(private http: HttpClient) { }
 
   getProducts(){
-    return this.http.get<Response<Products[]>>(this.apiUrl);
+    return this.http.get<Response<Product[]>>(this.apiUrl);
   }
 
-  getProductById(id: string): Observable<Products> {
-    return this.http.get<Products>(`${this.getProductsById}/${id}`);
+  getProductById(id: string): Observable<Product> {
+    return this.http.get<Product>(`${this.getProductsById}/${id}`);
   }
 
-  addProduct(product: Products): Observable<any> {
+  addProduct(product: Product): Observable<any> {
     return this.http.post(this.createProduct, product, { responseType: 'text' as 'json' });
   }
 
-  updateProduct(id: string, updatedData: Partial<Products>): Observable<Products> {
-    return this.http.put<Products>(`${this.updateProducts}/${id}`, updatedData);
+  updateProduct(id: string, updatedData: Partial<Product>): Observable<Product> {
+    return this.http.put<Product>(`${this.updateProducts}/${id}`, updatedData);
   }
 }
