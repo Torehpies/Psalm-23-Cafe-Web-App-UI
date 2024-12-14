@@ -1,6 +1,23 @@
 <div class="container">
   <app-leftsidebar></app-leftsidebar>
   <div class="main-content" [class.active]="isMenuActive">
-    <p>Charts Content Loaded Here</p>
+    <!-- Tabs for navigation -->
+    <div class="charts-tabs">
+      <button 
+        class="nav-btn" 
+        [routerLink]="['./hourly']" 
+        routerLinkActive="active">Hourly</button>
+      <button 
+        class="nav-btn" 
+        [routerLink]="['./weekly']" 
+        routerLinkActive="active">Weekly</button>
+      <button 
+        class="nav-btn" 
+        [routerLink]="['./monthly']" 
+        routerLinkActive="active">Monthly</button>
+    </div>
+
+    <!-- Render child route here dynamically -->
+    <router-outlet></router-outlet>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router'; // Import RouterModule
 import { MenuService } from '../../services/menu.service';
 import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
 
@@ -10,7 +11,8 @@ import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.c
   imports: [
     CommonModule,
     FormsModule,
-    LeftsidebarComponent,  // Include the left sidebar to ensure consistency in layout
+    RouterModule, // Add RouterModule here
+    LeftsidebarComponent,
   ],
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.css'],
@@ -21,12 +23,10 @@ export class ChartsComponent implements OnInit {
   constructor(private menuService: MenuService) {}
 
   ngOnInit() {
-    // Subscribe to the menu active status
     this.menuService.isMenuActive$.subscribe((status) => {
       this.isMenuActive = status;
     });
 
-    // Change the header text to "Reports" just like in the TransactionComponent
     this.menuService.changeHeaderText('Reports');
   }
 }

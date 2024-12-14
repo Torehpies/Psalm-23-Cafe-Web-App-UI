@@ -10,7 +10,7 @@
 .main-content {
   flex-grow: 1;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #ffecb3;
   transition: background-color 0.2s ease;
 }
 

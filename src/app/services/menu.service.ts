@@ -22,5 +22,8 @@ export class MenuService {
         this.headerText.set(text);
     }
 
+    // New function added
+    resetMenuState() {
+        this.isMenuActiveSubject.next(false);
+    }
 }
-

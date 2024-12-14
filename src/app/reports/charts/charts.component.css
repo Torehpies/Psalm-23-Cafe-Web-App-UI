@@ -1,27 +1,81 @@
+/* General Container */
 .container {
   display: flex;
-  flex-direction: row;
-  min-height: 70vh; 
-  padding: 0;
+  height: 100hv;
+  font-family: Arial, sans-serif;
 }
 
-
-/* Style for the main content */
+/* Main Content */
 .main-content {
-  flex-grow: 1;
+  flex: 1;
   padding: 20px;
-  background-color: #ffffff;
-  transition: background-color 0.2s ease;
+  background-color: #ffecb3;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
-/* Sticky Header */
-.sticky-header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
-  font-size: 18px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
+/* Chart Tabs */
+.chart-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.chart-tab {
+  background-color: #ffe4a6;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.chart-tab:hover {
+  background-color: #ffda91;
+}
+
+/* Responsive container for charts area */
+.chart-container {
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-height: 300px;
+}
+
+/* Active main navigation menu button hover effect */
+.chart-tab.active {
+  background-color: #5d3b09;
+  color: white;
+}
+
+/* Add alignment and scrollbar adjustments if necessary */
+.scroll-container {
+  overflow: auto;
+  max-height: 500px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .app-leftsidebar {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .chart-tabs {
+    flex-wrap: wrap;
+  }
+}
+.nav-btn.active {
+  background-color: #5d3b09;
+  color: white;
 }

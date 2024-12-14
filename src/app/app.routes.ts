@@ -64,6 +64,21 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./reports/financial-reports/financial-reports.component').then(m => m.FinancialReportsComponent),
       },
+      {
+        path: 'hourly',
+        loadComponent: () =>
+          import('./reports/charts/hourly/hourly.component').then(m => m.HourlyComponent),
+      },
+      {
+        path: 'weekly',
+        loadComponent: () =>
+          import('./reports/charts/weekly/weekly.component').then(m => m.WeeklyComponent),
+      },
+      {
+        path: 'monthly',
+        loadComponent: () =>
+          import('./reports/charts/monthly/monthly.component').then(m => m.MonthlyComponent),
+      },
     ],
   },
   
