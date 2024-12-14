@@ -1,37 +1,38 @@
 .daily-section {
-    width: 20%;
-    height: 40%;
-    background-color: white;
-    position: absolute;
-    top: 65%;
-    left: 72%;
-    transform: translate(-10%, -50%);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column; /* Stack headings vertically */
-    justify-content: flex-start; /* Align items at the top to avoid extra space */
-    align-items: flex-start; /* Align items to the left */
-    text-align: left;
-    border-radius: 10px;
-    padding: 10px;  /* Reduced padding inside the container */
-    margin: 0;  /* Removed margin to avoid extra space outside */
-  }
-  
-  h1, h2, h4 {
-    margin: 10px 0;  /* Adds 5px margin between headings to keep them close */
-    padding: 0;  /* Reset any padding */
-    line-height: 1.2;  /* Reduces line height to avoid extra space between lines of text */
-  }
-  
-  h1 {
-    color: #583D00;
-    font-size: 40px;
-  }
-  h2 {
-    font-size: 30px;
-  }
-  h4 {
-    font-size: 20px;
-    margin-left: 50px;
-  }
-  
+  width: 22%;
+  height: auto; /* Changed to auto to allow dynamic height */
+  background-color: white;
+  position: absolute;
+  top: 65%;
+  left: 72%;
+  transform: translate(-10%, -50%);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Stack headings vertically */
+  justify-content: flex-start; /* Align items at the top to avoid extra space */
+  align-items: flex-start; /* Align items to the left */
+  text-align: left;
+  border-radius: 10px;
+  padding: 10px;  /* Reduced padding inside the container */
+  margin: 0;  /* Removed margin to avoid extra space outside */
+  overflow: hidden; /* Prevent overflow */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+h1, h2, h4 {
+  margin: 10px 0;  /* Adds 10px margin between headings to keep them close */
+  padding: 0;  /* Reset any padding */
+  line-height: 1.2;  /* Reduces line height to avoid extra space between lines of text */
+}
+
+h1 {
+  color: #583D00;
+  font-size: 40px;
+}
+h2 {
+  font-size: 30px;
+}
+h4 {
+  font-size: 20px;
+  margin-left: 50px;
+}

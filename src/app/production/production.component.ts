@@ -9,7 +9,7 @@ import { ProductionTableComponent } from './production-table/production-table.co
   standalone: true,
   imports: [LeftsidebarComponent, HeaderComponent, ProductionTableComponent],
   templateUrl: './production.component.html',
-  styleUrl: './production.component.css'
+  styleUrls: ['./production.component.css']
 })
 export class ProductionComponent {
 
@@ -18,10 +18,14 @@ export class ProductionComponent {
   constructor(private menuService: MenuService) {}
 
   ngOnInit() {
-      this.menuService.isMenuActive$.subscribe((status) => {
-          this.isMenuActive = status;       
-      });
-      this.menuService.changeHeaderText('Production');
+    this.menuService.isMenuActive$.subscribe((status) => {
+      this.isMenuActive = status;       
+    });
+    this.menuService.changeHeaderText('Production');
   }
 
+  onItemAdded(item: any) {
+    // Logic to handle the added item
+    console.log('Item added:', item);
+  }
 }

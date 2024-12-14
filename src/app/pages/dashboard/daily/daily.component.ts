@@ -5,8 +5,13 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './daily.component.html',
-  styleUrl: './daily.component.css'
+  styleUrls: ['./daily.component.css']
 })
 export class DailyComponent {
-
+  totalCustomers: number = 200;
+  topSellers = {
+    pandesal: 54,
+    okinawaMilktea: 23,
+    mochaCake: 10
+  };
 }
