@@ -1,0 +1,10 @@
+<div class="popup-backdrop" *ngIf="showDeleteConfirm"></div>
+<div class="popup-modal" *ngIf="showDeleteConfirm">
+  <div class="popup-content">
+    <h2>Are you sure?</h2>
+    <div class="button-group">
+      <button (click)="onConfirm()" class="confirm-delete-btn">Yes</button>
+      <button (click)="onCancel()" class="cancel-btn">No</button>
+    </div>
+  </div>
+</div>

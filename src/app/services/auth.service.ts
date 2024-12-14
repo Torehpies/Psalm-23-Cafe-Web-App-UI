@@ -46,6 +46,7 @@ export class AuthService {
   logoutService() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('products');
+    localStorage.removeItem('supplyData');
   }
   
   sendEmailService(email: string){
