@@ -102,10 +102,6 @@ export class EditProductComponent {
                         formValue.price === this.product.price &&
                         formValue.unit === this.product.unit &&
                         this.areSizesEqual(formValue.sizes, this.product.sizes);
-
-                        console.log('Form Value:', formValue);
-                        console.log('Product:', this.product);
-                        console.log('Unchanged:', unchanged);
       return unchanged ? { unchanged: true } : null;
     };
   }
