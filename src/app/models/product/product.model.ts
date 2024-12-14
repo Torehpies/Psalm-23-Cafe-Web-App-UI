@@ -3,7 +3,7 @@ export interface Size {
     price: number;
 }
 
-export type Product = {
+export interface Product {
     _id?: string;
     name: string;
     unit: string;

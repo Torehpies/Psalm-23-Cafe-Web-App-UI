@@ -62,12 +62,12 @@ export class ProductFormComponent {
     if (formData.name && formData.category) {
       return this.productsService.getProducts().pipe(
         switchMap((response) => {
-          const products: Products[] = response.data; // Adjust to match the response type
+          const products: Product[] = response.data; // Adjust to match the response type
           console.log('Products:', products);
           const inputName = formData.name.toLowerCase();
           const inputCategory = formData.category.toLowerCase();
           this.isDuplicateProduct = products.some(product => 
-            product.name.toLowerCase() === inputName && product.Category.toLowerCase() === inputCategory
+            product.name.toLowerCase() === inputName && product.category.toLowerCase() === inputCategory
           );
           if (this.isDuplicateProduct) {
             this.addProductForm.setErrors({ duplicate: true }); // Mark form as invalid
