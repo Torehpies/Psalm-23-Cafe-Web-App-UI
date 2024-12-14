@@ -3,7 +3,7 @@ export interface Size {
     price: number;
 }
 
-export interface Product {
+export type Product = {
     _id?: string;
     name: string;
     unit: string;
@@ -12,5 +12,5 @@ export interface Product {
     sizes: Size[];
     status: 'Active' | 'Inactive';
     currentStock: number;
-    par: number
+    par: number;
 }

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormArray } from '@angular/forms';
 import { ProductsService } from '../../../services/products.service';
 import { Product } from '../../../models/product/product.model';
 import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm-modal.component';
@@ -19,17 +19,20 @@ export class ProductFormComponent {
   @Output() visible = new EventEmitter<void>();
 
   addProductForm: FormGroup;
-  categories: string[] = ['Bread', 'Cake', 'Coffee', 'Milk Tea', 'Sides'];
+  categories: string[] = ['Bread', 'Cake', 'Coffee', 'Milk Tea', 'Others'];
   showModal: boolean = false;
   modalMessage: string = '';
   isSubmitAction: boolean = false;
   isDuplicateProduct: boolean = false; // New flag for duplicate product validation
+  selectedCategory: string = '';
 
   constructor(private fb: FormBuilder, private productsService: ProductsService) {
     this.addProductForm = this.fb.group({
       name: ['', Validators.required],
       category: ['', Validators.required],
       price: ['', [Validators.required, Validators.min(0)]],
+      unit: [''],
+      sizes: this.fb.array([])
     });
 
      // Listen for changes to the name and category fields for instant duplicate validation
@@ -39,6 +42,11 @@ export class ProductFormComponent {
        switchMap(() => this.checkForDuplicateProduct())
      )
      .subscribe();
+
+     this.addProductForm.get('category')?.valueChanges.subscribe(category => {
+      this.selectedCategory = category;
+      this.updateFormForCategory(category);
+    });
   }
 
   toggleVisible() {
@@ -63,7 +71,6 @@ export class ProductFormComponent {
       return this.productsService.getProducts().pipe(
         switchMap((response) => {
           const products: Product[] = response.data; // Adjust to match the response type
-          console.log('Products:', products);
           const inputName = formData.name.toLowerCase();
           const inputCategory = formData.category.toLowerCase();
           this.isDuplicateProduct = products.some(product => 
@@ -79,6 +86,42 @@ export class ProductFormComponent {
       );
     }
     return of([]);
+  }
+
+  updateFormForCategory(category: string) {
+    if (category === 'Bread') {
+      this.addProductForm.get('unit')?.setValidators(Validators.required);
+      this.addProductForm.get('price')?.clearValidators();
+    } else if (category === 'Cake') {
+      this.addProductForm.get('unit')?.setValue('whole');
+      this.addProductForm.get('unit')?.clearValidators();
+      this.addProductForm.get('price')?.setValidators([Validators.required, Validators.min(0)]);
+    } else if (category === 'Coffee' || category === 'Milk Tea') {
+      this.addProductForm.get('unit')?.setValue('cup');
+      this.addProductForm.get('unit')?.clearValidators();
+      this.addProductForm.get('price')?.clearValidators();
+      this.addProductForm.setControl('sizes', this.fb.array([]));
+    } else if (category === 'Others') {
+      this.addProductForm.get('unit')?.clearValidators();
+      this.addProductForm.get('price')?.setValidators([Validators.required, Validators.min(0)]);
+    }
+    this.addProductForm.get('unit')?.updateValueAndValidity();
+    this.addProductForm.get('price')?.updateValueAndValidity();
+  }
+
+  get sizes(): FormArray {
+    return this.addProductForm.get('sizes') as FormArray;
+  }
+
+  addSize() {
+    this.sizes.push(this.fb.group({
+      size: ['', Validators.required],
+      price: ['', [Validators.required, Validators.min(0)]]
+    }));
+  }
+
+  removeSize(index: number) {
+    this.sizes.removeAt(index);
   }
 
   onSubmit(): void {
@@ -99,11 +142,11 @@ export class ProductFormComponent {
             name: formData.name,
             category: formData.category,
             price: formData.price,
-            unit: 'Pieces',
+            unit: this.selectedCategory === 'Coffee' || this.selectedCategory === 'Milk Tea' ? 'cup' : formData.unit || 'Pieces',
             status: 'Inactive',
             currentStock: 0,
             par: 0,
-            sizes: []
+            sizes: this.selectedCategory === 'Coffee' || this.selectedCategory === 'Milk Tea' ? formData.sizes : []
           };
           this.productsService.addProduct(product).subscribe(
             (response) => {
