@@ -147,4 +147,56 @@ export class SupplyTableComponent {
       }
     }
   }
+
+  downloadData(data: any[], filename: string): void {
+    if (data.length === 0) {
+      console.error('No data available to download.');
+      return;
+    }
+    
+    const csvData = this.convertToCSV(data);
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('style', 'display:none');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  convertToCSV(data: any[]): string {
+    const array = [Object.keys(data[0])].concat(data);
+    return array.map(it => {
+      return Object.values(it).toString();
+    }).join('\n');
+  }
+
+  downloadAllTime(): void {
+    this.downloadData(this.supplyData, 'supply_data_all_time.csv');
+  }
+
+  downloadMonthToDate(): void {
+    const currentDate = new Date();
+    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const monthToDateData = this.supplyData.filter(record => {
+      const supplyDate = new Date(record.supply_date);
+      return supplyDate >= startOfMonth && supplyDate <= currentDate;
+    });
+    this.downloadData(monthToDateData, 'supply_data_month_to_date.csv');
+  }
+
+  downloadToday(): void {
+    const today = new Date().toISOString().split('T')[0];
+    const todayData = this.supplyData.filter(record => {
+      const recordDate = new Date(record.supply_date).toISOString().split('T')[0];
+      return recordDate === today;
+    });
+    this.downloadData(todayData, 'supply_data_today.csv');
+  }
+
+  downloadCustom(): void {
+    this.downloadData(this.filteredSupplyData, 'supply_data_custom.csv');
+  }
 }

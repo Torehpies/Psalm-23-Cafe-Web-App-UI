@@ -6,7 +6,7 @@
         </div>
     </div>
     <div>
-        <button (click)="toggleShowAddSupplyForm()" class="add-item-btn">+ Add Item</button>
+        <button (click)="toggleShowAddSupplyForm()" class="add-item-btn" *ngIf="isAddActive">+ Add Item</button>
     </div>
       
     <div class="table-section">
@@ -20,10 +20,10 @@
             <div class="download-section">
                 <span class="download-title">Download:</span>
                 <div class="download-buttons">
-                    <button>Custom Download</button>
-                    <button>All Time</button>
-                    <button>Month to Date</button>
-                    <button>Today</button>
+                  <button (click)="downloadCustom()">Custom Download</button>
+                  <button (click)="downloadAllTime()">All Time</button>
+                  <button (click)="downloadMonthToDate()">Month to Date</button>
+                  <button (click)="downloadToday()">Today</button>
                 </div>
             </div>
         </div>

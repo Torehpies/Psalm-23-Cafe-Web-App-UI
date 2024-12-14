@@ -21,11 +21,11 @@
             <div class="download-section">
                 <span class="download-title">Download:</span>
                 <div class="download-buttons">
-                    <button>Custom Download</button>
-                    <button>All Time</button>
-                    <button>Month to Date</button>
-                    <button>Today</button>
-                </div>
+                  <button (click)="downloadCustom()">Custom Download</button>
+                  <button (click)="downloadAllTime()">All Time</button>
+                  <button (click)="downloadMonthToDate()">Month to Date</button>
+                  <button (click)="downloadToday()">Today</button>
+                </div>                
             </div>
         </div>
         
