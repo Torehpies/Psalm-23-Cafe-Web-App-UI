@@ -1,8 +1,8 @@
 export interface UsedSupplies {
-    _id: string,
+    _id?: string,
     supply: SupplySummary,
     quantity: number,
-    employee: string,
+    employee: string | null,
     usedAt: string
 }
 

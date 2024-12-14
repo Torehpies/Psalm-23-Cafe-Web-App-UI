@@ -9,6 +9,8 @@ import { UsedSupplies } from '../../../models/usedSupplies.model';
 import { AddSupplyModalComponent } from './add-supply-modal/add-supply-modal.component';
 import { EditSupplyModalComponent } from './edit-supply-modal/edit-supply-modal.component';
 import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
+import { AuthService } from '../../../services/auth.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-supply-table',
@@ -35,6 +37,7 @@ export class SupplyTableComponent implements OnInit {
 
   suppliesService = inject(SuppliesService);
   usedSuppliesService = inject(UsedSuppliesService);
+  authService = inject(AuthService);
 
   constructor(private fb: FormBuilder) {
     this.addItemForm = this.createAddItemForm();
@@ -62,44 +65,19 @@ export class SupplyTableComponent implements OnInit {
   }
 
   private initializeData(): void {
-    this.fetchAndStoreSupplyData();
-    this.fetchAndStoreUsedSuppliesData();
-    this.loadSupplyDataFromLocalStorage();
-    this.applyDateFilter();
-  }
-
-  private fetchAndStoreSupplyData(): void {
-    this.suppliesService.getSupplies().subscribe({
-      next: (data) => {
-        localStorage.setItem('supplyData', JSON.stringify(data));
-        this.loadSupplyDataFromLocalStorage();
+    forkJoin({
+      supplies: this.suppliesService.getSupplies(),
+      usedSupplies: this.usedSuppliesService.fetchUsedSuppliesData()
+    }).subscribe({
+      next: ({ supplies, usedSupplies }) => {
+        this.supplyData = supplies;
+        this.usedSuppliesData = usedSupplies.data;
+        localStorage.setItem('supplyData', JSON.stringify(supplies));
+        localStorage.setItem('usedSuppliesData', JSON.stringify(usedSupplies.data));
+        this.applyDateFilter();
       },
-      error: (error) => console.error('Error fetching supply data:', error)
+      error: (error) => console.error('Error fetching data:', error)
     });
-  }
-
-  private fetchAndStoreUsedSuppliesData(): void {
-    this.usedSuppliesService.fetchUsedSuppliesData().subscribe({
-      next: (data) => {
-        localStorage.setItem('usedSuppliesData', JSON.stringify(data.data));
-        this.loadUsedSupplyDataFromLocalStorage();
-      },
-      error: (error) => console.error('Error fetching used supplies data:', error)
-    });
-  }
-
-  private loadSupplyDataFromLocalStorage(): void {
-    const storedData = localStorage.getItem('supplyData');
-    if (storedData) {
-      this.supplyData = JSON.parse(storedData);
-    }
-  }
-
-  private loadUsedSupplyDataFromLocalStorage(): void {
-    const storedData = localStorage.getItem('usedSuppliesData');
-    if (storedData) {
-      this.usedSuppliesData = JSON.parse(storedData);
-    }
   }
 
   toggleView(): void {
@@ -108,28 +86,17 @@ export class SupplyTableComponent implements OnInit {
   }
 
   applyDateFilter(): void {
-    if (this.isAddActive || !this.fromDate || !this.toDate) {
+    if (this.isAddActive) {
       this.usedSuppliesData = this.newSupplyData;
     } else {
-      const fromDateObj = new Date(this.fromDate);
-      const toDateObj = new Date(this.toDate);
-      this.usedSuppliesData = this.newSupplyData.filter(record => {
+      const fromDateObj = this.fromDate ? new Date(this.fromDate) : null;
+      const toDateObj = this.toDate ? new Date(this.toDate) : null;
+      this.usedSuppliesData = JSON.parse(localStorage.getItem('usedSuppliesData') || '[]');
+      this.usedSuppliesData = this.usedSuppliesData.filter(record => {
         const supplyDateObj = new Date(record.usedAt);
-        return supplyDateObj >= fromDateObj && supplyDateObj <= toDateObj;
+        return (!fromDateObj || supplyDateObj >= fromDateObj) && (!toDateObj || supplyDateObj <= toDateObj);
       });
     }
-  }
-
-  toggleShowAddSupplyForm(): void {
-    this.showAddForm = !this.showAddForm;
-  }
-
-  toggleShowEditSupplyForm(): void {
-    this.showEditForm = !this.showEditForm;
-  }
-
-  toggleShowDeleteConfirm(): void {
-    this.showDeleteConfirm = !this.showDeleteConfirm;
   }
 
   editItem(item: any): void {
@@ -139,54 +106,68 @@ export class SupplyTableComponent implements OnInit {
       quantity: item.quantity,
       dateProduced: item.usedAt
     });
-    this.toggleShowEditSupplyForm();
+    this.showEditForm = true;
   }
 
   deleteItem(item: any): void {
     this.currentItem = item;
-    this.toggleShowDeleteConfirm();
+    this.showDeleteConfirm = true;
   }
 
   confirmDelete(): void {
-    const index = this.newSupplyData.findIndex(item => item.supply.name === this.currentItem.name);
+    const index = this.newSupplyData.findIndex(item => item.supply.name === this.currentItem.supply.name);
     if (index !== -1) {
       this.newSupplyData.splice(index, 1);
       this.applyDateFilter();
     }
-    this.toggleShowDeleteConfirm();
+    this.showDeleteConfirm = false;
   }
 
   cancelDelete(): void {
     this.currentItem = null;
-    this.toggleShowDeleteConfirm();
+    this.showDeleteConfirm = false;
   }
 
-  onSubmit(): void {
+  onSubmit(newSupply: any): void {
+    const newUsedSupply: UsedSupplies = {
+      supply: { _id: newSupply.id, name: newSupply.itemName},
+      quantity: newSupply.quantity,
+      usedAt: new Date(newSupply.dateProduced).toISOString(), // Ensure the date is stored as a full form default date value
+      employee: this.authService.getUserId()
+    };
+    this.newSupplyData.push(newUsedSupply);
+    this.applyDateFilter();
+    this.showAddForm = false; // Ensure the form closes after submission
+  }
+
+  submitUsedSupplies(): void {
     if (this.newSupplyData.length > 0) {
-      this.usedSuppliesService.addUsedSupplies(this.newSupplyData).subscribe({
-        next: () => {
-          this.newSupplyData = [];
-          this.applyDateFilter();
-          this.toggleShowAddSupplyForm();
-        },
-        error: (error) => console.error('Error submitting used supplies:', error)
-      });
+      for (const supply of this.newSupplyData) {
+        this.usedSuppliesService.addUsedSupplies(supply).subscribe({
+          next: () => {
+            this.newSupplyData = [];
+            this.applyDateFilter();
+          },
+          error: (error) => console.error('Error submitting used supplies:', error)
+        });
+      }
     }
   }
 
   onUpdate(updatedItem: any): void {
     if (this.editItemForm.valid) {
-      const index = this.newSupplyData.findIndex(item => item.supply.name === this.currentItem.supply.name);
+      const index = this.newSupplyData.findIndex(item => item.supply._id === updatedItem.id);
       if (index !== -1) {
         this.newSupplyData[index] = {
           ...this.newSupplyData[index],
+          supply: { _id: updatedItem.id, name: updatedItem.itemName },
           quantity: updatedItem.quantity,
-          usedAt: updatedItem.dateProduced
+          usedAt: new Date(updatedItem.dateProduced).toISOString() // Ensure the date is stored as a full form default date value
         };
 
         this.applyDateFilter();
         this.editItemForm.reset();
-        this.toggleShowEditSupplyForm();
+        this.showEditForm = false; // Ensure the form closes after submission
       }
     }
   }

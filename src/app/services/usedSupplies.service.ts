@@ -15,7 +15,7 @@ export class UsedSuppliesService {
     return this.http.get<Response<UsedSupplies[]>>(`${apiUrls.usedSuppliesServiceApi}`);
   }
 
-  addUsedSupplies(usedSupplies: UsedSupplies[]) {
-    return this.http.post(`${apiUrls.usedSuppliesServiceApi}/create`, usedSupplies);
+  addUsedSupplies(usedSupplies: UsedSupplies) {
+    return this.http.post(`${apiUrls.usedSuppliesServiceApi}create`, usedSupplies);
   }
 }

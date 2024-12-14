@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Supplies } from '../../../../models/supplies.model';
 
 @Component({
-    standalone: true,
+  standalone: true,
   selector: 'app-add-supply-modal',
   templateUrl: './add-supply-modal.component.html',
   styleUrls: ['./add-supply-modal.component.css'],
@@ -11,6 +12,7 @@ import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angula
 })
 export class AddSupplyModalComponent {
   @Input() showAddForm: boolean = false;
+  @Input() supplyData: Supplies[] = [];
   @Output() closeAddForm = new EventEmitter<void>();
   @Output() addSupply = new EventEmitter<any>();
 
@@ -26,9 +28,14 @@ export class AddSupplyModalComponent {
 
   onSubmit(): void {
     if (this.addItemForm.valid) {
-      this.addSupply.emit(this.addItemForm.value);
+      const selectedSupply = this.supplyData.find(supply => supply.name === this.addItemForm.value.itemName);
+      const newSupply = {
+        ...this.addItemForm.value,
+        id: selectedSupply?._id
+      };
+      this.addSupply.emit(newSupply);
       this.addItemForm.reset();
-      this.closeAddForm.emit();
+      this.closeAddForm.emit(); // Ensure the form closes after submission
     }
   }
 

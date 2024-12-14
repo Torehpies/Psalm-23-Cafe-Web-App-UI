@@ -6,7 +6,7 @@
     </div>
   </div>
   <div>
-    <button (click)="toggleShowAddSupplyForm()" class="add-item-btn">+ Add Item</button>
+    <button (click)="showAddForm = true" class="add-item-btn" *ngIf="isAddActive">+ Add Item</button>
   </div>
   
   <div class="table-section">
@@ -39,10 +39,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let record of isAddActive ? newSupplyData: usedSuppliesData">
+            <tr *ngFor="let record of isAddActive ? newSupplyData : usedSuppliesData">
               <td>{{ record.supply.name }}</td>
               <td>{{ record.quantity }}</td>
-              <td>{{ record.usedAt }}</td>
+              <td>{{ record.usedAt | date: 'mediumDate' }}</td>
               <td *ngIf="isAddActive">
                 <button class="edit-btn" (click)="editItem(record)">Edit</button>
                 <button class="delete-btn" (click)="deleteItem(record)">Delete</button>
@@ -54,18 +54,21 @@
     </div>
   </div>
   <div class="submit" [ngClass]="{'hidden': !isAddActive}">
-    <button>Submit</button>
+    <button (click)="submitUsedSupplies()">Submit</button>
   </div>
 
   <app-add-supply-modal 
     [showAddForm]="showAddForm" 
-    (closeAddForm)="toggleShowAddSupplyForm()" 
-    (addSupply)="onSubmit()">
+    [supplyData]="supplyData"
+    (closeAddForm)="showAddForm = false" 
+    (addSupply)="onSubmit($event)">
   </app-add-supply-modal>
 
   <app-edit-supply-modal
     [showEditForm]="showEditForm" 
-    (closeEditForm)="toggleShowEditSupplyForm()" 
+    [supplyData]="supplyData"
+    [currentItem]="currentItem"
+    (closeEditForm)="showEditForm = false" 
     (updateSupply)="onUpdate($event)">
   </app-edit-supply-modal>
 

@@ -7,10 +7,7 @@
         <label for="itemName">Item:</label>
         <select formControlName="itemName" id="itemName">
           <option value="" disabled>Select Item</option>
-          <option value="Flour">Flour</option>
-          <option value="Sugar">Sugar</option>
-          <option value="Salt">Salt</option>
-          <option value="Butter">Butter</option>
+          <option *ngFor="let supply of supplyData" [value]="supply.name">{{ supply.name }}</option>
         </select>
         <div *ngIf="addItemForm.get('itemName')?.touched && addItemForm.get('itemName')?.invalid">
           <small class="error">Item name is required</small>

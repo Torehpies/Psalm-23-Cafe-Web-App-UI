@@ -2,17 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Supplies } from '../../../../models/supplies.model';
 
 @Component({
   standalone: true,
   selector: 'app-edit-supply-modal',
   templateUrl: './edit-supply-modal.component.html',
   styleUrls: ['./edit-supply-modal.component.css'],
-  imports: [ReactiveFormsModule,CommonModule]
+  imports: [ReactiveFormsModule, CommonModule]
 })
 export class EditSupplyModalComponent implements OnChanges {
   @Input() showEditForm: boolean = false;
   @Input() currentItem: any;
+  @Input() supplyData: Supplies[] = [];
   @Output() closeEditForm = new EventEmitter<void>();
   @Output() updateSupply = new EventEmitter<any>();
 
@@ -38,9 +40,14 @@ export class EditSupplyModalComponent implements OnChanges {
 
   onUpdate(): void {
     if (this.editItemForm.valid) {
-      this.updateSupply.emit(this.editItemForm.value);
+      const selectedSupply = this.supplyData.find(supply => supply.name === this.editItemForm.value.itemName);
+      const updatedSupply = {
+        ...this.editItemForm.value,
+        id: selectedSupply?._id
+      };
+      this.updateSupply.emit(updatedSupply);
       this.editItemForm.reset();
-      this.closeEditForm.emit();
+      this.closeEditForm.emit(); // Ensure the form closes after submission
     }
   }
 
