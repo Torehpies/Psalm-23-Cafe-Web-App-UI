@@ -6,13 +6,11 @@
         <li *ngIf="admin_roles.includes(userRole)" (click)="gotoAccountManagement()">Account Management</li>
         <li *ngIf="admin_roles.includes(userRole)" (click)="gotoAccountMonitoring()">Attendance Monitoring</li>
         <li *ngIf="admin_roles.includes(userRole)" (click)="gotoProductManagement()">Product Management</li>
-        <li *ngIf="counter_roles.includes(userRole)" (click)="gotoPos()">POS</li>
-        <!--
-        <li (click)="gotoSupplies()">Supplies</li>
-        <li (click)="gotoclockin()">Clock-in</li>
-        <li (click)="gotoProduction()">Production</li>
-        <li (click)="gotoScrapping()">Scrapping</li>
-        -->
+        <li *ngIf="counter_roles.includes(userRole) || admin_roles.includes(userRole)" (click)="gotoPos()">POS</li>
+        <li *ngIf="admin_roles.includes(userRole)" (click)="gotoSupplies()">Supplies</li>
+        <li *ngIf="admin_roles.includes(userRole)" (click)="gotoclockin()">Clock-in</li>
+        <li *ngIf="admin_roles.includes(userRole)" (click)="gotoProduction()">Production</li>
+        <li *ngIf="admin_roles.includes(userRole)" (click)="gotoScrapping()">Scrapping</li>
         <li class="logout" (click)="logout()">Log Out</li>
     </ul>
 </div>

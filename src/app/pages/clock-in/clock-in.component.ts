@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { LeftsidebarComponent } from '../components/leftsidebar/leftsidebar.component';
-import { HeaderComponent } from '../components/header/header.component';
-import { MenuService } from '../services/menu.service';
+import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { MenuService } from '../../services/menu.service';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @Component({
@@ -11,7 +11,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
   templateUrl: './clock-in.component.html',
   styleUrl: './clock-in.component.css'
 })
-export class ClockInComponent {
+export default class ClockInComponent {
 
   isMenuActive: boolean = false;
 

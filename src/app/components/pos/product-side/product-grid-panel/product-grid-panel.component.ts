@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { ProductItemComponent } from '../product-item/product-item.component';
 import { CommonModule } from '@angular/common';
-import { Product} from '../../../../services/product.service';
+import { Product } from '../../../../models/product/product.model';
 import { RouterModule } from '@angular/router';
 import { LineItem } from '../../../../models/lineItem/lineItem.model';
 import { CategoryService } from '../../../../services/category.service';
@@ -30,7 +30,7 @@ export class ProductGridPanelComponent implements OnInit {
     this.loadProductsFromLocalStorage();
     this.categoryService.selectedCategory$.subscribe((category) => {
       this.filteredProducts = category
-        ? this.products.filter((item) => item.Category === category)
+        ? this.products.filter((item) => item.category === category)
         : this.products;
     });
   }
@@ -51,9 +51,7 @@ export class ProductGridPanelComponent implements OnInit {
   }
 
   onLineItemConfirm(lineItem: LineItem) {
-    // console.log(`Selected quantity for ${this.selectedProduct?.name}: ${lineItem.quantity}`);
     this.orderService.addLineItem(lineItem);
-    console.log(lineItem)
     this.selectedProduct = null;
   }
 }

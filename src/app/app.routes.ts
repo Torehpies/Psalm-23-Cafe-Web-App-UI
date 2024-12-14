@@ -59,7 +59,31 @@ export const routes: Routes = [
     path: 'pos', 
     loadComponent: () => import('./pages/pos/pos.component'), 
     canActivate: [AuthGuardService, RoleGuardService],  
-     data: { expectedRoles: COUNTER_ROLES}
+     data: { expectedRoles: [...ADMIN_ROLES, ...COUNTER_ROLES]}
+  },
+  { 
+    path: 'supplies', 
+    loadComponent: () => import('./pages/supplies/supplies.component'), 
+    canActivate: [AuthGuardService, RoleGuardService],  
+     data: { expectedRoles: [...ADMIN_ROLES, ...COUNTER_ROLES]}
+  },
+  { 
+    path: 'production', 
+    loadComponent: () => import('./pages/production/production.component'), 
+    canActivate: [AuthGuardService, RoleGuardService],  
+     data: { expectedRoles: [...ADMIN_ROLES, ...COUNTER_ROLES]}
+  },
+  { 
+    path: 'scrapping', 
+    loadComponent: () => import('./pages/scrapping/scrapping.component'), 
+    canActivate: [AuthGuardService, RoleGuardService],  
+     data: { expectedRoles: [...ADMIN_ROLES, ...COUNTER_ROLES]}
+  },
+  { 
+    path: 'clock-in', 
+    loadComponent: () => import('./pages/clock-in/clock-in.component'), 
+    canActivate: [AuthGuardService, RoleGuardService],  
+     data: { expectedRoles: [...ADMIN_ROLES, ...COUNTER_ROLES]}
   },
   { 
     path: '**', 

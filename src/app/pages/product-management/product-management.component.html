@@ -9,7 +9,7 @@
     <div class="flex justify-center mt-6">
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-16">
         <div class="border border-gray-300 rounded-lg shadow-md flex flex-col items-center text-center hover:scale-105 transition-transform cursor-pointer max-w-[250px] min-h-[250px] p-4" *ngFor="let product of products" (click)="showProductDetails(product)">
-          <span class="text-lg font-bold">{{ product.Category }}</span>
+          <span class="text-lg font-bold">{{ product.category }}</span>
           <h1 class="text-xl font-semibold mt-2 mb-4 flex-grow flex items-center justify-center break-words">{{ product.name }}</h1>
           <p class="text-gray-500 mt-auto">{{ product.price | currency: 'PHP' }}</p>
         </div>

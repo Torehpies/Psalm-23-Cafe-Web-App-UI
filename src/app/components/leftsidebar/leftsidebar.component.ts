@@ -74,7 +74,7 @@ export class LeftsidebarComponent implements OnInit {
       this.menuService.toggleMenu();
     }
 
-   /*gian changes
+
    gotoSupplies(): void {
     this.router.navigate(['supplies']);
     this.menuService.toggleMenu();
@@ -93,5 +93,5 @@ export class LeftsidebarComponent implements OnInit {
    gotoScrapping(): void {
     this.router.navigate(['scrapping']);
     this.menuService.toggleMenu();
-   }*/
+   }
 }

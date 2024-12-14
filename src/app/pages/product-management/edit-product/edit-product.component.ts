@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ValidationErrors,AbstractControl,ValidatorFn} from '@angular/forms';
 import { ProductsService } from '../../../services/products.service';
-import { Products } from '../../../models/products.model';
+import { Product } from '../../../models/product/product.model';
 import { ConfirmModalComponent } from '../../../components/confirm-modal/confirm-modal.component';
 import { switchMap, debounceTime } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -29,7 +29,8 @@ export class EditProductComponent {
       name: ['', Validators.required],
       category: ['', Validators.required],
       price: ['', [Validators.required, Validators.min(0)]],
-    }, { validators: [this.unchangedValidator()] });
+      sizes: this.fb.array([]) // Add sizes form array
+    }, { validators: this.unchangedValidator() });
   }
 
   ngOnInit() {
@@ -38,6 +39,7 @@ export class EditProductComponent {
         name: this.product.name,
         category: this.product.Category,
         price: this.product.price,
+        sizes: this.product.sizes // Patch sizes
       });
 
       this.editProductForm.updateValueAndValidity();
@@ -113,9 +115,9 @@ export class EditProductComponent {
         if (this.editProductForm.valid) {
           const formData = this.editProductForm.value;
 
-          const updatedProduct: Partial<Products> = {
+          const updatedProduct: Partial<Product> = {
             name: formData.name,
-            Category: formData.category,
+            category: formData.category,
             price: formData.price,
           };
           this.productsService.updateProduct(this.product._id, updatedProduct).subscribe(

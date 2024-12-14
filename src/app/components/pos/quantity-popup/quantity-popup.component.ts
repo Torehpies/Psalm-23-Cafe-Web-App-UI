@@ -1,9 +1,9 @@
-
 import { Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import { Product } from '../../../services/product.service';
+import { Product } from '../../../models/product/product.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LineItem } from '../../../models/lineItem/lineItem.model';
+import { Size } from '../../../models/product/product.model';
 
 @Component({
   standalone: true,
@@ -19,12 +19,15 @@ export class QuantityPopupComponent implements OnInit{
   @Output() lineItemConfirm = new EventEmitter<LineItem>();
 
   quantity: number = 1;
+  selectedSize: string | undefined = '';
 
   lineItem: LineItem = {
     _id: this.product?._id,
     name: this.product?.name,
     quantity: this.quantity,
-    price: this.product?.price
+    price: this.product?.price,
+    sizes: this.product?.sizes,
+    selectedSize: this.selectedSize
   }
 
   ngOnInit(): void {
@@ -33,19 +36,23 @@ export class QuantityPopupComponent implements OnInit{
         _id: this.product._id,
         name: this.product.name,
         quantity: this.quantity,
-        price: this.product.price
+        price: this.product.price,
+        sizes: this.product.sizes,
+        selectedSize: this.selectedSize
+      };
+      if (this.product.sizes && this.product.sizes.length > 0) {
+        this.selectedSize = this.product.sizes[0].size; // Set default size
       }
     }
   }
-  // lineItem: LineItem = {
-  //   _id: this.product?._id,
-  //   name: this.product?.name,
-  //   quantity: this.quantity,
-  //   price: this.product?.price
-  // }
 
   onConfirm() {
     this.lineItem.quantity = this.quantity;
+    this.lineItem.selectedSize = this.selectedSize;
+    const selectedSizeObj = this.product?.sizes.find(size => size.size === this.selectedSize);
+    if (selectedSizeObj) {
+      this.lineItem.price = selectedSizeObj.price;
+    }
     this.lineItemConfirm.emit(this.lineItem);
     this.close.emit();
   }

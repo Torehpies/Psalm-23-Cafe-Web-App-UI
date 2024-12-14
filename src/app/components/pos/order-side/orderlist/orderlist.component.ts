@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 export class OrderlistComponent implements OnInit{
   
   lineItems: LineItem[] = [];
+  totalAmount: number = 0;
 
   orderService = inject(OrderService);
 
@@ -20,13 +21,21 @@ export class OrderlistComponent implements OnInit{
     this.orderService.lineItems$.subscribe((lineItems) => {
       this.lineItems = lineItems;
     });
+    this.orderService.totalAmount$.subscribe((totalAmount) => {
+      this.totalAmount = totalAmount;
+    });
   }
 
   removeLineItem(lineItem: LineItem): void {
     this.orderService.removeLineItem(lineItem);
   }
 
-  getTotalAmount(): number {
-    return this.lineItems.reduce((acc, item) => acc + (item.price ?? 0) * (item.quantity ?? 0), 0);
+  clearAllLineItems(): void {
+    this.lineItems.forEach(item => this.orderService.removeLineItem(item));
   }
+
+  getTotalAmount(): number {
+    return this.totalAmount;
+  }
+
 }

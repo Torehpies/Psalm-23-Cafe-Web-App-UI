@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { LeftsidebarComponent } from '../components/leftsidebar/leftsidebar.component';
-import { HeaderComponent } from '../components/header/header.component';
-import { MenuService } from '../services/menu.service';
+import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { MenuService } from '../../services/menu.service';
 import { ScrappingTableComponent } from './scrapping-table/scrapping-table.component';
 
 @Component({
@@ -11,7 +11,7 @@ import { ScrappingTableComponent } from './scrapping-table/scrapping-table.compo
   templateUrl: './scrapping.component.html',
   styleUrl: './scrapping.component.css'
 })
-export class ScrappingComponent {
+export default class ScrappingComponent {
   isMenuActive: boolean = false;
 
   constructor(private menuService: MenuService) {}

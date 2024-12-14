@@ -5,7 +5,7 @@ import { MenuService } from '../../services/menu.service';
 import { CommonModule } from '@angular/common';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { Products } from '../../models/products.model';
+import { Product } from '../../models/product/product.model';
 import { ProductsService } from '../../services/products.service';
 
 @Component({
@@ -19,7 +19,7 @@ export default class ProductManagementComponent {
   isMenuActive: boolean = false;
   showProductForm: boolean = false;
   showProductDetail: boolean = false;
-  products: Products[] = []; // Array to hold the products
+  products: Product[] = []; // Array to hold the products
   selectedProduct: any = null;
 
   constructor(private menuService: MenuService, private productsService: ProductsService) {}
@@ -37,7 +37,7 @@ export default class ProductManagementComponent {
       this.showProductForm = !this.showProductForm;
   }
 
-  showProductDetails(product: Products) {
+  showProductDetails(product: Product) {
       this.selectedProduct = product;
       this.showProductDetail = true;
   }
@@ -60,7 +60,7 @@ export default class ProductManagementComponent {
   }
 
 
-  addProduct(product: Products) {
+  addProduct(product: Product) {
       console.log('Adding product to backend:', product);
       this.productsService.addProduct(product).subscribe(
           (response) => {
@@ -73,7 +73,7 @@ export default class ProductManagementComponent {
       );
   }
 
-  onProductAdded(newProduct: Products) {
+  onProductAdded(newProduct: Product) {
     this.products.push(newProduct);
   }
   
