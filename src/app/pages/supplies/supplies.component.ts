@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { LeftsidebarComponent } from '../components/leftsidebar/leftsidebar.component';
-import { HeaderComponent } from '../components/header/header.component';
-import { MenuService } from '../services/menu.service';
+import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { MenuService } from '../../services/menu.service';
 import { SupplyTableComponent } from './supply-table/supply-table.component';
 
 @Component({
@@ -11,7 +11,7 @@ import { SupplyTableComponent } from './supply-table/supply-table.component';
   templateUrl: './supplies.component.html',
   styleUrl: './supplies.component.css'
 })
-export class SuppliesComponent {
+export default class SuppliesComponent {
 
   isMenuActive: boolean = false;
 

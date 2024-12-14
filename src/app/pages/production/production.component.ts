@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { LeftsidebarComponent } from '../components/leftsidebar/leftsidebar.component';
-import { HeaderComponent } from '../components/header/header.component';
-import { MenuService } from '../services/menu.service';
+import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { MenuService } from '../../services/menu.service';
 import { ProductionTableComponent } from './production-table/production-table.component';
 
 @Component({
@@ -11,7 +11,7 @@ import { ProductionTableComponent } from './production-table/production-table.co
   templateUrl: './production.component.html',
   styleUrls: ['./production.component.css']
 })
-export class ProductionComponent {
+export default class ProductionComponent {
 
   isMenuActive: boolean = false;
 
