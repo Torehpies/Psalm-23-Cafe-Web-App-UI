@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Supplies } from '../../../../models/supplies.model';
 
 @Component({
@@ -23,7 +22,7 @@ export class EditSupplyModalComponent implements OnChanges {
   constructor(private fb: FormBuilder) {
     this.editItemForm = this.fb.group({
       itemName: ['', Validators.required],
-      quantity: ['', [Validators.required, Validators.min(1)]],
+      quantity: ['', [Validators.required, Validators.min(1), this.stockValidator.bind(this)]],
       dateProduced: ['', Validators.required]
     });
   }
@@ -36,6 +35,14 @@ export class EditSupplyModalComponent implements OnChanges {
         dateProduced: this.currentItem.usedAt
       });
     }
+  }
+
+  stockValidator(control: AbstractControl): ValidationErrors | null {
+    const selectedSupply = this.supplyData.find(supply => supply.name === this.editItemForm?.value.itemName);
+    if (selectedSupply && control.value > selectedSupply.currentStock) {
+      return { insufficientStock: true };
+    }
+    return null;
   }
 
   onUpdate(): void {

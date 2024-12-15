@@ -1,80 +1,68 @@
-<div>
-  <div class="centered-toggle">
-    <div class="toggle-container">
-      <div class="toggle-option" [class.active]="isAddActive" (click)="toggleView()">ADD</div>
-      <div class="toggle-option" [class.active]="!isAddActive" (click)="toggleView()">VIEW</div>
-    </div>
+<div class="centered-toggle">
+  <div class="toggle-container">
+    <div class="toggle-option" [class.active]="isAddActive" (click)="toggleView()">ADD</div>
+    <div class="toggle-option" [class.active]="!isAddActive" (click)="toggleView()">VIEW</div>
   </div>
-  <div>
-    <button (click)="showAddForm = true" class="add-item-btn" *ngIf="isAddActive">+ Add Item</button>
-  </div>
-  
-  <div class="table-section">
-    <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
-      <div class="date-filter">
-        <label for="fromDate">From:</label>
-        <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()">
-        <label for="toDate">To:</label>
-        <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()">
-      </div>
-      <div class="download-section">
-        <span class="download-title">Download:</span>
-        <div class="download-buttons">
-          <button>Custom Download</button>
-          <button>All Time</button>
-          <button>Month to Date</button>
-          <button>Today</button>
-        </div>
-      </div>
-    </div>
-    <div class="supply-info">
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Quantity</th>
-              <th>Date Used</th>
-              <th *ngIf="isAddActive">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let record of isAddActive ? newSupplyData : usedSuppliesData">
-              <td>{{ record.supply.name }}</td>
-              <td>{{ record.quantity }}</td>
-              <td>{{ record.usedAt | date: 'mediumDate' }}</td>
-              <td *ngIf="isAddActive">
-                <button class="edit-btn" (click)="editItem(record)">Edit</button>
-                <button class="delete-btn" (click)="deleteItem(record)">Delete</button>
-              </td>   
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="submit" [ngClass]="{'hidden': !isAddActive}">
-    <button (click)="submitUsedSupplies()">Submit</button>
-  </div>
-
-  <app-add-supply-modal 
-    [showAddForm]="showAddForm" 
-    [supplyData]="supplyData"
-    (closeAddForm)="showAddForm = false" 
-    (addSupply)="onSubmit($event)">
-  </app-add-supply-modal>
-
-  <app-edit-supply-modal
-    [showEditForm]="showEditForm" 
-    [supplyData]="supplyData"
-    [currentItem]="currentItem"
-    (closeEditForm)="showEditForm = false" 
-    (updateSupply)="onUpdate($event)">
-  </app-edit-supply-modal>
-
-  <app-delete-confirmation-modal
-    [showDeleteConfirm]="showDeleteConfirm" 
-    (confirmDelete)="confirmDelete()" 
-    (cancelDelete)="cancelDelete()">
-  </app-delete-confirmation-modal>
+  <button (click)="showAddForm = true" class="add-item-btn" *ngIf="isAddActive">+ Add Item</button>
 </div>
+
+<div class="table-section">
+  <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
+    <div class="date-filter">
+      <label for="fromDate">From:</label>
+      <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()">
+      <label for="toDate">To:</label>
+      <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()">
+    </div>
+    <div class="download-section">
+      <span class="download-title">Download:</span>
+      <div class="download-buttons">
+        <button>Custom Download</button>
+        <button>All Time</button>
+        <button>Month to Date</button>
+        <button>Today</button>
+      </div>
+    </div>
+  </div>
+  <div class="supply-info">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Date Used</th>
+            <th *ngIf="isAddActive">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of isAddActive ? newSupplyData : usedSuppliesData">
+            <td>{{ record.supply.name }}</td>
+            <td>{{ record.quantity }}</td>
+            <td>{{ record.usedAt | date: 'mediumDate' }}</td>
+            <td *ngIf="isAddActive">
+              <button class="edit-btn" (click)="editItem(record)">Edit</button>
+              <button class="delete-btn" (click)="deleteItem(record)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="submit" [ngClass]="{'hidden': !isAddActive}">
+  <button (click)="submitUsedSupplies()">Submit</button>
+</div>
+
+<app-add-supply-modal [showAddForm]="showAddForm" [supplyData]="supplyData" (closeAddForm)="showAddForm = false"
+  (addSupply)="onSubmit($event)">
+</app-add-supply-modal>
+
+<app-edit-supply-modal [showEditForm]="showEditForm" [supplyData]="supplyData" [currentItem]="currentItem"
+  (closeEditForm)="showEditForm = false" (updateSupply)="onUpdate($event)">
+</app-edit-supply-modal>
+
+<app-delete-confirmation-modal [showDeleteConfirm]="showDeleteConfirm" (confirmDelete)="confirmDelete()"
+  (cancelDelete)="cancelDelete()">
+</app-delete-confirmation-modal>

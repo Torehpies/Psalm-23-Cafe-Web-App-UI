@@ -7,17 +7,13 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  position: absolute; /* To position it absolutely within the container */
-  top: 16%; /* Adjust to match the height positioning in the picture */
-  right: 5%; /* Adjust to the right edge */
   transition: background-color 0.3s ease;
+  margin-left: 20px;
 }
 
 .add-item-btn:hover {
   background-color: #45a049; /* Darker green on hover */
 }
-
-
 
 /* Delete Confirmation Modal */
 .confirm-delete-btn {
@@ -32,13 +28,8 @@
 
 /* Existing styles for the table section */
 .table-section {
-  width: 80%;
-  height: 60%;
+  width: 100%;
   background-color: white;
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -46,6 +37,7 @@
   border-radius: 8px;
   padding: 20px;
   overflow: hidden;
+  margin-top: 20px;
 }
 
 .worker-info {
@@ -125,18 +117,18 @@ tbody tr:last-child td {
 
 /* Style for the submit button */
 .submit {
-  position: absolute;
-  top: 93%;
-  left: 42.5%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .submit button {
   background-color: #3C2100;
   color: white;
-  width: 200%;
-  height: 200%;
+  width: 200px;
+  height: 50px;
   border-radius: 20px;
-  font-size: 40px;
+  font-size: 20px;
   border: none; /* Remove default border */
   cursor: pointer; /* Change cursor to pointer */
   transition: background-color 0.3s ease; /* Add hover effect */
@@ -147,29 +139,23 @@ tbody tr:last-child td {
   color: #3C2100;
 }
 
-/* Center the toggle horizontally with position fixed */
+/* Center the toggle horizontally with flexbox */
 .centered-toggle {
-  position: fixed; /* Fixed position to stay centered */
-  top: 16%; /* Adjusted based on your image */
-  left: 50%;
-  transform: translateX(-50%); /* Only horizontally center it */
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 250px; /* Increased width for a better fit */
-  height: 60px; /* Adjusted height for a better look */
+  margin-bottom: 20px;
+}
+
+.toggle-container {
+  display: flex;
+  width: auto;
+  height: 60px;
   background-color: #f0f0f0;
   border-radius: 100px; /* Increased radius for more rounded edges */
   overflow: hidden;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
-
-.toggle-container {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  position: relative;
 }
 
 .toggle-option {

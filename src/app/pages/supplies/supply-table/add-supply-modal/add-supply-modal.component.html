@@ -20,6 +20,9 @@
         <div *ngIf="addItemForm.get('quantity')?.touched && addItemForm.get('quantity')?.invalid">
           <small class="error">Quantity is required</small>
         </div>
+        <div *ngIf="addItemForm.get('quantity')?.errors?.['insufficientStock']">
+          <small class="error">Insufficient stock</small>
+        </div>
       </div>
 
       <div>

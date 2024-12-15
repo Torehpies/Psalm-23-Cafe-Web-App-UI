@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Supplies } from '../../../../models/supplies.model';
 
 @Component({
@@ -21,9 +21,17 @@ export class AddSupplyModalComponent {
   constructor(private fb: FormBuilder) {
     this.addItemForm = this.fb.group({
       itemName: ['', Validators.required],
-      quantity: ['', [Validators.required, Validators.min(1)]],
+      quantity: ['', [Validators.required, Validators.min(1), this.stockValidator.bind(this)]],
       dateProduced: ['', Validators.required]
     });
+  }
+
+  stockValidator(control: AbstractControl): ValidationErrors | null {
+    const selectedSupply = this.supplyData.find(supply => supply.name === this.addItemForm?.value.itemName);
+    if (selectedSupply && control.value > selectedSupply.currentStock) {
+      return { insufficientStock: true };
+    }
+    return null;
   }
 
   onSubmit(): void {

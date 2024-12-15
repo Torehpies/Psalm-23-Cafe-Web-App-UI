@@ -142,11 +142,15 @@ export class SupplyTableComponent implements OnInit {
 
   submitUsedSupplies(): void {
     if (this.newSupplyData.length > 0) {
+      let completedRequests = 0;
       for (const supply of this.newSupplyData) {
         this.usedSuppliesService.addUsedSupplies(supply).subscribe({
           next: () => {
-            this.newSupplyData = [];
-            this.applyDateFilter();
+            completedRequests++;
+            if (completedRequests === this.newSupplyData.length) {
+              this.newSupplyData = [];
+              this.applyDateFilter();
+            }
           },
           error: (error) => console.error('Error submitting used supplies:', error)
         });
