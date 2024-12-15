@@ -8,7 +8,7 @@
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
-  margin-left: 20px;
+  margin-left: auto; /* Align to the right */
 }
 
 .add-item-btn:hover {
@@ -145,6 +145,7 @@ tbody tr:last-child td {
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  position: relative; /* Add relative positioning */
 }
 
 .toggle-container {
@@ -159,6 +160,7 @@ tbody tr:last-child td {
 }
 
 .toggle-option {
+  width: 80px;
   flex: 1;
   display: flex;
   justify-content: center;
@@ -177,6 +179,14 @@ tbody tr:last-child td {
 
 .toggle-container .toggle-option:first-child {
   border-right: 1px solid #ddd; /* Border between options */
+}
+
+/* Position the add-item-btn to the right */
+.add-item-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /* Style for the filter section */
