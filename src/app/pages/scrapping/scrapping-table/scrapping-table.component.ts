@@ -139,19 +139,14 @@ export class ScrappingTableComponent implements OnInit {
   }
 
   onSubmit(newScrap: any): void {
-    const itemType = newScrap.itemType;
-    const itemName = newScrap.itemName;
-    const item = itemType === 'Supply' ? this.supplyData.find(item => item.name === itemName) : this.productData.find(item => item.name === itemName);
-
     const newScrapItem: Scrapping = {
       itemType: newScrap.itemType,
-      itemId: item._id,
-      itemName: item.name,
+      itemId: newScrap.itemId,
+      itemName: newScrap.itemName,
       quantity: newScrap.quantity,
       usedAt: newScrap.scrapDate,
       employee: this.authService.getUserId()
     };
-    console.log('Adding new scrap item:', newScrapItem); // Debug log
     this.newScrapData.push(newScrapItem);
     this.applyDateFilter();
     this.showAddForm = false;

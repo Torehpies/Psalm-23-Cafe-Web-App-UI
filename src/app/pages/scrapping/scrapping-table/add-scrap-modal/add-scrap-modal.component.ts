@@ -43,15 +43,10 @@ export class AddScrapModalComponent {
 
   onSubmit(): void {
     if (this.addItemForm.valid) {
-      const itemType = this.addItemForm.get('itemType')?.value;
-      const itemName = this.addItemForm.get('itemName')?.value;
-      const item = itemType === 'Supplies' ? this.supplyData.find(item => item.name === itemName) : this.productData.find(item => item.name === itemName);
-
       const newScrap = {
         ...this.addItemForm.value,
-        itemId: item._id,
-        itemName: item.name
-      };
+        itemId: this.itemOptions.find(item => item.name === this.addItemForm.value.itemName)._id,
+      }
 
       this.addScrap.emit(newScrap);
       this.addItemForm.reset();
