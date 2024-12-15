@@ -1,51 +1,52 @@
-<app-header class="sticky-header"/>
+<app-header class="sticky top-0 z-50"/>
 
-<div class="container">
+<div class="flex flex-col lg:flex-row">
   <app-leftsidebar></app-leftsidebar>
 
-  <div class="main-content" [class.active]="isMenuActive">
-    <div class="attendance-monitoring">
-      <div class="header">
-        <h1>Attendance Monitoring</h1>
-        <div class="date-filter">
-          <label for="startDate">From:</label>
-          <input type="date" id="startDate" [(ngModel)]="startDate" />
-          <label for="endDate">To:</label>
-          <input type="date" id="endDate" [(ngModel)]="endDate" />
+  <div class="main-content flex-1 flex flex-col items-center justify-center" style="margin-left: 5rem; margin-right: 5rem;" [class.active]="isMenuActive">
+    <div class="attendance-monitoring flex flex-col h-full overflow-hidden w-full max-w-full">
+      <div class="header flex justify-between items-center mb-5 bg-yellow-950 rounded p-4">
+        <div class="date-filter flex items-center gap-2 ml-10">
+          <label for="startDate" class="text-sm text-white">From:</label>
+          <input type="date" id="startDate" [(ngModel)]="startDate" class="p-1 border border-brown-700 rounded text-sm"/>
+          <label for="endDate" class="text-sm text-white">To:</label>
+          <input type="date" id="endDate" [(ngModel)]="endDate" class="p-1 border border-brown-700 rounded text-sm"/>
         </div>
-        <div class="download-buttons">
-          <button (click)="download('custom')">Custom Download</button>
-          <button (click)="download('allTime')">All Time</button>
-          <button (click)="download('today')">Today</button>
-          <button (click)="download('monthToDate')">Month to Date</button>
+        <div class="download-buttons flex gap-2">
+          <button (click)="download('custom')" class="bg-yellow-600 text-white border-none rounded p-2 cursor-pointer text-sm hover:bg-brown-800 focus:outline focus:outline-2 focus:outline-brown-800">Custom Download</button>
+          <button (click)="download('allTime')" class="bg-yellow-600 text-white border-none rounded p-2 cursor-pointer text-sm hover:bg-brown-800 focus:outline focus:outline-2 focus:outline-brown-800">All Time</button>
+          <button (click)="download('today')" class="bg-yellow-600 text-white border-none rounded p-2 cursor-pointer text-sm hover:bg-brown-800 focus:outline focus:outline-2 focus:outline-brown-800">Today</button>
+          <button (click)="download('monthToDate')" class="bg-yellow-600 text-white border-none rounded p-2 cursor-pointer text-sm hover:bg-brown-800 focus:outline focus:outline-2 focus:outline-brown-800">Month to Date</button>
         </div>
       </div>
 
-      <div class="content">
-        <div class="employee-list">
-          <h3>Employees</h3>
-          <ul>
-            <li *ngFor="let employee of employees" (click)="selectEmployee(employee)">
-              {{ employee.name }} <span class="role">{{ employee.role }}</span>
+      <div class="content grid grid-cols-2 gap-5 flex-grow h-[calc(75vh-20px)]">
+        <div class="employee-list bg-white border border-brown-700 rounded p-4 overflow-auto max-h-full">
+          <h3 class="text-xl text-brown-900 mb-2">Employees</h3>
+          <ul class="list-none p-0 m-0">
+            <li *ngFor="let user of users" (click)="selectUser(user)" class="p-3 border-b border-brown-700 cursor-pointer text-xl text-brown-900 leading-6 hover:bg-yellow-100">
+              {{ user.firstName }} {{ user.lastName }} 
+              <span class="role block text-lg text-brown-800 ml-1 italic">{{ user.role }}</span>
             </li>
           </ul>
         </div>
 
-        <div *ngIf="selectedEmployee" class="employee-details">
-          <h3>{{ selectedEmployee.name }} - {{ selectedEmployee.role }}</h3>
-          <table>
+        <div class="employee-details bg-white border border-brown-700 rounded p-4 overflow-auto">
+          <h3 class="text-xl text-brown-900 mb-2" *ngIf="selectedUser">{{ selectedUser.firstName }} {{ selectedUser.lastName }} - {{ selectedUser.role }}</h3>
+          <h3 class="text-xl text-brown-900 mb-2" *ngIf="!selectedUser">Choose employee to view</h3>
+          <table *ngIf="selectedUser" class="w-full border-collapse mt-2 table-fixed">
             <thead>
               <tr>
-                <th>Date</th>
-                <th>Time In</th>
-                <th>Time Out</th>
+                <th class="border border-brown-700 p-2 text-left text-lg leading-6 bg-yellow-100 text-brown-900 w-1/3">Date</th>
+                <th class="border border-brown-700 p-2 text-left text-lg leading-6 bg-yellow-100 text-brown-900 w-1/3">Time In</th>
+                <th class="border border-brown-700 p-2 text-left text-lg leading-6 bg-yellow-100 text-brown-900 w-1/3">Time Out</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let record of selectedEmployee.attendance">
-                <td>{{ record.date }}</td>
-                <td>{{ record.timeIn }}</td>
-                <td>{{ record.timeOut }}</td>
+              <tr *ngFor="let attendance of attendances">
+                <td class="border border-brown-700 p-2 text-lg leading-6 text-brown-900">{{ attendance.Date | date }}</td>
+                <td class="border border-brown-700 p-2 text-lg leading-6 text-brown-900">{{ attendance.TimeIn }}</td>
+                <td class="border border-brown-700 p-2 text-lg leading-6 text-brown-900">{{ attendance.Timeout }}</td>
               </tr>
             </tbody>
           </table>

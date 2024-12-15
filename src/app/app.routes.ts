@@ -83,7 +83,7 @@ export const routes: Routes = [
     path: 'clock-in', 
     loadComponent: () => import('./pages/clock-in/clock-in.component'), 
     canActivate: [AuthGuardService, RoleGuardService],  
-     data: { expectedRoles: [...ADMIN_ROLES, ...COUNTER_ROLES]}
+     data: { expectedRoles: [...ADMIN_ROLES, ...COUNTER_ROLES, ...PRODUCTION_ROLES]}
   },
   { 
     path: '**', 

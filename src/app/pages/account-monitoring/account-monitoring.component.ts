@@ -4,6 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { MenuService } from '../../services/menu.service';
 import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
 import { HeaderComponent } from '../../components/header/header.component';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.model';
+import { AttendanceService } from '../../services/attendance.service';
+import { Attendance } from '../../models/attendance.model';
 
 @Component({
   selector: 'app-account-monitoring',
@@ -22,31 +26,11 @@ export default class AccountMonitoringComponent implements OnInit {
   startDate: string = ''; 
   endDate: string = ''; 
 
-// Sample employee data
-employees = [
-  {
-    name: 'Juan Dela Cruz',
-    role: 'Baker',
-    attendance: [
-      { date: 'Jan. 01, 2024', timeIn: '7:00 AM', timeOut: '9:00 PM' },
-      { date: 'Jan. 02, 2024', timeIn: '7:00 AM', timeOut: '9:00 PM' },
-      { date: 'Jan. 03, 2024', timeIn: '7:00 AM', timeOut: '9:00 PM' },
-    ],
-  },
-  {
-    name: 'Maria Santos',
-    role: 'Chef',
-    attendance: [
-      { date: 'Jan. 01, 2024', timeIn: '8:00 AM', timeOut: '4:00 PM' },
-      { date: 'Jan. 02, 2024', timeIn: '8:00 AM', timeOut: '4:00 PM' },
-      { date: 'Jan. 03, 2024', timeIn: '8:00 AM', timeOut: '4:00 PM' },
-    ],
-  },
-];
+  users: User[] = [];
+  selectedUser: User | null = null;
+  attendances: Attendance[] = [];
 
-  selectedEmployee: any = null;
-
-  constructor(private menuService: MenuService) {}
+  constructor(private menuService: MenuService, private userService: UserService, private attendanceService: AttendanceService) {}
 
   ngOnInit() {
     this.menuService.isMenuActive$.subscribe((status) => {
@@ -54,6 +38,11 @@ employees = [
     });
 
     this.menuService.changeHeaderText('Account Monitoring');
+
+    this.userService.getUsers().subscribe((response) => {
+      console.log('Users received from backend:', response.data); // Add this line for debugging
+      this.users = response.data.filter(user => user.role !== 'admin'); //filter out admin users
+    });
   }
 
   download(type: string) {
@@ -61,7 +50,10 @@ employees = [
     // Add API call for download based on type
   }
 
-  selectEmployee(employee: any) {
-    this.selectedEmployee = employee;
+  selectUser(user: User) {
+    this.selectedUser = user;
+    this.attendanceService.getAttendance().subscribe((response) => {
+      this.attendances = response.filter(attendance => attendance.userId === user._id);
+    });
   }
 }

@@ -31,6 +31,10 @@ export class AuthService {
       return null; // Return null if no token is found
     }
 
+  getUserName() {
+    return this.http.get<{ firstName: string, lastName: string }>(`${apiUrls.authServiceApi}username`);
+  }
+
   private decodeToken(token: string): any {
     const payload = token.split('.')[1]; // Get the payload part of the JWT
     return JSON.parse(atob(payload)); // Decode and parse the payload
