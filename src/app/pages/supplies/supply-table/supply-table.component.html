@@ -66,3 +66,9 @@
 <app-delete-confirmation-modal [showDeleteConfirm]="showDeleteConfirm" (confirmDelete)="confirmDelete()"
   (cancelDelete)="cancelDelete()">
 </app-delete-confirmation-modal>
+
+<div *ngIf="showStatusModal" class="status-modal">
+  <div class="status-content">
+    <p>{{ statusMessage }}</p>
+  </div>
+</div>

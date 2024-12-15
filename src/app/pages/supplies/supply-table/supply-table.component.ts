@@ -27,6 +27,8 @@ export class SupplyTableComponent implements OnInit {
   showAddForm = false;
   showEditForm = false;
   showDeleteConfirm = false;
+  showStatusModal = false;
+  statusMessage = '';
 
   supplyData: Supplies[] = [];
   usedSuppliesData: UsedSupplies[] = [];
@@ -150,12 +152,41 @@ export class SupplyTableComponent implements OnInit {
             if (completedRequests === this.newSupplyData.length) {
               this.newSupplyData = [];
               this.applyDateFilter();
+              this.refetchData(); // Refetch data after successful submission
+              this.showStatus('Data submitted successfully');
             }
           },
-          error: (error) => console.error('Error submitting used supplies:', error)
+          error: (error) => {
+            console.error('Error submitting used supplies:', error);
+            this.showStatus('Error submitting data');
+          }
         });
       }
     }
+  }
+
+  private refetchData(): void {
+    forkJoin({
+      supplies: this.suppliesService.getSupplies(),
+      usedSupplies: this.usedSuppliesService.fetchUsedSuppliesData()
+    }).subscribe({
+      next: ({ supplies, usedSupplies }) => {
+        this.supplyData = supplies;
+        this.usedSuppliesData = usedSupplies.data;
+        localStorage.setItem('supplyData', JSON.stringify(supplies));
+        localStorage.setItem('usedSuppliesData', JSON.stringify(usedSupplies.data));
+        this.applyDateFilter();
+      },
+      error: (error) => console.error('Error refetching data:', error)
+    });
+  }
+
+  private showStatus(message: string): void {
+    this.statusMessage = message;
+    this.showStatusModal = true;
+    setTimeout(() => {
+      this.showStatusModal = false;
+    }, 3000); // Hide the modal after 3 seconds
   }
 
   onUpdate(updatedItem: any): void {
