@@ -36,6 +36,7 @@ export class ProductionTableComponent implements OnInit {
   addItemForm: FormGroup;
   editItemForm: FormGroup;
   currentItem: any = null;
+  index: number | null = null;
 
   productsService = inject(ProductsService);
   produceHistoryService = inject(ProduceHistoryService);
@@ -54,8 +55,8 @@ export class ProductionTableComponent implements OnInit {
     return this.fb.group({
       itemName: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.min(1)]],
-      dateProduced: ['', Validators.required],
-      expirationDate: ['', Validators.required],
+      dateProduced: [new Date().toISOString().substring(0, 10), Validators.required],
+      expirationDate: [new Date().toISOString().substring(0, 10), Validators.required],
     });
   }
 
@@ -63,8 +64,8 @@ export class ProductionTableComponent implements OnInit {
     return this.fb.group({
       itemName: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.min(1)]],
-      dateProduced: ['', Validators.required],
-      expirationDate: ['', Validators.required],
+      dateProduced: [new Date().toISOString().substring(0, 10), Validators.required],
+      expirationDate: [new Date().toISOString().substring(0, 10), Validators.required],
     });
   }
 
@@ -103,54 +104,62 @@ export class ProductionTableComponent implements OnInit {
     }
   }
 
-  editItem(item: any): void {
-    this.currentItem = item;
-    this.editItemForm.patchValue({
-      itemName: item.product.name || item.product,
-      quantity: item.quantity,
-      dateProduced: item.producedAt,
-      expirationDate: item.expiresAt
-    });
+  editItem(index: number): void {
+    this.index = index;
+    this.currentItem = this.newProduceHistoryData[index];
     this.showEditForm = true;
   }
 
-  deleteItem(item: any): void {
-    this.currentItem = item;
+  deleteItem(index: number): void {
+    this.index = index;
     this.showDeleteConfirm = true;
   }
 
   confirmDelete(): void {
-    const index = this.newProduceHistoryData.findIndex(item => item.product.name === this.currentItem.product || item.product === this.currentItem.product);
-    if (index !== -1) {
-      this.newProduceHistoryData.splice(index, 1);
-      this.applyDateFilter();
+    if (this.index !== null) {
+      this.newProduceHistoryData.splice(this.index, 1);
     }
     this.showDeleteConfirm = false;
   }
 
   cancelDelete(): void {
-    this.currentItem = null;
+    this.index = null;
     this.showDeleteConfirm = false;
   }
 
   onSubmit(newProduct: any): void {
     const newProduceHistory: ProduceHistory = {
-      product: newProduct.itemName,
+      product: {_id: newProduct.id, name: newProduct.itemName},
       quantity: newProduct.quantity,
       employee: this.authService.getUserId(),
-      producedAt: newProduct.dateProduced,
+      producedAt: newProduct.dateProduced, 
       expiresAt: newProduct.expirationDate
     };
 
     this.newProduceHistoryData.push(newProduceHistory);
-    this.applyDateFilter();
     this.showAddForm = false;
   }
 
+  onUpdate(updatedItem: any): void {
+    if (this.index !== null) {
+      this.newProduceHistoryData[this.index] = {
+        product: {_id: updatedItem._id, name: updatedItem.itemName},
+        quantity: updatedItem.quantity,
+        employee: this.authService.getUserId(),
+        producedAt: updatedItem.dateProduced,
+        expiresAt: updatedItem.expirationDate
+      };
+
+      this.applyDateFilter();
+      this.showEditForm = false;
+    }
+  
+  }
   submitProduceHistory(): void {
     if (this.newProduceHistoryData.length > 0) {
       let completedRequests = 0;
       for (const produce of this.newProduceHistoryData) {
+        console.log('Produce:', produce);
         this.produceHistoryService.addProduceHistory(produce).subscribe({
           next: () => {
             completedRequests++;
@@ -194,22 +203,5 @@ export class ProductionTableComponent implements OnInit {
     }, 3000); // Hide the modal after 3 seconds
   }
 
-  onUpdate(updatedItem: any): void {
-    if (this.editItemForm.valid) {
-      const index = this.newProduceHistoryData.findIndex(item => item.product.name === updatedItem.itemName || item.product === updatedItem.itemName);
-      if (index !== -1) {
-        this.newProduceHistoryData[index] = {
-          product: updatedItem.itemName,
-          quantity: updatedItem.quantity,
-          employee: this.authService.getUserId(),
-          producedAt: updatedItem.dateProduced,
-          expiresAt: updatedItem.expirationDate
-        };
-
-        this.applyDateFilter();
-        this.editItemForm.reset();
-        this.showEditForm = false;
-      }
-    }
-  }
+  
 }

@@ -22,14 +22,19 @@ export class AddProductModalComponent {
     this.addItemForm = this.fb.group({
       itemName: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.min(1)]],
-      dateProduced: ['', Validators.required],
-      expirationDate: ['', Validators.required],
+      dateProduced: [new Date().toISOString().substring(0, 10), Validators.required],
+      expirationDate: [new Date().toISOString().substring(0, 10), Validators.required],
     });
   }
 
   onSubmit(): void {
     if (this.addItemForm.valid) {
-      this.addProduct.emit(this.addItemForm.value);
+      const selectedProduct = this.productData.find(product => product.name === this.addItemForm.value.itemName);
+      const newProduceHistory = {
+        ...this.addItemForm.value,
+        id: selectedProduct?._id
+      };
+      this.addProduct.emit(newProduceHistory);
       this.addItemForm.reset();
       this.closeAddForm.emit();
     }

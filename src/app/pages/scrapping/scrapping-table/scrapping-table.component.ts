@@ -156,7 +156,6 @@ export class ScrappingTableComponent implements OnInit {
         employee: this.authService.getUserId()
       };
       this.applyDateFilter();
-      // this.editItemForm.reset();
       this.showEditForm = false;
     }
   }

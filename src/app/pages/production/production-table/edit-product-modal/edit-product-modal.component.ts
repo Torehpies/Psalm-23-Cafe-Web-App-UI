@@ -23,8 +23,8 @@ export class EditProductModalComponent implements OnChanges {
     this.editItemForm = this.fb.group({
       itemName: ['', Validators.required],
       quantity: ['', [Validators.required, Validators.min(1)]],
-      dateProduced: ['', Validators.required],
-      expirationDate: ['', Validators.required],
+      dateProduced: [new Date().toISOString().substring(0, 10), Validators.required],
+      expirationDate: [new Date().toISOString().substring(0, 10), Validators.required],
     });
   }
 
@@ -41,6 +41,11 @@ export class EditProductModalComponent implements OnChanges {
 
   onUpdate(): void {
     if (this.editItemForm.valid) {
+      const updatedProduct = {
+        ...this.editItemForm.value,
+        itemId: this.productData
+          .find(item => item.name === this.editItemForm.value.itemName)?._id,
+      }
       this.updateProduct.emit(this.editItemForm.value);
       this.editItemForm.reset();
       this.closeEditForm.emit();
