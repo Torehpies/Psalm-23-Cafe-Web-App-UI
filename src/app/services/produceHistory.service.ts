@@ -7,7 +7,7 @@ import { apiUrls } from '../api.urls';
 @Injectable({
   providedIn: 'root'
 })
-export class UsedSuppliesService {
+export class ProduceHistoryService {
 
   constructor(private http: HttpClient) { }
 

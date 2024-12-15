@@ -3,7 +3,8 @@ export interface ProduceHistory {
     product: ProductSummary,
     quantity: number,
     employee: string | null,
-    usedAt: string
+    producedAt: string,
+    expiresAt: string
 }
 
 export interface ProductSummary {

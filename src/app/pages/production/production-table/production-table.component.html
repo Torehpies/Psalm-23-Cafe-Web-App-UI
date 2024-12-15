@@ -1,180 +1,73 @@
-<div>
-    <div class="centered-toggle" (click)="toggleView()">
-        <div class="toggle-container">
-          <div class="toggle-option" [class.active]="isAddActive">ADD</div>
-          <div class="toggle-option" [class.active]="!isAddActive">VIEW</div>
-        </div>
-    </div>
-
-    <div>
-      <button (click)="toggleShowAddProductForm()" class="add" *ngIf="isAddActive">+ Add Item</button>
-    </div>
-
-    <div class="table-section">
-        <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
-            <div class="date-filter">
-                <label for="fromDate">From:</label>
-                <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()">
-                <label for="toDate">To:</label>
-                <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()">
-            </div>
-            <div class="download-section">
-                <span class="download-title">Download:</span>
-                <div class="download-buttons">
-                    <button>Custom Download</button>
-                    <button>All Time</button>
-                    <button>Month to Date</button>
-                    <button>Today</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="product-info"></div>
-        <div class="table-container">
-        <table>
-            <thead>
-            <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Date Used</th>
-                <th>Expiration date</th>
-                <th *ngIf="isAddActive">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let record of isAddActive ? productData : filteredProductData">
-                    <td>{{ record.product_item }}</td>
-                    <td>{{ record.product_quantity }}</td>
-                    <td>{{ record.product_date }}</td>
-                    <td>{{ record.product_expiration }}</td>
-                    <td *ngIf="isAddActive"> 
-                        <button (click)="editItem(record)" class="edit-btn">Edit</button>
-                        <button (click)="deleteItem(record)" class="delete-btn">Delete</button>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-        </div>
-    </div>
-    <div *ngIf="isAddActive" class="submit">
-      <button>Submit</button>
-    </div>
+<div class="centered-toggle">
+  <div class="toggle-container">
+    <div class="toggle-option" [class.active]="isAddActive" (click)="toggleView()">ADD</div>
+    <div class="toggle-option" [class.active]="!isAddActive" (click)="toggleView()">VIEW</div>
+  </div>
+  <button (click)="showAddForm = true" class="add-item-btn" *ngIf="isAddActive">+ Add Item</button>
 </div>
 
-<!-- Edit Item Modal -->
-<div class="popup-backdrop" *ngIf="showEditForm"></div>
-<div class="popup-modal" *ngIf="showEditForm">
-    <div class="popup-content">
-      <h2>Edit Item</h2>
-      <form [formGroup]="editItemForm" (ngSubmit)="onUpdate()">
-        <div>
-          <label for="editItemName">Item:</label>
-          <select formControlName="itemName" id="editItemName">
-            <option value="" disabled>Select Item</option>
-            <option value="Pandesal">Pandesal</option>
-            <option value="Monay">Monay</option>
-            <option value="Kababayan">Kababayan</option>
-            <option value="Ensaymada">Ensaymada</option>
-            <option value="Putok">Putok</option>
-          </select>
-          <div *ngIf="editItemForm.get('itemName')?.touched && editItemForm.get('itemName')?.invalid">
-            <small class="error">Item name is required</small>
-          </div>
-        </div>
-
-        <div>
-          <label for="editQuantity">Quantity:</label>
-          <input formControlName="quantity" id="editQuantity" type="number" placeholder="Enter quantity" />
-          <div *ngIf="editItemForm.get('quantity')?.touched && editItemForm.get('quantity')?.invalid">
-            <small class="error">Quantity is required</small>
-          </div>
-        </div>
-
-        <div>
-          <label for="editDateProduced">Date Produced:</label>
-          <input formControlName="dateProduced" id="editDateProduced" type="date" />
-          <div *ngIf="editItemForm.get('dateProduced')?.touched && editItemForm.get('dateProduced')?.invalid">
-            <small class="error">Date produced is required</small>
-          </div>
-        </div>
-
-        <div>
-          <label for="editExpirationDate">Expiration Date:</label>
-          <input formControlName="expirationDate" id="editExpirationDate" type="date" />
-          <div *ngIf="editItemForm.get('expirationDate')?.touched && editItemForm.get('expirationDate')?.invalid">
-            <small class="error">Expiration date is required</small>
-          </div>
-        </div>
-
-        <div class="button-group">
-          <button type="submit" [disabled]="!editItemForm.valid" class="update-btn">Update</button>
-          <button type="button" (click)="toggleShowEditProductForm()" class="cancel-btn">Cancel</button>
-        </div>
-      </form>
+<div class="table-section">
+  <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
+    <div class="date-filter">
+      <label for="fromDate">From:</label>
+      <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()">
+      <label for="toDate">To:</label>
+      <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()">
     </div>
-</div>
-
-<!-- Delete Confirmation Modal -->
-<div class="popup-backdrop" *ngIf="showDeleteConfirm"></div>
-<div class="popup-modal" *ngIf="showDeleteConfirm">
-    <div class="popup-content">
-      <h2>Are you sure?</h2>
-      <div class="button-group">
-        <button (click)="confirmDelete()" class="confirm-delete-btn">Yes</button>
-        <button (click)="cancelDelete()" class="cancel-btn">No</button>
+    <div class="download-section">
+      <span class="download-title">Download:</span>
+      <div class="download-buttons">
+        <button>Custom Download</button>
+        <button>All Time</button>
+        <button>Month to Date</button>
+        <button>Today</button>
       </div>
     </div>
+  </div>
+  <div class="product-info">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Date Produced</th>
+            <th>Expiration Date</th>
+            <th *ngIf="isAddActive">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of isAddActive ? newProduceHistoryData : produceHistoryData">
+            <td>{{ record.product.name || record.product }}</td>
+            <td>{{ record.quantity }}</td>
+            <td>{{ record.producedAt }}</td>
+            <td>{{ record.expiresAt }}</td>
+            <td *ngIf="isAddActive">
+              <button class="edit-btn" (click)="editItem(record)">Edit</button>
+              <button class="delete-btn" (click)="deleteItem(record)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
-<!-- Add Item Modal -->
-<div class="popup-backdrop" *ngIf="showAddForm"></div>
-<div class="popup-modal" *ngIf="showAddForm">
-    <div class="popup-content">
-      <h2>Add Item</h2>
-      <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
-        <div>
-          <label for="itemName">Item:</label>
-          <select formControlName="itemName" id="itemName">
-            <option value="" disabled>Select Item</option>
-            <option value="Pandesal">Pandesal</option>
-            <option value="Monay">Monay</option>
-            <option value="Kababayan">Kababayan</option>
-            <option value="Ensaymada">Ensaymada</option>
-            <option value="Putok">Putok</option>
-          </select>
-          <div *ngIf="addItemForm.get('itemName')?.touched && addItemForm.get('itemName')?.invalid">
-            <small class="error">Item name is required</small>
-          </div>
-        </div>
+<div class="submit" [ngClass]="{'hidden': !isAddActive}">
+  <button (click)="submitProduceHistory()">Submit</button>
+</div>
 
-        <div>
-          <label for="quantity">Quantity:</label>
-          <input formControlName="quantity" id="quantity" type="number" placeholder="Enter quantity" />
-          <div *ngIf="addItemForm.get('quantity')?.touched && addItemForm.get('quantity')?.invalid">
-            <small class="error">Quantity is required</small>
-          </div>
-        </div>
+<app-add-product-modal [showAddForm]="showAddForm" [productData]="productData" (closeAddForm)="showAddForm = false" (addProduct)="onSubmit($event)">
+</app-add-product-modal>
 
-        <div>
-          <label for="dateProduced">Date Produced:</label>
-          <input formControlName="dateProduced" id="dateProduced" type="date" />
-          <div *ngIf="addItemForm.get('dateProduced')?.touched && addItemForm.get('dateProduced')?.invalid">
-            <small class="error">Date produced is required</small>
-          </div>
-        </div>
+<app-edit-product-modal [showEditForm]="showEditForm" [currentItem]="currentItem" [productData]="productData" (closeEditForm)="showEditForm = false" (updateProduct)="onUpdate($event)">
+</app-edit-product-modal>
 
-        <div>
-          <label for="expirationDate">Expiration Date:</label>
-          <input formControlName="expirationDate" id="expirationDate" type="date" />
-          <div *ngIf="addItemForm.get('expirationDate')?.touched && addItemForm.get('expirationDate')?.invalid">
-            <small class="error">Expiration date is required</small>
-          </div>
-        </div>
+<app-delete-confirmation-modal [showDeleteConfirm]="showDeleteConfirm" (confirmDelete)="confirmDelete()" (cancelDelete)="cancelDelete()">
+</app-delete-confirmation-modal>
 
-        <div class="button-group">
-          <button type="submit" [disabled]="!addItemForm.valid" class="add-btn">Add</button>
-          <button type="button" (click)="toggleShowAddProductForm()" class="cancel-btn">Cancel</button>
-        </div>
-      </form>
-    </div>
+<div *ngIf="showStatusModal" class="status-modal">
+  <div class="status-content">
+    <p>{{ statusMessage }}</p>
+  </div>
 </div>
