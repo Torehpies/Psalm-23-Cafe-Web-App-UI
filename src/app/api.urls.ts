@@ -4,4 +4,5 @@ export const apiUrls = {
   orderServiceApi: 'http://localhost:8800/api/orders/',
   usedSuppliesServiceApi: 'http://localhost:8800/api/usedSupplies/',
   scrappingServiceApi: 'http://localhost:8800/api/scrapping/',
+  produceHistoryServiceApi: 'http://localhost:8800/api/produceHistory/',
 }
