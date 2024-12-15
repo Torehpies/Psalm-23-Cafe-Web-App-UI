@@ -1,48 +1,92 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common'; // Import CommonModule
+import { CommonModule } from '@angular/common';
+import { ScrappingService } from '../../../services/scrapping.service';
+import { SuppliesService } from '../../../services/supplies.service';
+import { ProductsService } from '../../../services/products.service';
+import { Scrapping } from '../../../models/scrapping.model';
+import { AddScrapModalComponent } from './add-scrap-modal/add-scrap-modal.component';
+import { EditScrapModalComponent } from './edit-scrap-modal/edit-scrap-modal.component';
+import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
+import { AuthService } from '../../../services/auth.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-scrapping-table',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, 
+    AddScrapModalComponent, EditScrapModalComponent, DeleteConfirmationModalComponent],
   templateUrl: './scrapping-table.component.html',
   styleUrls: ['./scrapping-table.component.css']
 })
-export class ScrappingTableComponent {
+export class ScrappingTableComponent implements OnInit {
+  isAddActive = true;
+  fromDate = '';
+  toDate = '';
+  showAddForm = false;
+  showEditForm = false;
+  showDeleteConfirm = false;
+  showStatusModal = false;
+  statusMessage = '';
 
-  isAddActive: boolean = true; // Initial state: "ADD" is active
-  fromDate: string = ''; // Initialize fromDate
-  toDate: string = ''; // Initialize toDate
-  showAddForm: boolean = false; // State to control visibility of the form
-  showEditForm: boolean = false; // State to control visibility of the edit form
-  showDeleteConfirm: boolean = false; // State to control visibility of the delete confirmation
+  scrapData: Scrapping[] = [];
+  newScrapData: Scrapping[] = [];
+  filteredScrapData: Scrapping[] = [];
+  supplyData: any[] = [];
+  productData: any[] = [];
+  addItemForm: FormGroup;
+  editItemForm: FormGroup;
+  currentItem: any = null;
 
-  scrapData: { scrap_id: string; scrap_name: string; scrap_quantity: string; scrap_date: string }[] = [];
-  filteredScrapData: { scrap_id: string; scrap_name: string; scrap_quantity: string; scrap_date: string }[] = [];
-  addItemForm: FormGroup; // Form Group for adding items
-  editItemForm: FormGroup; // Form Group for editing items
-  products: string[] = ['Pandesal', 'Monay', 'Pan de coco']; // Sample products
-  currentItem: any = null; // To hold the item being edited or deleted
+  scrappingService = inject(ScrappingService);
+  suppliesService = inject(SuppliesService);
+  productsService = inject(ProductsService);
+  authService = inject(AuthService);
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
-    this.addItemForm = this.fb.group({
-      productName: ['', Validators.required],
-      quantity: ['', [Validators.required, Validators.min(1)]],
-      scrapDate: ['', Validators.required],
-    });
-
-    this.editItemForm = this.fb.group({
-      productName: ['', Validators.required],
-      quantity: ['', [Validators.required, Validators.min(1)]],
-      scrapDate: ['', Validators.required],
-    });
+  constructor(private fb: FormBuilder) {
+    this.addItemForm = this.createAddItemForm();
+    this.editItemForm = this.createEditItemForm();
   }
 
   ngOnInit(): void {
-    this.loadscrapData();
-    this.applyDateFilter(); // Apply initial filter
+    this.initializeData();
+  }
+
+  private createAddItemForm(): FormGroup {
+    return this.fb.group({
+      itemType: ['', Validators.required],
+      itemName: ['', Validators.required],
+      quantity: ['', [Validators.required, Validators.min(1)]],
+      scrapDate: ['', Validators.required]
+    });
+  }
+
+  private createEditItemForm(): FormGroup {
+    return this.fb.group({
+      itemType: ['', Validators.required],
+      itemName: ['', Validators.required],
+      quantity: ['', [Validators.required, Validators.min(1)]],
+      scrapDate: ['', Validators.required]
+    });
+  }
+
+  private initializeData(): void {
+    forkJoin({
+      supplies: this.suppliesService.getSupplies(),
+      products: this.productsService.getProducts(),
+      scrapping: this.scrappingService.fetchScrappingData()
+    }).subscribe({
+      next: ({ supplies, products, scrapping }) => {
+        this.supplyData = supplies;
+        this.productData = products.data;
+        this.scrapData = scrapping.data;
+        localStorage.setItem('supplyData', JSON.stringify(supplies));
+        localStorage.setItem('products', JSON.stringify(products.data));
+        localStorage.setItem('scrapData', JSON.stringify(scrapping.data));
+        this.applyDateFilter();
+      },
+      error: (error) => console.error('Error fetching data:', error)
+    });
   }
 
   toggleView(): void {
@@ -50,105 +94,138 @@ export class ScrappingTableComponent {
     this.applyDateFilter();
   }
 
-  loadscrapData(): void {
-    this.http.get<{ scrap_id: string; scrap_name: string; scrap_quantity: string; scrap_date: string }[]>('/api/worker-scrap-data')
-      .subscribe(
-        (data) => {
-          this.scrapData = data;
-          this.applyDateFilter();
-        },
-        (error) => {
-          console.error('Error fetching supply data:', error);
-        }
-      );
-  }
-
   applyDateFilter(): void {
-    if (this.isAddActive || !this.fromDate || !this.toDate) {
-      this.filteredScrapData = this.scrapData; // Show all data when in add mode or no date selected
-    } else {
-      const fromDateObj = new Date(this.fromDate);
-      const toDateObj = new Date(this.toDate);
+    if (!this.isAddActive) {
+      const fromDateObj = this.fromDate ? new Date(this.fromDate) : null;
+      const toDateObj = this.toDate ? new Date(this.toDate) : null;
       this.filteredScrapData = this.scrapData.filter(record => {
-        const scrapDateObj = new Date(record.scrap_date);
-        return scrapDateObj >= fromDateObj && scrapDateObj <= toDateObj;
+        const scrapDateObj = new Date(record.usedAt);
+        return (!fromDateObj || scrapDateObj >= fromDateObj) && (!toDateObj || scrapDateObj <= toDateObj);
       });
+    } else {
+      this.filteredScrapData = this.newScrapData;
     }
-  }
-
-  toggleShowAddScrapForm(): void {
-    this.showAddForm = !this.showAddForm;
-  }
-
-  toggleShowEditScrapForm(): void {
-    this.showEditForm = !this.showEditForm;
-  }
-
-  toggleShowDeleteConfirm(): void {
-    this.showDeleteConfirm = !this.showDeleteConfirm;
+    // console.log('Filtered scrap data:', this.filteredScrapData); // Debug log
   }
 
   editItem(item: any): void {
     this.currentItem = item;
     this.editItemForm.patchValue({
-      productName: item.scrap_name,
-      quantity: item.scrap_quantity,
-      scrapDate: item.scrap_date
+      itemType: item.itemType,
+      itemName: item.itemName,
+      quantity: item.quantity,
+      scrapDate: item.usedAt
     });
-    this.toggleShowEditScrapForm();
+    this.showEditForm = true;
   }
 
   deleteItem(item: any): void {
     this.currentItem = item;
-    this.toggleShowDeleteConfirm();
+    this.showDeleteConfirm = true;
   }
 
   confirmDelete(): void {
-    const index = this.scrapData.findIndex(item => item.scrap_id === this.currentItem.scrap_id);
+    const index = this.newScrapData.findIndex(record => record._id === this.currentItem._id);
     if (index !== -1) {
-      this.scrapData.splice(index, 1);
-      this.applyDateFilter(); // Update the filtered data
+      this.newScrapData.splice(index, 1);
+      this.applyDateFilter();
     }
-    this.toggleShowDeleteConfirm(); // Close the delete confirmation
+    this.showDeleteConfirm = false;
   }
 
   cancelDelete(): void {
     this.currentItem = null;
-    this.toggleShowDeleteConfirm(); // Close the delete confirmation
+    this.showDeleteConfirm = false;
   }
 
-  onSubmit(): void {
-    if (this.addItemForm.valid) {
-      const newItem = {
-        scrap_id: 'B-' + (this.scrapData.length + 1).toString().padStart(3, '0'), // Generate new ID
-        scrap_name: this.addItemForm.value.productName,
-        scrap_quantity: this.addItemForm.value.quantity,
-        scrap_date: this.addItemForm.value.scrapDate
-      };
+  onSubmit(newScrap: any): void {
+    const itemType = newScrap.itemType;
+    const itemName = newScrap.itemName;
+    const item = itemType === 'Supply' ? this.supplyData.find(item => item.name === itemName) : this.productData.find(item => item.name === itemName);
 
-      this.scrapData.push(newItem);
-      this.applyDateFilter(); // Update the filtered data
+    const newScrapItem: Scrapping = {
+      itemType: newScrap.itemType,
+      itemId: item._id,
+      itemName: item.name,
+      quantity: newScrap.quantity,
+      usedAt: newScrap.scrapDate,
+      employee: this.authService.getUserId()
+    };
+    console.log('Adding new scrap item:', newScrapItem); // Debug log
+    this.newScrapData.push(newScrapItem);
+    this.applyDateFilter();
+    this.showAddForm = false;
+  }
 
-      this.addItemForm.reset(); // Clear the form
-      this.toggleShowAddScrapForm(); // Close the add form
+  submitScrapData(): void {
+    if (this.newScrapData.length > 0) {
+      let completedRequests = 0;
+      for (const scrap of this.newScrapData) {
+        this.scrappingService.addScrapping(scrap).subscribe({
+          next: () => {
+            completedRequests++;
+            if (completedRequests === this.newScrapData.length) {
+              this.newScrapData = [];
+              this.applyDateFilter();
+              this.refetchData(); // Refetch data after successful submission
+              this.showStatus('Data submitted successfully');
+            }
+          },
+          error: (error) => {
+            console.error('Error submitting scrapping data:', error);
+            this.showStatus('Error submitting data');
+          }
+        });
+      }
     }
   }
 
-  onUpdate(): void {
+  private refetchData(): void {
+    forkJoin({
+      supplies: this.suppliesService.getSupplies(),
+      products: this.productsService.getProducts(),
+      scrapping: this.scrappingService.fetchScrappingData()
+    }).subscribe({
+      next: ({ supplies, products, scrapping }) => {
+        this.supplyData = supplies;
+        this.productData = products.data;
+        this.scrapData = scrapping.data;
+        localStorage.setItem('supplyData', JSON.stringify(supplies));
+        localStorage.setItem('products', JSON.stringify(products));
+        localStorage.setItem('scrapData', JSON.stringify(scrapping.data));
+        this.applyDateFilter();
+      },
+      error: (error) => console.error('Error refetching data:', error)
+    });
+  }
+
+  private showStatus(message: string): void {
+    this.statusMessage = message;
+    this.showStatusModal = true;
+    setTimeout(() => {
+      this.showStatusModal = false;
+    }, 3000); // Hide the modal after 3 seconds
+  }
+
+  onUpdate(updatedItem: any): void {
     if (this.editItemForm.valid) {
-      const index = this.scrapData.findIndex(item => item.scrap_id === this.currentItem.scrap_id);
+      const itemType = updatedItem.itemType;
+      const itemName = updatedItem.itemName;
+      const item = itemType === 'Supply' ? this.supplyData.find(item => item.name === itemName) : this.productData.find(item => item.name === itemName);
+
+      const index = this.newScrapData.findIndex(record => record._id === this.currentItem._id);
       if (index !== -1) {
-        this.scrapData[index] = {
-          scrap_id: this.currentItem.scrap_id,
-          scrap_name: this.editItemForm.value.productName,
-          scrap_quantity: this.editItemForm.value.quantity,
-          scrap_date: this.editItemForm.value.scrapDate
+        this.newScrapData[index] = {
+          ...this.newScrapData[index],
+          itemType: updatedItem.itemType,
+          itemId: item._id,
+          itemName: item.name,
+          quantity: updatedItem.quantity,
+          usedAt: updatedItem.scrapDate
         };
-
-        this.applyDateFilter(); // Update the filtered data
-
-        this.editItemForm.reset(); // Clear the form
-        this.toggleShowEditScrapForm(); // Close the edit form
+        this.applyDateFilter();
+        this.editItemForm.reset();
+        this.showEditForm = false;
       }
     }
   }

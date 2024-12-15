@@ -1,0 +1,54 @@
+<div class="popup-backdrop" *ngIf="showAddForm"></div>
+<div class="popup-modal" *ngIf="showAddForm">
+  <div class="popup-content">
+    <h2>Add Items</h2>
+    <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="itemType">Item Type:</label>
+        <select formControlName="itemType" id="itemType" (change)="onItemTypeChange()">
+          <option value="" disabled>Select Type</option>
+          <option value="Supplies">Supplies</option>
+          <option value="Products">Products</option>
+        </select>
+        <div *ngIf="addItemForm.get('itemType')?.touched && addItemForm.get('itemType')?.invalid">
+          <small class="error">Item type is required</small>
+        </div>
+      </div>
+
+      <div>
+        <label for="itemName">Item Name:</label>
+        <select formControlName="itemName" id="itemName">
+          <option value="" disabled>Select Item</option>
+          <option *ngFor="let item of itemOptions" [value]="item.name">{{ item.name }}</option>
+        </select>
+        <div *ngIf="addItemForm.get('itemName')?.touched && addItemForm.get('itemName')?.invalid">
+          <small class="error">Item name is required</small>
+        </div>
+      </div>
+
+      <div>
+        <label for="quantity">Quantity:</label>
+        <input formControlName="quantity" id="quantity" type="number" placeholder="Enter quantity" />
+        <div *ngIf="addItemForm.get('quantity')?.touched && addItemForm.get('quantity')?.invalid">
+          <small class="error">Quantity is required</small>
+        </div>
+        <div *ngIf="addItemForm.get('quantity')?.errors?.['insufficientStock']">
+          <small class="error">Insufficient stock</small>
+        </div>
+      </div>
+
+      <div>
+        <label for="scrapDate">Date to Scrapped:</label>
+        <input formControlName="scrapDate" id="scrapDate" type="date" />
+        <div *ngIf="addItemForm.get('scrapDate')?.touched && addItemForm.get('scrapDate')?.invalid">
+          <small class="error">Date is required</small>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" [disabled]="!addItemForm.valid">Add</button>
+        <button type="button" (click)="onCancel()" class="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

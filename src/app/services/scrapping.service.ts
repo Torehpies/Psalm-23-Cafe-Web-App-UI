@@ -7,8 +7,7 @@ import { apiUrls } from '../api.urls';
 @Injectable({
   providedIn: 'root'
 })
-export class UsedSuppliesService {
-
+export class ScrappingService {
   constructor(private http: HttpClient) { }
 
   fetchScrappingData() {
