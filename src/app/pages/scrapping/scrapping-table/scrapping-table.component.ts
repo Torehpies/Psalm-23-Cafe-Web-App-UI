@@ -36,7 +36,8 @@ export class ScrappingTableComponent implements OnInit {
   productData: any[] = [];
   addItemForm: FormGroup;
   editItemForm: FormGroup;
-  currentItem: any = null;
+  selectedItem: any;
+  index: number | null = null;
 
   scrappingService = inject(ScrappingService);
   suppliesService = inject(SuppliesService);
@@ -108,33 +109,27 @@ export class ScrappingTableComponent implements OnInit {
     // console.log('Filtered scrap data:', this.filteredScrapData); // Debug log
   }
 
-  editItem(item: any): void {
-    this.currentItem = item;
-    this.editItemForm.patchValue({
-      itemType: item.itemType,
-      itemName: item.itemName,
-      quantity: item.quantity,
-      scrapDate: item.usedAt
-    });
+  editItem(index: number): void {
+    this.index = index
+    this.selectedItem = this.newScrapData[index];
     this.showEditForm = true;
   }
 
-  deleteItem(item: any): void {
-    this.currentItem = item;
+  deleteItem(index: number): void {
+    this.index = index;
     this.showDeleteConfirm = true;
   }
 
   confirmDelete(): void {
-    const index = this.newScrapData.findIndex(record => record._id === this.currentItem._id);
-    if (index !== -1) {
-      this.newScrapData.splice(index, 1);
-      this.applyDateFilter();
+
+    if (this.index !== null) {
+      this.newScrapData.splice(this.index, 1);
     }
     this.showDeleteConfirm = false;
   }
 
   cancelDelete(): void {
-    this.currentItem = null;
+    this.index = null;
     this.showDeleteConfirm = false;
   }
 
@@ -148,8 +143,22 @@ export class ScrappingTableComponent implements OnInit {
       employee: this.authService.getUserId()
     };
     this.newScrapData.push(newScrapItem);
-    this.applyDateFilter();
+    // this.applyDateFilter();
     this.showAddForm = false;
+  }
+
+  onUpdate(updatedItem: any): void {
+    // console.log('Updated item:', updatedItem); // Debug log
+    if(this.index !== null) {
+      this.newScrapData[this.index] = {
+        ... updatedItem,
+        usedAt: updatedItem.scrapDate,
+        employee: this.authService.getUserId()
+      };
+      this.applyDateFilter();
+      // this.editItemForm.reset();
+      this.showEditForm = false;
+    }
   }
 
   submitScrapData(): void {
@@ -202,26 +211,4 @@ export class ScrappingTableComponent implements OnInit {
     }, 3000); // Hide the modal after 3 seconds
   }
 
-  onUpdate(updatedItem: any): void {
-    if (this.editItemForm.valid) {
-      const itemType = updatedItem.itemType;
-      const itemName = updatedItem.itemName;
-      const item = itemType === 'Supply' ? this.supplyData.find(item => item.name === itemName) : this.productData.find(item => item.name === itemName);
-
-      const index = this.newScrapData.findIndex(record => record._id === this.currentItem._id);
-      if (index !== -1) {
-        this.newScrapData[index] = {
-          ...this.newScrapData[index],
-          itemType: updatedItem.itemType,
-          itemId: item._id,
-          itemName: item.name,
-          quantity: updatedItem.quantity,
-          usedAt: updatedItem.scrapDate
-        };
-        this.applyDateFilter();
-        this.editItemForm.reset();
-        this.showEditForm = false;
-      }
-    }
-  }
 }

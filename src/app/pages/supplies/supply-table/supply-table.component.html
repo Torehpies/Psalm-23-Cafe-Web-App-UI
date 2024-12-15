@@ -67,8 +67,8 @@
   (cancelDelete)="cancelDelete()">
 </app-delete-confirmation-modal>
 
-<div *ngIf="showStatusModal" class="status-modal">
-  <div class="status-content">
+<div *ngIf="showStatusModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg">
     <p>{{ statusMessage }}</p>
   </div>
 </div>

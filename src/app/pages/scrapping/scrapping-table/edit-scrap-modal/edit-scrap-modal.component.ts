@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
@@ -14,7 +14,7 @@ export class EditScrapModalComponent {
   @Input() showEditForm = false;
   @Input() supplyData: any[] = [];
   @Input() productData: any[] = [];
-  @Input() currentItem: any;
+  @Input() selectedItem: any;
   @Output() closeEditForm = new EventEmitter<void>();
   @Output() updateScrap = new EventEmitter<any>();
 
@@ -30,13 +30,13 @@ export class EditScrapModalComponent {
     });
   }
 
-  ngOnChanges(): void {
-    if (this.currentItem) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedItem'] && this.selectedItem) {
       this.editItemForm.patchValue({
-        itemType: this.currentItem.itemType,
-        itemName: this.currentItem.itemName,
-        quantity: this.currentItem.quantity,
-        scrapDate: this.currentItem.usedAt
+        itemType: this.selectedItem.itemType,
+        itemName: this.selectedItem.itemName,
+        quantity: this.selectedItem.quantity,
+        scrapDate: this.selectedItem.usedAt
       });
       this.onItemTypeChange();
     }
@@ -57,14 +57,9 @@ export class EditScrapModalComponent {
 
   onUpdate(): void {
     if (this.editItemForm.valid) {
-      const itemType = this.editItemForm.get('itemType')?.value;
-      const itemName = this.editItemForm.get('itemName')?.value;
-      const item = itemType === 'Supplies' ? this.supplyData.find(item => item.name === itemName) : this.productData.find(item => item.name === itemName);
-
       const updatedScrap = {
         ...this.editItemForm.value,
-        itemId: item._id,
-        itemName: item.name
+        itemId: this.itemOptions.find(item => item.name === this.editItemForm.value.itemName)._id,
       };
 
       this.updateScrap.emit(updatedScrap);
@@ -74,7 +69,8 @@ export class EditScrapModalComponent {
   }
 
   onCancel(): void {
-    this.editItemForm.reset();
+    
+    // this.editItemForm.reset();
     this.closeEditForm.emit();
   }
 }
