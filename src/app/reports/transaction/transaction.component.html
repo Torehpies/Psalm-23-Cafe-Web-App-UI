@@ -1,7 +1,56 @@
-
 <div class="container">
   <app-leftsidebar></app-leftsidebar>
-  <div class="main-content" [class.active]="isMenuActive">
-    <p>Reports Transaction Content Here</p>
+  <div class="main-content">
+
+    <!-- Filter Section -->
+    <div class="transaction-container">
+      <div class="filter-container">
+        <!-- Date Filter -->
+        <div class="date-filter">
+          <label for="startDate">From:</label>
+          <input type="date" id="startDate" [(ngModel)]="startDate" (change)="filterDataByCustomDateRange()" />
+          <label for="endDate">To:</label>
+          <input type="date" id="endDate" [(ngModel)]="endDate" (change)="filterDataByCustomDateRange()" />
+        </div>
+
+        <!-- Predefined Buttons -->
+        <div class="transaction-buttons">
+          <button (click)="filterDataByDateRange('today')">Today</button>
+          <button (click)="filterDataByDateRange('yesterday')">Yesterday</button>
+          <button (click)="filterDataByDateRange('last30days')">Last 30 Days</button>
+          <button (click)="filterDataByDateRange('monthToDate')">Month to Date</button>
+          <button (click)="filterDataByDateRange('lastMonth')">Last Month</button>
+          <button (click)="downloadReport()">Download Report</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transaction Data Section -->
+    <div class="transaction-data-container">
+      <div class="transaction-category">
+        <h3>Transactions</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Payment Method</th>
+              <th>Items</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let transaction of filteredData.transactions">
+              <td>{{ transaction.date }}</td>
+              <td>{{ transaction.time }}</td>
+              <td>{{ transaction.paymentMethod }}</td>
+              <td>{{ transaction.items.join(', ') }}</td>
+              <td>₱{{ transaction.total }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>

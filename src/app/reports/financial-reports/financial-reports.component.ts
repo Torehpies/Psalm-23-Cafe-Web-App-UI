@@ -10,7 +10,7 @@ import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.c
   imports: [
     CommonModule,
     FormsModule,
-    LeftsidebarComponent, // Include sidebar component to keep the layout consistent
+    LeftsidebarComponent,
   ],
   templateUrl: './financial-reports.component.html',
   styleUrls: ['./financial-reports.component.css'],
@@ -18,15 +18,51 @@ import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.c
 export class FinancialReportsComponent implements OnInit {
   isMenuActive: boolean = false;
 
+  // Expenses and Sales Data
+  expenses = [
+    { item: 'Coffee Beans', quantity: '20 kg', amount: 120.0 },
+    { item: 'Milk', quantity: '30 L', amount: 480.0 },
+    { item: 'sugar', quantity: '30 L', amount: 480.0 }
+  ];
+
+  sales = [
+    { item: 'Pandesal', quantity: '50 pc', amount: 500.0 },
+    { item: 'Coffee', quantity: '10 pc', amount: 350.0 }
+  ];
+
+  // Calculate totals dynamically
+  get totalExpenses(): number {
+    return this.expenses.reduce((sum, expense) => sum + expense.amount, 0);
+  }
+
+  get totalSales(): number {
+    return this.sales.reduce((sum, sale) => sum + sale.amount, 0);
+  }
+
+  get profitLoss(): number {
+    return this.totalSales - this.totalExpenses;
+  }
+
+  startDate: string = '';
+  endDate: string = '';
+
   constructor(private menuService: MenuService) {}
 
   ngOnInit() {
-    // Subscribe to menu active state
-    this.menuService.isMenuActive$.subscribe((status) => {
+    this.menuService.isMenuActive$.subscribe(status => {
       this.isMenuActive = status;
     });
+  }
 
-    // Set header text to "Reports" so the header remains consistent
-    this.menuService.changeHeaderText('Reports');
+  filterDataByRange(range: string) {
+    console.log('Filter data by range', range);
+  }
+
+  filterData() {
+    console.log('Filtering data...');
+  }
+
+  downloadReport() {
+    console.log('Report download triggered');
   }
 }
