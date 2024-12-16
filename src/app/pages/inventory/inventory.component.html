@@ -20,10 +20,10 @@
 
       <!-- Card Container -->
       <div class="flex justify-center mt-6" *ngIf="!showRestockForm">
-        <div class="flex flex-row flex-wrap justify-between">
+        <div class="flex flex-row flex-wrap justify-center">
         <!-- <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-16"> -->
           <div
-            class=" bg-orange-950 rounded-lg flex flex-col items-center text-center mb-3 pt-3
+            class=" bg-orange-950 rounded-lg flex flex-col items-center text-center m-3 pt-3
               hover:scale-105 transition-transform cursor-pointer min-w-[200px] max-w-[250px] min-h-[200px]"
             *ngFor="let item of items" (click)="showItemDetails(item)">
             <span class="text-lg font-bold text-white">{{ item.category }}</span>
