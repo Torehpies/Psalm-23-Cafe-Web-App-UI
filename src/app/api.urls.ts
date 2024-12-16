@@ -8,4 +8,6 @@ export const apiUrls = {
   scrappingServiceApi: 'http://localhost:8800/api/scrapping/',
   userServiceApi: 'http://localhost:8800/api/user/',
   attendanceServiceApi: 'http://localhost:8800/api/attendance/',
+  produceHistoryServiceApi: 'http://localhost:8800/api/produceHistory/',
+  accountManagementServiceApi: 'http://localhost:8800/api/approveUser/',
 }

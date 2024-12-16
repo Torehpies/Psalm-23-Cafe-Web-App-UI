@@ -1,149 +1,87 @@
-<div>
-  <div class="centered-toggle" (click)="toggleView()">
-    <div class="toggle-container">
-      <div class="toggle-option" [class.active]="isAddActive">ADD</div>
-      <div class="toggle-option" [class.active]="!isAddActive">VIEW</div>
-    </div>
+<div class="flex justify-center items-center mb-5 relative">
+  <div class="flex bg-gray-200 rounded-full overflow-hidden cursor-pointer">
+    <div class="flex-1 text-center py-2 px-4 font-bold" [ngClass]="{
+        'text-white bg-yellow-950': isAddActive,
+        'bg-white text-yellow-950': !isAddActive
+      }" (click)="toggleView()">ADD</div>
+    <div class="flex-1 text-center py-2 px-4 font-bold" [ngClass]="{
+        'bg-white text-yellow-950': isAddActive,
+        'bg-yellow-950 text-white': !isAddActive
+      }" (click)="toggleView()">VIEW</div>
   </div>
-  <div>
-    <button (click)="toggleShowAddScrapForm()" class="add" *ngIf="isAddActive">+ Add Item</button>
-  </div>
+  <button (click)="showAddForm = true"
+    class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-500 text-white py-2 px-4 rounded-full hover:bg-green-700"
+    *ngIf="isAddActive">+ Add Item</button>
+</div>
 
-  <div class="table-section">
-    <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
-      <div class="date-filter">
-        <label for="fromDate">From:</label>
-        <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()">
-        <label for="toDate">To:</label>
-        <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()">
-      </div>
-      <div class="download-section">
-        <span class="download-title">Download:</span>
-        <div class="download-buttons">
-          <button>Custom Download</button>
-          <button>All Time</button>
-          <button>Month to Date</button>
-          <button>Today</button>
-        </div>
-      </div>
+<div class="bg-white shadow-md rounded-lg p-5 mt-5">
+  <div class="flex justify-between items-center mb-5" [ngClass]="{'hidden': isAddActive}">
+    <div class="flex items-center">
+      <label for="fromDate" class="mr-2">From:</label>
+      <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()"
+        class="mr-4 p-2 border rounded">
+      <label for="toDate" class="mr-2">To:</label>
+      <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()" class="p-2 border rounded">
     </div>
-    <div class="scrapping-info">
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Product ID</th>
-              <th>Product Name</th>
-              <th>Quantity</th>
-              <th>Scrapping Date</th>
-              <th *ngIf="isAddActive">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let record of isAddActive ? scrapData : filteredScrapData">
-              <td>{{ record.scrap_id }}</td>
-              <td>{{ record.scrap_name }}</td>
-              <td>{{ record.scrap_quantity }}</td>
-              <td>{{ record.scrap_date }}</td>
-              <td *ngIf="isAddActive"> 
-                <button (click)="editItem(record)" class="edit-btn">Edit</button>
-                <button (click)="deleteItem(record)" class="delete-btn">Delete</button>
-              </td>   
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="flex items-center overflow-x-auto">
+      <span class="mr-2">Download:</span>
+      <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">Custom Download</button>
+      <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">All Time</button>
+      <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">Month to Date</button>
+      <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">Today</button>
     </div>
   </div>
-  <div *ngIf="isAddActive" class="submit">
-    <button>Submit</button>
+  <div class="overflow-auto max-h-[calc(100vh-300px)]">
+    <table class="w-full border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border-b p-2">Item Name</th>
+          <th class="border-b p-2">Quantity</th>
+          <th class="border-b p-2">Scrapping Date</th>
+          <th class="border-b p-2" *ngIf="isAddActive">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of isAddActive ? newScrapData : filteredScrapData; let i = index" class="hover:bg-gray-50">
+          <td class="border-b p-2">{{ record.itemName }}</td>
+          <td class="border-b p-2">{{ record.quantity }}</td>
+          <td class="border-b p-2">{{ record.usedAt | date: 'mediumDate' }}</td>
+          <td class="border-b p-2" *ngIf="isAddActive">
+            <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700 mr-2"
+              (click)="editItem(i)">Edit</button>
+            <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700"
+              (click)="deleteItem(i)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
-<div class="popup-backdrop" *ngIf="showAddForm || showEditForm || showDeleteConfirm"></div>
-<div class="popup-modal" *ngIf="showAddForm">
-  <div class="popup-content">
-    <h2>Add Items</h2>
-    <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="productName">Product name:</label>
-        <select formControlName="productName" id="productName">
-          <option value="" disabled>Select Product</option>
-          <option *ngFor="let product of products" [value]="product">{{ product }}</option>
-        </select>
-        <div *ngIf="addItemForm.get('productName')?.touched && addItemForm.get('productName')?.invalid">
-          <small class="error">Product name is required</small>
-        </div>
-      </div>
-
-      <div>
-        <label for="quantity">Quantity:</label>
-        <input formControlName="quantity" id="quantity" type="number" placeholder="Enter quantity" />
-        <div *ngIf="addItemForm.get('quantity')?.touched && addItemForm.get('quantity')?.invalid">
-          <small class="error">Quantity is required</small>
-        </div>
-      </div>
-
-      <div>
-        <label for="scrapDate">Date to Scrapped:</label>
-        <input formControlName="scrapDate" id="scrapDate" type="date" />
-        <div *ngIf="addItemForm.get('scrapDate')?.touched && addItemForm.get('scrapDate')?.invalid">
-          <small class="error">Date is required</small>
-        </div>
-      </div>
-
-      <div class="button-group">
-        <button type="submit" [disabled]="!addItemForm.valid">Add</button>
-        <button type="button" (click)="toggleShowAddScrapForm()" class="cancel-btn">Cancel</button>
-      </div>
-    </form>
-  </div>
+<div class="flex justify-center mt-5" [ngClass]="{'hidden': !isAddActive}">
+  <button (click)="submitScrapData()"
+    class="bg-yellow-950 text-white py-3 px-10 rounded-full hover:bg-yellow-800">Submit</button>
 </div>
 
-<div class="popup-modal" *ngIf="showEditForm">
-  <div class="popup-content">
-    <h2>Update Items</h2>
-    <form [formGroup]="editItemForm" (ngSubmit)="onUpdate()">
-      <div>
-        <label for="editProductName">Product name:</label>
-        <select formControlName="productName" id="editProductName">
-          <option *ngFor="let product of products" [value]="product">{{ product }}</option>
-        </select>
-        <div *ngIf="editItemForm.get('productName')?.touched && editItemForm.get('productName')?.invalid">
-          <small class="error">Product name is required</small>
-        </div>
-      </div>
+<app-add-scrap-modal [showAddForm]="showAddForm" [supplyData]="supplyData" [productData]="productData"
+  (closeAddForm)="showAddForm = false" (addScrap)="onSubmit($event)">
+</app-add-scrap-modal>
 
-      <div>
-        <label for="editQuantity">Quantity:</label>
-        <input formControlName="quantity" id="editQuantity" type="number" placeholder="Enter quantity" />
-        <div *ngIf="editItemForm.get('quantity')?.touched && editItemForm.get('quantity')?.invalid">
-          <small class="error">Quantity is required</small>
-        </div>
-      </div>
+<app-edit-scrap-modal 
+  [showEditForm]="showEditForm" 
+  [supplyData]="supplyData" 
+  [productData]="productData"
+  [selectedItem]="selectedItem" 
+  (closeEditForm)="showEditForm = false" 
+  (updateScrap)="onUpdate($event)">
+</app-edit-scrap-modal>
 
-      <div>
-        <label for="editScrapDate">Date to Scrapped:</label>
-        <input formControlName="scrapDate" id="editScrapDate" type="date" />
-        <div *ngIf="editItemForm.get('scrapDate')?.touched && editItemForm.get('scrapDate')?.invalid">
-          <small class="error">Date is required</small>
-        </div>
-      </div>
+<app-delete-confirmation-modal [showDeleteConfirm]="showDeleteConfirm" (confirmDelete)="confirmDelete()"
+  (cancelDelete)="cancelDelete()">
+</app-delete-confirmation-modal>
 
-      <div class="button-group">
-        <button type="submit" [disabled]="!editItemForm.valid" class="update-btn">Update</button>
-        <button type="button" (click)="toggleShowEditScrapForm()" class="cancel-btn">Cancel</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<div class="popup-modal" *ngIf="showDeleteConfirm">
-  <div class="popup-content">
-    <h2>Are you sure?</h2>
-    <div class="delete-btn-group">
-      <button (click)="confirmDelete()" class="yes-btn">Yes</button>
-      <button (click)="cancelDelete()" class="no-btn">No</button>
-    </div>
+<div *ngIf="showStatusModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg">
+    <p>{{ statusMessage }}</p>
   </div>
 </div>

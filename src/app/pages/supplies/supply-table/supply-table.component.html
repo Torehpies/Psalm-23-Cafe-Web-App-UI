@@ -1,58 +1,66 @@
-<div class="centered-toggle">
-  <div class="toggle-container">
-    <div class="toggle-option" [class.active]="isAddActive" (click)="toggleView()">ADD</div>
-    <div class="toggle-option" [class.active]="!isAddActive" (click)="toggleView()">VIEW</div>
+<div class="flex justify-center items-center mb-5 relative">
+  <div class="flex bg-gray-200 rounded-full overflow-hidden cursor-pointer">
+    <div class="flex-1 text-center py-2 px-4 font-bold" [ngClass]="{
+        'text-white bg-yellow-950': isAddActive,
+        'bg-white text-yellow-950': !isAddActive
+      }" (click)="toggleView()">ADD</div>
+    <div class="flex-1 text-center py-2 px-4 font-bold" [ngClass]="{
+        'bg-white text-yellow-950': isAddActive,
+        'bg-yellow-950 text-white': !isAddActive
+      }" (click)="toggleView()">VIEW</div>
   </div>
-  <button (click)="showAddForm = true" class="add-item-btn" *ngIf="isAddActive">+ Add Item</button>
+  <button (click)="showAddForm = true"
+    class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-500 text-white py-2 px-4 rounded-full hover:bg-green-700"
+    *ngIf="isAddActive">+ Add Item</button>
 </div>
 
-<div class="table-section">
-  <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
-    <div class="date-filter">
-      <label for="fromDate">From:</label>
-      <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()">
-      <label for="toDate">To:</label>
-      <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()">
+<div class="bg-white shadow-md rounded-lg p-5 mt-5">
+  <div class="flex justify-between items-center mb-5" [ngClass]="{'hidden': isAddActive}">
+    <div class="flex items-center">
+      <label for="fromDate" class="mr-2">From:</label>
+      <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()"
+        class="mr-4 p-2 border rounded">
+      <label for="toDate" class="mr-2">To:</label>
+      <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()" class="p-2 border rounded">
     </div>
-    <div class="download-section">
-      <span class="download-title">Download:</span>
-      <div class="download-buttons">
-        <button>Custom Download</button>
-        <button>All Time</button>
-        <button>Month to Date</button>
-        <button>Today</button>
-      </div>
+    <div class="flex items-center overflow-x-auto">
+      <span class="mr-2">Download:</span>
+      <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">Custom Download</button>
+      <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">All Time</button>
+      <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">Month to Date</button>
+      <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">Today</button>
     </div>
   </div>
-  <div class="supply-info">
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th>Date Used</th>
-            <th *ngIf="isAddActive">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let record of isAddActive ? newSupplyData : usedSuppliesData">
-            <td>{{ record.supply.name }}</td>
-            <td>{{ record.quantity }}</td>
-            <td>{{ record.usedAt | date: 'mediumDate' }}</td>
-            <td *ngIf="isAddActive">
-              <button class="edit-btn" (click)="editItem(record)">Edit</button>
-              <button class="delete-btn" (click)="deleteItem(record)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="overflow-auto max-h-[calc(100vh-300px)]">
+    <table class="w-full border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border-b p-2">Item</th>
+          <th class="border-b p-2">Quantity</th>
+          <th class="border-b p-2">Date Used</th>
+          <th class="border-b p-2" *ngIf="isAddActive">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of isAddActive ? newSupplyData : usedSuppliesData" class="hover:bg-gray-50">
+          <td class="border-b p-2">{{ record.supply.name }}</td>
+          <td class="border-b p-2">{{ record.quantity }}</td>
+          <td class="border-b p-2">{{ record.usedAt | date: 'mediumDate' }}</td>
+          <td class="border-b p-2" *ngIf="isAddActive">
+            <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700 mr-2"
+              (click)="editItem(record)">Edit</button>
+            <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700"
+              (click)="deleteItem(record)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
-<div class="submit" [ngClass]="{'hidden': !isAddActive}">
-  <button (click)="submitUsedSupplies()">Submit</button>
+<div class="flex justify-center mt-5" [ngClass]="{'hidden': !isAddActive}">
+  <button (click)="submitUsedSupplies()"
+    class="bg-yellow-950 text-white py-3 px-10 rounded-full hover:bg-yellow-800">Submit</button>
 </div>
 
 <app-add-supply-modal [showAddForm]="showAddForm" [supplyData]="supplyData" (closeAddForm)="showAddForm = false"
@@ -67,8 +75,8 @@
   (cancelDelete)="cancelDelete()">
 </app-delete-confirmation-modal>
 
-<div *ngIf="showStatusModal" class="status-modal">
-  <div class="status-content">
+<div *ngIf="showStatusModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg">
     <p>{{ statusMessage }}</p>
   </div>
 </div>

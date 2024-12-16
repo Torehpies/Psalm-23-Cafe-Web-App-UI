@@ -1,180 +1,89 @@
-<div>
-    <div class="centered-toggle" (click)="toggleView()">
-        <div class="toggle-container">
-          <div class="toggle-option" [class.active]="isAddActive">ADD</div>
-          <div class="toggle-option" [class.active]="!isAddActive">VIEW</div>
-        </div>
+
+<div class="grow">
+
+  <div class="flex justify-center items-center mb-5 relative">
+    <div class="flex bg-gray-200 rounded-full overflow-hidden cursor-pointer">
+      <div class="flex-1 text-center py-2 px-4 font-bold " [ngClass]="{
+          'text-white bg-yellow-950 ': isAddActive,
+          'bg-white text-yellow-950': !isAddActive
+        }" (click)="toggleView()">ADD</div>
+      <div class="flex-1 text-center py-2 px-4 font-bold " [ngClass]="{
+          'bg-white text-yellow-950': isAddActive,
+          'bg-yellow-950 text-white': !isAddActive
+        }" (click)="toggleView()">VIEW</div>
     </div>
-
-    <div>
-      <button (click)="toggleShowAddProductForm()" class="add" *ngIf="isAddActive">+ Add Item</button>
-    </div>
-
-    <div class="table-section">
-        <div class="filter-section" [ngClass]="{'hidden': isAddActive}">
-            <div class="date-filter">
-                <label for="fromDate">From:</label>
-                <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()">
-                <label for="toDate">To:</label>
-                <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()">
-            </div>
-            <div class="download-section">
-                <span class="download-title">Download:</span>
-                <div class="download-buttons">
-                    <button>Custom Download</button>
-                    <button>All Time</button>
-                    <button>Month to Date</button>
-                    <button>Today</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="product-info"></div>
-        <div class="table-container">
-        <table>
-            <thead>
-            <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Date Used</th>
-                <th>Expiration date</th>
-                <th *ngIf="isAddActive">Action</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let record of isAddActive ? productData : filteredProductData">
-                    <td>{{ record.product_item }}</td>
-                    <td>{{ record.product_quantity }}</td>
-                    <td>{{ record.product_date }}</td>
-                    <td>{{ record.product_expiration }}</td>
-                    <td *ngIf="isAddActive"> 
-                        <button (click)="editItem(record)" class="edit-btn">Edit</button>
-                        <button (click)="deleteItem(record)" class="delete-btn">Delete</button>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-        </div>
-    </div>
-    <div *ngIf="isAddActive" class="submit">
-      <button>Submit</button>
-    </div>
-</div>
-
-<!-- Edit Item Modal -->
-<div class="popup-backdrop" *ngIf="showEditForm"></div>
-<div class="popup-modal" *ngIf="showEditForm">
-    <div class="popup-content">
-      <h2>Edit Item</h2>
-      <form [formGroup]="editItemForm" (ngSubmit)="onUpdate()">
-        <div>
-          <label for="editItemName">Item:</label>
-          <select formControlName="itemName" id="editItemName">
-            <option value="" disabled>Select Item</option>
-            <option value="Pandesal">Pandesal</option>
-            <option value="Monay">Monay</option>
-            <option value="Kababayan">Kababayan</option>
-            <option value="Ensaymada">Ensaymada</option>
-            <option value="Putok">Putok</option>
-          </select>
-          <div *ngIf="editItemForm.get('itemName')?.touched && editItemForm.get('itemName')?.invalid">
-            <small class="error">Item name is required</small>
-          </div>
-        </div>
-
-        <div>
-          <label for="editQuantity">Quantity:</label>
-          <input formControlName="quantity" id="editQuantity" type="number" placeholder="Enter quantity" />
-          <div *ngIf="editItemForm.get('quantity')?.touched && editItemForm.get('quantity')?.invalid">
-            <small class="error">Quantity is required</small>
-          </div>
-        </div>
-
-        <div>
-          <label for="editDateProduced">Date Produced:</label>
-          <input formControlName="dateProduced" id="editDateProduced" type="date" />
-          <div *ngIf="editItemForm.get('dateProduced')?.touched && editItemForm.get('dateProduced')?.invalid">
-            <small class="error">Date produced is required</small>
-          </div>
-        </div>
-
-        <div>
-          <label for="editExpirationDate">Expiration Date:</label>
-          <input formControlName="expirationDate" id="editExpirationDate" type="date" />
-          <div *ngIf="editItemForm.get('expirationDate')?.touched && editItemForm.get('expirationDate')?.invalid">
-            <small class="error">Expiration date is required</small>
-          </div>
-        </div>
-
-        <div class="button-group">
-          <button type="submit" [disabled]="!editItemForm.valid" class="update-btn">Update</button>
-          <button type="button" (click)="toggleShowEditProductForm()" class="cancel-btn">Cancel</button>
-        </div>
-      </form>
-    </div>
-</div>
-
-<!-- Delete Confirmation Modal -->
-<div class="popup-backdrop" *ngIf="showDeleteConfirm"></div>
-<div class="popup-modal" *ngIf="showDeleteConfirm">
-    <div class="popup-content">
-      <h2>Are you sure?</h2>
-      <div class="button-group">
-        <button (click)="confirmDelete()" class="confirm-delete-btn">Yes</button>
-        <button (click)="cancelDelete()" class="cancel-btn">No</button>
+    <button (click)="showAddForm = true"
+      class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-500 text-white py-2 px-4 rounded-full hover:bg-green-700"
+      *ngIf="isAddActive">+ Add Item</button>
+  </div>
+  
+  <div class="bg-white shadow-md rounded-lg p-5 mt-5 flex flex-col grow">
+    <div class="flex justify-between items-center mb-5" [ngClass]="{'hidden': isAddActive}">
+      <div class="flex items-center">
+        <label for="fromDate" class="mr-2">From:</label>
+        <input type="date" id="fromDate" [(ngModel)]="fromDate" (change)="applyDateFilter()"
+          class="mr-4 p-2 border rounded">
+        <label for="toDate" class="mr-2">To:</label>
+        <input type="date" id="toDate" [(ngModel)]="toDate" (change)="applyDateFilter()" class="p-2 border rounded">
+      </div>
+      <div class="flex items-center overflow-x-auto">
+        <span class="mr-2">Download:</span>
+        <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">Custom Download</button>
+        <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">All Time</button>
+        <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">Month to Date</button>
+        <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">Today</button>
       </div>
     </div>
-</div>
-
-<!-- Add Item Modal -->
-<div class="popup-backdrop" *ngIf="showAddForm"></div>
-<div class="popup-modal" *ngIf="showAddForm">
-    <div class="popup-content">
-      <h2>Add Item</h2>
-      <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
-        <div>
-          <label for="itemName">Item:</label>
-          <select formControlName="itemName" id="itemName">
-            <option value="" disabled>Select Item</option>
-            <option value="Pandesal">Pandesal</option>
-            <option value="Monay">Monay</option>
-            <option value="Kababayan">Kababayan</option>
-            <option value="Ensaymada">Ensaymada</option>
-            <option value="Putok">Putok</option>
-          </select>
-          <div *ngIf="addItemForm.get('itemName')?.touched && addItemForm.get('itemName')?.invalid">
-            <small class="error">Item name is required</small>
-          </div>
-        </div>
-
-        <div>
-          <label for="quantity">Quantity:</label>
-          <input formControlName="quantity" id="quantity" type="number" placeholder="Enter quantity" />
-          <div *ngIf="addItemForm.get('quantity')?.touched && addItemForm.get('quantity')?.invalid">
-            <small class="error">Quantity is required</small>
-          </div>
-        </div>
-
-        <div>
-          <label for="dateProduced">Date Produced:</label>
-          <input formControlName="dateProduced" id="dateProduced" type="date" />
-          <div *ngIf="addItemForm.get('dateProduced')?.touched && addItemForm.get('dateProduced')?.invalid">
-            <small class="error">Date produced is required</small>
-          </div>
-        </div>
-
-        <div>
-          <label for="expirationDate">Expiration Date:</label>
-          <input formControlName="expirationDate" id="expirationDate" type="date" />
-          <div *ngIf="addItemForm.get('expirationDate')?.touched && addItemForm.get('expirationDate')?.invalid">
-            <small class="error">Expiration date is required</small>
-          </div>
-        </div>
-
-        <div class="button-group">
-          <button type="submit" [disabled]="!addItemForm.valid" class="add-btn">Add</button>
-          <button type="button" (click)="toggleShowAddProductForm()" class="cancel-btn">Cancel</button>
-        </div>
-      </form>
+    <div class="overflow-auto max-h-[calc(100vh-300px)]">
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="border-b p-2">Item</th>
+            <th class="border-b p-2">Quantity</th>
+            <th class="border-b p-2">Date Produced</th>
+            <th class="border-b p-2">Expiration Date</th>
+            <th class="border-b p-2" *ngIf="isAddActive">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of isAddActive ? newProduceHistoryData : produceHistoryData; let i = index"
+            class="hover:bg-gray-50">
+            <td class="border-b p-2">{{ record.product.name || record.product }}</td>
+            <td class="border-b p-2">{{ record.quantity }}</td>
+            <td class="border-b p-2">{{ record.producedAt | date:'mediumDate' }}</td>
+            <td class="border-b p-2">{{ record.expiresAt | date:'mediumDate' }}</td>
+            <td class="border-b p-2" *ngIf="isAddActive">
+              <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700 mr-2"
+                (click)="editItem(i)">Edit</button>
+              <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700"
+                (click)="deleteItem(i)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
+  
+  <div class="flex justify-center mt-5" [ngClass]="{'hidden': !isAddActive}">
+    <button (click)="submitProduceHistory()"
+      class="bg-yellow-950 text-white py-3 px-10 rounded-full hover:bg-yellow-800">Submit</button>
+  </div>
+  
+  <app-add-product-modal [showAddForm]="showAddForm" [productData]="productData" (closeAddForm)="showAddForm = false"
+    (addProduct)="onSubmit($event)">
+  </app-add-product-modal>
+  
+  <app-edit-product-modal [showEditForm]="showEditForm" [currentItem]="currentItem" [productData]="productData"
+    (closeEditForm)="showEditForm = false" (updateProduct)="onUpdate($event)">
+  </app-edit-product-modal>
+  
+  <app-delete-confirmation-modal [showDeleteConfirm]="showDeleteConfirm" (confirmDelete)="confirmDelete()"
+    (cancelDelete)="cancelDelete()">
+  </app-delete-confirmation-modal>
+  
+  <div *ngIf="showStatusModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+      <p>{{ statusMessage }}</p>
+    </div>
+  </div>
 </div>
