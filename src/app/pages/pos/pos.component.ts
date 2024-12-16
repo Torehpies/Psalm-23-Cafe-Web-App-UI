@@ -3,6 +3,7 @@ import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.c
 import { HeaderComponent } from '../../components/header/header.component';
 import { OrderPanelComponent } from '../../components/pos/order-side/order-panel/order-panel.component';
 import { ProductPanelComponent } from '../../components/pos/product-side/product-panel/product-panel.component';
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-pos',
@@ -14,9 +15,12 @@ import { ProductPanelComponent } from '../../components/pos/product-side/product
 export default class PosComponent {
   isMenuActive: boolean = false;
 
-  constructor() {}
+  constructor(private menuService: MenuService) {}
 
   ngOnInit() {
-    
+    this.menuService.isMenuActive$.subscribe((status) => {
+      this.isMenuActive = status;       
+  });
+  this.menuService.changeHeaderText('Point of Sale');
   }
 }
