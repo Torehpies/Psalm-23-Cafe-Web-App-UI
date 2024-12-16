@@ -5,6 +5,13 @@ import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.c
 import { HeaderComponent } from '../../components/header/header.component';
 import { CommonModule } from '@angular/common';
 import { AccountManagementUpdateComponent } from './update/update.component';
+import { AccountDeletePopupComponent } from './delete-popup/delete-popup.component';
+import { AccountDisablePopupComponent } from './disable-popup/disable-popup.component';
+import { AccountInfoPopupComponent } from './info-popup/info-popup.component';
+import { AccountManagementService } from '../../services/accountmanagement.service';
+import { AuthService } from '../../services/auth.service';
+import { AccountManagement } from '../../models/account-management.model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-account-management',
@@ -14,24 +21,27 @@ import { AccountManagementUpdateComponent } from './update/update.component';
     LeftsidebarComponent,
     HeaderComponent,
     AccountManagementUpdateComponent,
+    AccountDeletePopupComponent,
+    AccountDisablePopupComponent,
+    AccountInfoPopupComponent,
   ],
-  templateUrl: './account-management.component.html',
-  styleUrls: ['./account-management.component.css'],
+  templateUrl: './account-management.component.html'
 })
 export default class AccountManagementComponent implements OnInit {
   isMenuActive: boolean = false;
   isLoading: boolean = true;
   errorMessage: string | null = null;
-  showPopup: boolean = false; 
-  showUpdateForm: boolean = false; 
-  showDeletePopup: boolean = false; 
-  showDisablePopup: boolean = false; 
+  showUpdateForm: boolean = false;
+  showDeletePopup: boolean = false;
+  showDisablePopup: boolean = false;
+  showInfoPopup: boolean = false;
 
-  dataItems: any[] = [];
+  unapprovedAccounts: AccountManagement[] = [];
+  approvedAccounts: AccountManagement[] = [];
 
   constructor(
+    private accountManagementService: AccountManagementService,
     private menuService: MenuService,
-    private dataService: DataService
   ) {}
 
   ngOnInit() {
@@ -41,57 +51,51 @@ export default class AccountManagementComponent implements OnInit {
 
     this.menuService.changeHeaderText('Account Management');
 
-    this.dataService.getData().subscribe(
-      (data) => {
-        this.dataItems = data;
+    forkJoin({
+      unapproved: this.accountManagementService.getUnapprovedAccounts(),
+      approved: this.accountManagementService.getApprovedAccounts()
+    }).subscribe({
+      next: (results) => {
+        this.unapprovedAccounts = results.unapproved.data;
+        this.approvedAccounts = results.approved.data;
         this.isLoading = false;
       },
-      (error) => {
-        this.errorMessage = 'Failed to load data';
+      error: (error) => {
+        this.errorMessage = 'Failed to fetch accounts';
         this.isLoading = false;
       }
-    );
+    });
   }
 
-  openPopup() {
-    this.showPopup = true;
-  }
-
-  closePopup() {
-    this.showPopup = false;
-  }
-
-  openDeletePopup(): void {
-    this.showDeletePopup = true;
-  }
-
-  closeDeletePopup(): void {
-    this.showDeletePopup = false;
-  }
-
-  deleteAccount(): void {
-    console.log("Account Deleted"); 
-    this.closeDeletePopup(); 
-  }
-
-  openDisablePopup(): void {
-    this.showDisablePopup = true;
-  }
-
-  closeDisablePopup(): void {
-    this.showDisablePopup = false;
-  }
-
-  disableAccount(): void {
-    console.log("Account Disabled");
-    this.closeDisablePopup(); 
-  }
-
-  showUpdateComponent() {
+  openUpdateComponent() {
     this.showUpdateForm = true;
   }
 
-  hideUpdateComponent() {
+  closeUpdateComponent() {
     this.showUpdateForm = false;
+  }
+
+  openDeletePopup() {
+    this.showDeletePopup = true;
+  }
+
+  closeDeletePopup() {
+    this.showDeletePopup = false;
+  }
+
+  openDisablePopup() {
+    this.showDisablePopup = true;
+  }
+
+  closeDisablePopup() {
+    this.showDisablePopup = false;
+  }
+
+  openInfoPopup() {
+    this.showInfoPopup = true;
+  }
+
+  closeInfoPopup() {
+    this.showInfoPopup = false;
   }
 }

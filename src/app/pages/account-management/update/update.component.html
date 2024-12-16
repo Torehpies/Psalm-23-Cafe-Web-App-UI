@@ -1,26 +1,25 @@
-<div *ngIf="isFormVisible" class="popup-overlay">
-    <div class="popup-container">
-      <button class="close-popup" (click)="closePopup()">X</button>
-      <div class="form-header">
-        <h3>Account Information</h3>
+<div *ngIf="isFormVisible" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg relative">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" (click)="closePopup()">X</button>
+    <h3 class="text-xl font-bold mb-4">Account Information</h3>
+    <form>
+      <div class="mb-4">
+        <input id="name" type="text" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="First Name" />
+        <input id="lastName" type="text" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="Last Name" />
       </div>
-      <form>
-        <div class="name-fields">
-            <input id="name" type="text" class="input-field" placeholder="First Name" />
-            <input id="lastName" type="text" class="input-field" placeholder="Last Name" />
-        </div>
-        <div class="role-field">
-          <select id="userRole" name="role" class="input-field">
-            <option value="">Select Role</option>
-            <option value="Admin">Baker</option>
-            <option value="User">Assistant Baker</option>
-            <option value="Cashier">Cashier</option>
-          </select>
-        </div>
-        <input id="email" type="email" class="input-field" placeholder="Email" />
-
-        <button type="submit" class="submit-button">Submit</button>
-      </form>
-    </div>
+      <div class="mb-4">
+        <select id="userRole" name="role" class="input-field w-full p-2 border border-gray-300 rounded mb-2">
+          <option value="">Select Role</option>
+          <option value="Admin">Baker</option>
+          <option value="User">Assistant Baker</option>
+          <option value="Cashier">Cashier</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <input id="email" type="email" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="Email" />
+      </div>
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
+    </form>
+  </div>
 </div>
 

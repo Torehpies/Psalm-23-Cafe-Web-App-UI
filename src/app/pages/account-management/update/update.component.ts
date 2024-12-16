@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
   selector: 'app-account-management-update',
   standalone: true,
   templateUrl: './update.component.html',
-  styleUrls: ['./update.component.css'],
   imports: [FormsModule, CommonModule],  
 })
 export class AccountManagementUpdateComponent {

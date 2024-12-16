@@ -1,0 +1,10 @@
+<div *ngIf="showDisablePopup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg relative">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" (click)="closeDisablePopup()">X</button>
+    <h2 class="text-xl font-bold mb-4">Are you sure you want to disable this account?</h2>
+    <div class="flex justify-end gap-4">
+      <button class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600" (click)="disableAccount()">Yes</button>
+      <button class="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400" (click)="closeDisablePopup()">No</button>
+    </div>
+  </div>
+</div>
