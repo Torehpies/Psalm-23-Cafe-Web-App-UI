@@ -55,11 +55,18 @@ export class OrderService {
       TotalAmount: totalAmount,
       PaymentMethod: paymentMethod,
       EmployeeId: employeeId,
-      products: this.lineItemsSubject.value.map(item => ({
-        _id: item._id,
-        Quantity: item.quantity,
-        size: item.selectedSize
-      }))
+      products: this.lineItemsSubject.value.map(item => {
+        const product: any = {
+          _id: item._id,
+          name: item.name,
+          Quantity: item.quantity,
+          price: item.price
+        };
+        if (item.selectedSize !== "") {
+          product.size = item.selectedSize;
+        }
+        return product;
+      })
     };
 
     return this.http.post(`${apiUrls.orderServiceApi}create`, order);

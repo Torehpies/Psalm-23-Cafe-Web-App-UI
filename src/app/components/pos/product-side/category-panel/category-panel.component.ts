@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CategoryPanelComponent {
 
-  categories = ['Bread','Cake','Milktea','Coffee']
+  categories = ['Bread','Cake','Milk Tea','Coffee']
 
   categoryService = inject(CategoryService)
   
