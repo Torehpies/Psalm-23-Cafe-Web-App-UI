@@ -1,103 +1,164 @@
-
 .container {
   background-color: #ffd36f;
-  min-height: 79vh;
-  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh; 
+  padding: 0;
   font-family: Arial, sans-serif;
 }
 
-.main-content {
-  background: #fff;
+.sidebar {
+  width: 250px;
+  background-color: #f2d14b;
   padding: 20px;
-  border-radius: 8px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.content {
-  h2 {
-    font-size: 35px;
-  }
+.sidebar h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
 
-  .actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-  }
+.sidebar .menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-  .action-buttons-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    max-width: 600px;
-  }
+.sidebar .menu li {
+  margin-bottom: 15px;
+}
 
-  .search-input {
-    width: 250px;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-  }
+.sidebar .menu a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  display: block;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
 
-  .approve-button {
-    background-color: #f2d14b;
-    border: none;
-    padding: 10px 15px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+.sidebar .menu a:hover {
+  background-color: #ffd36f;
+}
 
-  .user-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
+.main-content {
+  flex-grow: 1;
+  background: #fff;
+  padding: 20px;
+  border-radius: 0;
+  min-height: 100vh;
+  overflow-y: auto;
+}
 
-    th,
-    td {
-      border: 1px solid #ddd;
-      padding: 10px;
-    }
+.content h2 {
+  font-size: 35px;
+}
 
-    th {
-      background-color: #f2f2f2;
-      font-weight: bold;
-    }
-  }
+.content .actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
 
-  .operation-buttons-horizontal {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-    gap: 10px;
-  }
+.content .action-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+}
 
-  .update-button,
-  .delete-button,
-  .disable-button {
-    width: 120px;
-    text-align: center;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    border: none;
-    color: black;
-    font-size: 15px;
-  }
+.content .search-input {
+  width: 250px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
 
-  .update-button {
-    background-color: #4f9efc;
-  }
+.content .approve-button {
+  background-color: #f2d14b;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  .delete-button {
-    background-color: #f44336;
-  }
+.content .user-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
 
-  .disable-button {
-    background-color: #fdd835;
-  }
+.content .user-table th,
+.content .user-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.content .user-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.content .operation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px; 
+}
+
+.content .view-button,
+.content .update-button,
+.content .delete-button,
+.content .disable-button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  font-size: 15px;
+}
+
+.content .view-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.content .update-button {
+  background-color: #4f9efc;
+  color: white;
+}
+
+.content .delete-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.content .disable-button {
+  background-color: #fdd835;
+  color: black;
+}
+
+.popup-overlay,
+.delete-popup-backdrop,
+.disable-popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Optional backdrop */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .popup-overlay {
@@ -176,85 +237,9 @@
   color: #333;
   cursor: pointer;
   font-weight: bold;
-  z-index: 1100;
 }
 
-.close-popup:hover {
-  color: #f44336;
-}
-
-.delete-popup-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-}
-
-.delete-popup-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #F9C03F;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  outline: 2px solid black;
-}
-
-.delete-popup-modal h2 {
-  margin-bottom: 15px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  padding-right: 150px;
-}
-
-.delete-button-group {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.delete-button-group button {
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #000;
-  background-color: #FFD500;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  outline: 2px solid black;
-}
-
-.delete-button-group button:hover {
-  background-color: #009688;
-}
-
-.close-delete-popup {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: #333;
-  cursor: pointer;
-  font-weight: bold;
-  z-index: 1100;
-}
-
-.close-delete-popup:hover {
-  color: #f44336;
-}
-
+.delete-popup-backdrop,
 .disable-popup-backdrop {
   position: fixed;
   top: 0;
@@ -262,22 +247,22 @@
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10;
 }
 
+.delete-popup-modal,
 .disable-popup-modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #F9C03F;
+  background-color: #f9c03f;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
   outline: 2px solid black;
 }
 
+.delete-popup-modal h2,
 .disable-popup-modal h2 {
   margin-bottom: 15px;
   font-size: 18px;
@@ -286,6 +271,7 @@
   padding-right: 150px;
 }
 
+.delete-button-group,
 .disable-button-group {
   display: flex;
   justify-content: flex-end;
@@ -293,12 +279,13 @@
   margin-top: 20px;
 }
 
+.delete-button-group button,
 .disable-button-group button {
   padding: 10px 20px;
   font-size: 14px;
   font-weight: bold;
   color: #000;
-  background-color: #FFD500;
+  background-color: #ffd500;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -306,10 +293,12 @@
   outline: 2px solid black;
 }
 
+.delete-button-group button:hover,
 .disable-button-group button:hover {
   background-color: #009688;
 }
 
+.close-delete-popup,
 .close-disable-popup {
   position: absolute;
   top: 10px;
@@ -320,9 +309,26 @@
   color: #333;
   cursor: pointer;
   font-weight: bold;
-  z-index: 1100;
 }
 
+.close-delete-popup:hover,
 .close-disable-popup:hover {
   color: #f44336;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .main-content {
+    margin-top: 20px;
+    width: 100%;
+  }
 }

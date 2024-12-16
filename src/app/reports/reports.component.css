@@ -1,0 +1,111 @@
+.dashboard-container {
+  font-family: Arial, sans-serif;
+  background-color: #fbd687;
+  padding: 20px;
+}
+
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the navbar content */
+  padding: 10px 20px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  width: 100%;
+}
+
+.nav-buttons .nav-btn {
+  background-color: #5d3b09; /* Button color matching the dark brown */
+  color: #fff; /* White text for high contrast */
+  border: none; /* Remove borders for a cleaner look */
+  border-radius: 8px; /* Rounded edges */
+  padding: 10px 20px; /* Adjust spacing for consistent design */
+  margin: 0 10px; /* Add spacing between buttons */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 16px; /* Slightly larger font size for readability */
+  font-weight: bold; /* Make the text stand out */
+  transition: all 0.3s ease; /* Smooth hover effect */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+}
+
+.nav-buttons .nav-btn:hover {
+  background-color: #ffda91; /* Slightly lighter hover effect */
+  color: #5d3b09; /* Text color complementing hover background */
+}
+
+.nav-buttons .nav-btn.active {
+  background-color: #ffda91; /* Active button color */
+  color: #5d3b09; /* Text color for active button */
+}
+
+/* Date Filter */
+.date-filter {
+  display: flex;
+  align-items: center;
+  margin-left: auto;  /* Align the date filter to the right */
+}
+
+.date-filter label {
+  margin-right: 5px;
+  font-weight: bold;
+  color: #5d3b09;
+}
+
+.date-filter input[type="date"] {
+  padding: 5px;
+  margin-left: 5px;
+  border-radius: 5px;
+  border: 1px solid #5d3b09;
+  background-color: #ffe4a6;
+  color: #5d3b09;
+}
+
+.date-filter input[type="date"]:focus {
+  outline: none;
+  border-color: #5d3b09;
+}
+
+/* Chart Container */
+.chart-container {
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chart-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.chart-tab {
+  background-color: #ffe4a6;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chart-tab:hover {
+  background-color: #ffda91;
+}
+
+.chart-tab.active {
+  background-color: #5d3b09;
+  color: white;
+}
+
+.chart-title {
+  text-align: center;
+  margin-bottom: 20px;
+}

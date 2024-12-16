@@ -1,11 +1,11 @@
 <app-header class="sticky-header"/>
 <div class="container">
-  <app-leftsidebar></app-leftsidebar>
+  <app-leftsidebar></app-leftsidebar> 
+  
   <div class="main-content" [class.active]="isMenuActive">
     <section class="content">
       <h2>Account Management</h2>
 
-      <!-- Actions Section -->
       <div class="actions">
         <div class="action-buttons-container">
           <input type="text" placeholder="Search User" class="search-input" />
@@ -13,8 +13,7 @@
         </div>
       </div>
 
-      <!-- User Table -->
-      <table class="user-table">
+      <table class="user-table" *ngIf="!isLoading && dataItems.length > 0">
         <thead>
           <tr>
             <th style="text-align: center;">Name</th>
@@ -24,14 +23,27 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Table content goes here -->
+          <tr *ngFor="let item of dataItems">
+            <td style="text-align: center;">{{ item.name }}</td>
+            <td style="text-align: center;">{{ item.role }}</td>
+            <td style="text-align: center;">{{ item.email }}</td>
+            <td style="text-align: center;">
+              <div class="operation-buttons">
+                <button class="update-button" (click)="showUpdateComponent()">Update</button>
+                <button class="delete-button" (click)="openDeletePopup()">Delete</button>
+                <button class="disable-button" (click)="openDisablePopup()">Disable</button>
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
 
-      <div class="operation-buttons-horizontal">
-        <button class="update-button" (click)="showUpdateComponent()">Update</button>
-        <button class="delete-button" (click)="openDeletePopup()">Delete</button>
-        <button class="disable-button" (click)="openDisablePopup()">Disable</button> 
+      <div *ngIf="!isLoading && dataItems.length === 0" class="no-data">
+        <p>No data available</p>
+      </div>
+
+      <div *ngIf="isLoading" class="loading-indicator">
+        <p>Loading...</p>
       </div>
 
       <div *ngIf="showUpdateForm">

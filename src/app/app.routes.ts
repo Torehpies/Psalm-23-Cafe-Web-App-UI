@@ -33,9 +33,47 @@ export const routes: Routes = [
   },
   { 
     path: 'reports', 
-    loadComponent: () => import('./pages/dashboard/dashboard.component'), 
+    loadComponent: () => import('./reports/reports.component').then(m => m.ReportsComponent), 
     canActivate: [AuthGuardService, RoleGuardService],  
-    data: { expectedRoles: ADMIN_ROLES}
+    data: { expectedRoles: ADMIN_ROLES},
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () =>
+          import('./reports/charts/charts.component').then(m => m.ChartsComponent),
+      },
+      {
+        path: 'transaction',
+        loadComponent: () =>
+          import('./reports/transaction/transaction.component').then(m => m.TransactionComponent),
+      },
+      {
+        path: 'product-performance',
+        loadComponent: () =>
+          import('./reports/product-performance/product-performance.component').then(m => m.ProductPerformanceComponent),
+      },
+      {
+        path: 'financial-reports',
+        loadComponent: () =>
+          import('./reports/financial-reports/financial-reports.component').then(m => m.FinancialReportsComponent),
+      },
+      {
+        path: 'hourly',
+        loadComponent: () =>
+          import('./reports/charts/hourly/hourly.component').then(m => m.HourlyComponent),
+      },
+      {
+        path: 'weekly',
+        loadComponent: () =>
+          import('./reports/charts/weekly/weekly.component').then(m => m.WeeklyComponent),
+      },
+      {
+        path: 'monthly',
+        loadComponent: () =>
+          import('./reports/charts/monthly/monthly.component').then(m => m.MonthlyComponent),
+      },
+    ],
   },
   { 
     path: 'account-management', 
@@ -90,3 +128,4 @@ export const routes: Routes = [
     redirectTo: '' 
   },
 ];
+
