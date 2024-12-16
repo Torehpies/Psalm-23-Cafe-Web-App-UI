@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,18 +9,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './disable-popup.component.html'
 })
 export class AccountDisablePopupComponent {
-  showDisablePopup: boolean = false;
-
-  openDisablePopup(): void {
-    this.showDisablePopup = true;
-  }
+  @Output() close = new EventEmitter<void>();
 
   closeDisablePopup(): void {
-    this.showDisablePopup = false;
+    this.close.emit();
   }
 
   disableAccount(): void {
-    console.log("Account Disabled");
     this.closeDisablePopup(); 
   }
 }

@@ -6,38 +6,46 @@ import { AccountManagement } from '../models/account-management.model';
 import { Response } from '../models/response.model';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AccountManagementService {
-  private apiUrl = apiUrls.accountManagementServiceApi;
+    private apiUrl = apiUrls.accountManagementServiceApi;
 
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
-  getApprovedAccounts() {
-    return this.http.get<Response<AccountManagement[]>>(`${this.apiUrl}approved`);
-  }
+    getApprovedAccounts() {
+        return this.http.get<Response<AccountManagement[]>>(`${this.apiUrl}approved`);
+    }
 
-  getUnapprovedAccounts() {
-    return this.http.get<Response<AccountManagement[]>>(`${this.apiUrl}unapproved`);
-  }
+    getUnapprovedAccounts() {
+        return this.http.get<Response<AccountManagement[]>>(`${this.apiUrl}unapproved`);
+    }
 
-  getAccountById(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
-  }
+    approveAccount(id: string) {
+        return this.http.patch<any>(`${this.apiUrl}approve/${id}`, {});
+    }
 
-  createAccount(account: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, account);
-  }
+    rejectAccount(id: string) {
+        return this.http.patch<any>(`${this.apiUrl}reject/${id}`, {});
+    }
 
-  updateAccount(id: string, account: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, account);
-  }
+    getAccountById(id: string): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/${id}`);
+    }
 
-  deleteAccount(id: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`);
-  }
+    createAccount(account: any): Observable<any> {
+        return this.http.post<any>(this.apiUrl, account);
+    }
 
-  disableAccount(id: string): Observable<any> {
-    return this.http.patch<any>(`${this.apiUrl}/${id}/disable`, {});
-  }
+    updateAccount(id: string, account: any): Observable<any> {
+        return this.http.put<any>(`${this.apiUrl}/${id}`, account);
+    }
+
+    deleteAccount(id: string): Observable<any> {
+        return this.http.delete<any>(`${this.apiUrl}/${id}`);
+    }
+
+    disableAccount(id: string): Observable<any> {
+        return this.http.patch<any>(`${this.apiUrl}/${id}/disable`, {});
+    }
 }

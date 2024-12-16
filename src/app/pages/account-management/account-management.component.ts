@@ -36,6 +36,9 @@ export default class AccountManagementComponent implements OnInit {
   showDisablePopup: boolean = false;
   showInfoPopup: boolean = false;
 
+  index: number | null = null;
+  selectedAccount: AccountManagement | null = null;
+
   unapprovedAccounts: AccountManagement[] = [];
   approvedAccounts: AccountManagement[] = [];
 
@@ -50,7 +53,11 @@ export default class AccountManagementComponent implements OnInit {
     });
 
     this.menuService.changeHeaderText('Account Management');
+    this.fetchAccounts();
+  }
 
+  fetchAccounts() {
+    this.isLoading = true;
     forkJoin({
       unapproved: this.accountManagementService.getUnapprovedAccounts(),
       approved: this.accountManagementService.getApprovedAccounts()
@@ -67,12 +74,14 @@ export default class AccountManagementComponent implements OnInit {
     });
   }
 
-  openUpdateComponent() {
+  openUpdateComponent(account: AccountManagement) {
+    this.selectedAccount = account;
     this.showUpdateForm = true;
   }
 
   closeUpdateComponent() {
     this.showUpdateForm = false;
+    this.selectedAccount = null;
   }
 
   openDeletePopup() {
@@ -97,5 +106,9 @@ export default class AccountManagementComponent implements OnInit {
 
   closeInfoPopup() {
     this.showInfoPopup = false;
+  }
+
+  onAccountUpdated() {
+    this.fetchAccounts();
   }
 }

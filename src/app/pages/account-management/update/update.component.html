@@ -1,22 +1,20 @@
-<div *ngIf="isFormVisible" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
   <div class="bg-white p-6 rounded-lg shadow-lg relative">
     <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" (click)="closePopup()">X</button>
     <h3 class="text-xl font-bold mb-4">Account Information</h3>
-    <form>
+    <form *ngIf="account" (ngSubmit)="onSubmit()">
       <div class="mb-4">
-        <input id="name" type="text" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="First Name" />
-        <input id="lastName" type="text" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="Last Name" />
+        <input id="name" type="text" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="First Name" [(ngModel)]="account.firstName" name="firstName" />
+        <input id="lastName" type="text" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="Last Name" [(ngModel)]="account.lastName" name="lastName" />
       </div>
       <div class="mb-4">
-        <select id="userRole" name="role" class="input-field w-full p-2 border border-gray-300 rounded mb-2">
+        <select id="userRole" name="role" class="input-field w-full p-2 border border-gray-300 rounded mb-2" [(ngModel)]="account.role">
           <option value="">Select Role</option>
-          <option value="Admin">Baker</option>
-          <option value="User">Assistant Baker</option>
-          <option value="Cashier">Cashier</option>
+          <option *ngFor="let role of roles" [value]="role.toUpperCase()">{{ role }}</option>
         </select>
       </div>
       <div class="mb-4">
-        <input id="email" type="email" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="Email" />
+        <input id="email" type="email" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="Email" [(ngModel)]="account.email" name="email" />
       </div>
       <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
     </form>

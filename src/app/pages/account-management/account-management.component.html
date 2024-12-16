@@ -30,7 +30,7 @@
             <td class="border p-2 text-center">{{ account.role }}</td>
             <td class="border p-2 text-center">{{ account.email }}</td>
             <td class="border p-2 text-center">
-              <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600" (click)="openUpdateComponent()">Update</button>
+              <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600" (click)="openUpdateComponent(account)">Update</button>
               <button class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600" (click)="openDisablePopup()">Disable</button>
               <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" (click)="openDeletePopup()">Delete</button>
             </td>
@@ -44,12 +44,16 @@
   </div>
 </div>
 
-<app-account-management-update *ngIf="showUpdateForm"></app-account-management-update>
-
+<app-account-management-update 
+  *ngIf="showUpdateForm"
+  [account]="selectedAccount"
+  (close)="closeUpdateComponent()">
+</app-account-management-update>
 <app-account-info-popup 
   *ngIf="showInfoPopup"
   [unapprovedAccounts]="unapprovedAccounts"
-  (close)="closeInfoPopup()">
+  (close)="closeInfoPopup()"
+  (accountUpdated)="onAccountUpdated()">
 </app-account-info-popup>
 <app-account-delete-popup 
   *ngIf="showDeletePopup"

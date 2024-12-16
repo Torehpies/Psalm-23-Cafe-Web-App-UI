@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
   templateUrl: './delete-popup.component.html'
 })
 export class AccountDeletePopupComponent {
+  @Output() close = new EventEmitter<void>();
+
   showDeletePopup: boolean = false;
 
   openDeletePopup(): void {
@@ -15,7 +17,7 @@ export class AccountDeletePopupComponent {
   }
 
   closeDeletePopup(): void {
-    this.showDeletePopup = false;
+    this.close.emit();
   }
 
   deleteAccount(): void {
