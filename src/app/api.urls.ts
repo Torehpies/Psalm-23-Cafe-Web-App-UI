@@ -10,4 +10,5 @@ export const apiUrls = {
   attendanceServiceApi: 'http://localhost:8800/api/attendance/',
   produceHistoryServiceApi: 'http://localhost:8800/api/produceHistory/',
   accountManagementServiceApi: 'http://localhost:8800/api/approveUser/',
+  productPerformanceServiceApi: 'http://localhost:8800/api/productPerformance/'
 }

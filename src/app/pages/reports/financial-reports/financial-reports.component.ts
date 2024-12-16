@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { MenuService } from '../../../services/menu.service';
 import { LeftsidebarComponent } from '../../../components/leftsidebar/leftsidebar.component';
 import { SuppliesService } from '../../../services/supplies.service';
+import { ProductPerformanceService } from '../../../services/productPerformance.service';
+import { AggregatedProductPerformance, ProductPerformance } from '../../../models/productPerformance.model';
 
 @Component({
   selector: 'app-financial-reports',
@@ -22,34 +24,38 @@ export class FinancialReportsComponent implements OnInit {
   // Expenses and Sales Data
   expenses: { item: string, quantity: number, amount: number }[] = [];
 
-  sales = [
-    { item: 'Pandesal', quantity: '50 pc', amount: 500.0 },
-    { item: 'Coffee', quantity: '10 pc', amount: 350.0 }
-  ];
-
+  
   // Calculate totals dynamically
   get totalExpenses(): number {
     return this.expenses.reduce((sum, expense) => sum + expense.amount, 0);
   }
-
+  
   get totalSales(): number {
     return this.sales.reduce((sum, sale) => sum + sale.amount, 0);
   }
-
+  
   get profitLoss(): number {
     return this.totalSales - this.totalExpenses;
   }
-
+  
   startDate: string = '';
   endDate: string = '';
-
-  constructor(private menuService: MenuService, private suppliesService: SuppliesService) {}
+  
+  constructor(
+    private menuService: MenuService,
+    private suppliesService: SuppliesService,
+    private productPerformanceService: ProductPerformanceService) { }
+    
+    
+  sales: AggregatedProductPerformance[] = [];
+  productPerformances: ProductPerformance[] = [];
 
   ngOnInit() {
     this.menuService.isMenuActive$.subscribe(status => {
       this.isMenuActive = status;
     });
     this.loadExpenses();
+    this.loadProductPerformance();
   }
 
   loadExpenses() {
@@ -75,6 +81,41 @@ export class FinancialReportsComponent implements OnInit {
     }, error => {
       console.error('Error fetching stock histories:', error); // Debugging statement
     });
+  }
+
+  loadProductPerformance() {
+    this.productPerformanceService.getProductPerformance().subscribe({
+      next: (data) => {
+        this.productPerformances = data.data;
+        this.aggregateProductPerformance();
+        console.log('Product performance data:', data);
+      },
+      error: (error) => {
+        console.error('Error fetching product performance data:', error);
+      }
+    });
+  }
+
+  aggregateProductPerformance() {
+    const aggregatedData: { [key: string]: AggregatedProductPerformance } = {};
+
+    this.productPerformances.forEach(performance => {
+      performance.products.forEach(product => {
+        if (!aggregatedData[product.productId]) {
+          aggregatedData[product.productId] = {
+            productId: product.productId,
+            name: product.name,
+            quantity: 0,
+            amount: 0
+          };
+        }
+        aggregatedData[product.productId].quantity += product.quantity;
+        aggregatedData[product.productId].amount += product.price * product.quantity;
+      });
+    });
+
+    this.sales = Object.values(aggregatedData);
+    console.log('Aggregated product performance:', this.sales);
   }
 
   filterDataByRange(range: string) {
