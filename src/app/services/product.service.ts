@@ -25,6 +25,17 @@ export class ProductService {
       }
     })
   }
+
+  fetchAndSaveProducts() {
+    this.getProducts().subscribe({
+      next: (res) => {
+        localStorage.setItem('products', JSON.stringify(res.data));
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
 }
 
 // export type Response<T> = {

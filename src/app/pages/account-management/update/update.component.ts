@@ -15,12 +15,12 @@ export class AccountManagementUpdateComponent {
   @Output() close = new EventEmitter<void>();
   @Output() accountUpdated = new EventEmitter<void>();
 
-  roles: string[] = ['Manager', 'Baker', 'Barista', 'Cashier', 'Helper'];
+  roles: string[] = ['manager', 'baker', 'barista', 'cashier', 'helper'];
   
   closePopup() {
     this.close.emit();
   }
-  
+
   onSubmit() {
     // Handle form submission logic here
     this.accountUpdated.emit();

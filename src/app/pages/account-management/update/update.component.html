@@ -10,7 +10,7 @@
       <div class="mb-4">
         <select id="userRole" name="role" class="input-field w-full p-2 border border-gray-300 rounded mb-2" [(ngModel)]="account.role">
           <option value="">Select Role</option>
-          <option *ngFor="let role of roles" [value]="role.toUpperCase()">{{ role }}</option>
+          <option *ngFor="let role of roles" [value]="role">{{ role | titlecase }}</option>
         </select>
       </div>
       <div class="mb-4">

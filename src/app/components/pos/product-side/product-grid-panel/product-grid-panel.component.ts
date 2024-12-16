@@ -7,6 +7,7 @@ import { LineItem } from '../../../../models/lineItem/lineItem.model';
 import { CategoryService } from '../../../../services/category.service';
 import { OrderService } from '../../../../services/order.service';
 import { QuantityPopupComponent } from '../../quantity-popup/quantity-popup.component';
+import { ProductService } from '../../../../services/product.service';
 
 @Component({
   selector: 'app-product-grid-panel',
@@ -19,14 +20,14 @@ export class ProductGridPanelComponent implements OnInit {
 
   private categoryService = inject(CategoryService)
   private orderService = inject(OrderService)
+  private productService = inject(ProductService);
 
   products: Product[] = [];
   filteredProducts: Product[] = [];
   selectedProduct: Product | null = null;
 
   ngOnInit(): void {
-    // this.saveProducts();
-    // this.category = this.categoryPicker.selectedCategory
+    this.productService.fetchAndSaveProducts();
     this.loadProductsFromLocalStorage();
     this.categoryService.selectedCategory$.subscribe((category) => {
       this.filteredProducts = category
