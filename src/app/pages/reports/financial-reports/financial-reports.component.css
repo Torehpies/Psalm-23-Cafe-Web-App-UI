@@ -93,16 +93,43 @@
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Table Wrapper */
+.table-wrapper {
+  max-height: 600px; /* Increased height */
+  overflow-y: auto;
+  position: relative;
+  padding-top: 0; /* Remove space for sticky header */
+  padding-bottom: 0; /* Remove space for sticky total row */
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
+  margin: 0;
+  padding: 0;
 }
 
 th,
 td {
-  border: 1px solid #ccc;
+  
   padding: 8px;
   text-align: left;
+}
+
+/* Sticky Header and Total Row */
+table th,
+table tr:last-child {
+  position: sticky;
+  background: #fff;
+  z-index: 2; /* Ensure it stays above the content */
+}
+
+table th {
+  top: 0;
+}
+
+table tr:last-child {
+  bottom: 0;
 }
 
 /* Profit/Loss Section */

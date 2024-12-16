@@ -29,43 +29,55 @@
       <!-- Expenses Section -->
       <div class="expenses">
         <h2>Expenses</h2>
-        <table>
-          <tr>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th>Amount</th>
-          </tr>
-          <tr *ngFor="let expense of expenses">
-            <td>{{ expense.item }}</td>
-            <td>{{ expense.quantity }}</td>
-            <td>₱ {{ expense.amount }}</td>
-          </tr>
-          <tr>
-            <td colspan="2">Total</td>
-            <td>₱ {{ totalExpenses }}</td>
-          </tr>
-        </table>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let expense of expenses">
+                <td>{{ expense.item }}</td>
+                <td>{{ expense.quantity }}</td>
+                <td>₱ {{ expense.amount }}</td>
+              </tr>
+              <tr>
+                <td colspan="2">Total</td>
+                <td>₱ {{ totalExpenses }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Sales Section -->
       <div class="sales">
         <h2>Sales</h2>
-        <table>
-          <tr>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th>Amount</th>
-          </tr>
-          <tr *ngFor="let sale of sales">
-            <td>{{ sale.item }}</td>
-            <td>{{ sale.quantity }}</td>
-            <td>₱ {{ sale.amount }}</td>
-          </tr>
-          <tr>
-            <td colspan="2">Total</td>
-            <td>₱ {{ totalSales }}</td>
-          </tr>
-        </table>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sale of sales">
+                <td>{{ sale.item }}</td>
+                <td>{{ sale.quantity }}</td>
+                <td>₱ {{ sale.amount }}</td>
+              </tr>
+              <tr>
+                <td colspan="2">Total</td>
+                <td>₱ {{ totalSales }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 

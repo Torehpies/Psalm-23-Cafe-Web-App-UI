@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router'; // Import RouterModule
 import { MenuService } from '../../../services/menu.service';
 import { LeftsidebarComponent } from '../../../components/leftsidebar/leftsidebar.component';
+import { HourlyComponent } from './hourly/hourly.component';
+import { WeeklyComponent } from './weekly/weekly.component';
+import { MonthlyComponent } from './monthly/monthly.component';
 
 @Component({
   selector: 'app-charts',
@@ -13,12 +16,16 @@ import { LeftsidebarComponent } from '../../../components/leftsidebar/leftsideba
     FormsModule,
     RouterModule, // Add RouterModule here
     LeftsidebarComponent,
+    HourlyComponent,
+    WeeklyComponent,
+    MonthlyComponent,
   ],
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.css'],
 })
 export class ChartsComponent implements OnInit {
   isMenuActive: boolean = false;
+  currentComponent: string = 'hourly';
 
   constructor(private menuService: MenuService) {}
 
@@ -28,5 +35,9 @@ export class ChartsComponent implements OnInit {
     });
 
     this.menuService.changeHeaderText('Reports');
+  }
+
+  showComponent(component: string) {
+    this.currentComponent = component;
   }
 }

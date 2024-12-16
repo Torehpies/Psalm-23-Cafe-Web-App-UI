@@ -26,8 +26,9 @@ export class SuppliesService {
     return this.http.get<Supplies>(`${this.apiUrl}/${id}`);
   }
   
-  getsupplyHistory(): Observable<any> {
-    return this.http.get(this.historyUrl);  // Fetch all supply history from the backend
+  // Fetch all supply history from the backend
+  getsupplyHistory(): Observable<StockHistory[]> {
+    return this.http.get<StockHistory[]>(this.historyUrl);
   }
 
   getSupplyHistoryById(id: string): Observable<any> {

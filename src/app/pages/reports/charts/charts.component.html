@@ -1,23 +1,24 @@
 <div class="flex flex-col lg:flex-row">
   <app-leftsidebar></app-leftsidebar>
-  <div class="main-content" [class.active]="isMenuActive">
+  <div class="main-content flex-grow p-5 bg-yellow-200 rounded-lg shadow-lg transition-all duration-300" [class.active]="isMenuActive">
     <!-- Tabs for navigation -->
-    <div class="charts-tabs">
+    <div class="charts-tabs flex justify-center mb-5">
       <button 
-        class="nav-btn" 
-        [routerLink]="['./hourly']" 
-        routerLinkActive="active">Hourly</button>
+        class="nav-btn bg-yellow-300 border-none py-2 px-4 mx-1 rounded cursor-pointer text-lg font-bold transition-all duration-300 hover:bg-yellow-400 active:bg-brown-700 active:text-white" 
+        (click)="showComponent('hourly')">Hourly</button>
       <button 
-        class="nav-btn" 
-        [routerLink]="['./weekly']" 
-        routerLinkActive="active">Weekly</button>
+        class="nav-btn bg-yellow-300 border-none py-2 px-4 mx-1 rounded cursor-pointer text-lg font-bold transition-all duration-300 hover:bg-yellow-400 active:bg-brown-700 active:text-white" 
+        (click)="showComponent('weekly')">Daily</button>
       <button 
-        class="nav-btn" 
-        [routerLink]="['./monthly']" 
-        routerLinkActive="active">Monthly</button>
+        class="nav-btn bg-yellow-300 border-none py-2 px-4 mx-1 rounded cursor-pointer text-lg font-bold transition-all duration-300 hover:bg-yellow-400 active:bg-brown-700 active:text-white" 
+        (click)="showComponent('monthly')">Monthly</button>
     </div>
 
-    <!-- Render child route here dynamically -->
-    <router-outlet></router-outlet>
+    <!-- Render child component here dynamically -->
+    <div class="mt-5">
+      <app-hourly *ngIf="currentComponent === 'hourly'"></app-hourly>
+      <app-weekly *ngIf="currentComponent === 'weekly'"></app-weekly>
+      <app-monthly *ngIf="currentComponent === 'monthly'"></app-monthly>
+    </div>
   </div>
 </div>
