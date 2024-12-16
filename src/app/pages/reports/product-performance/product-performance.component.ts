@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MenuService } from '../../services/menu.service';
-import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
+import { MenuService } from '../../../services/menu.service';
+import { LeftsidebarComponent } from '../../../components/leftsidebar/leftsidebar.component';
 
 @Component({
   selector: 'app-product-performance',

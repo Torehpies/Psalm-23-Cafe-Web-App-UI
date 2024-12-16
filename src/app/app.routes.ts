@@ -32,50 +32,6 @@ export const routes: Routes = [
     data: { expectedRoles: [...ADMIN_ROLES, ...PRODUCTION_ROLES] } 
   },
   { 
-    path: 'reports', 
-    loadComponent: () => import('./reports/reports.component').then(m => m.ReportsComponent), 
-    canActivate: [AuthGuardService, RoleGuardService],  
-    data: { expectedRoles: ADMIN_ROLES},
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        loadComponent: () =>
-          import('./reports/charts/charts.component').then(m => m.ChartsComponent),
-      },
-      {
-        path: 'transaction',
-        loadComponent: () =>
-          import('./reports/transaction/transaction.component').then(m => m.TransactionComponent),
-      },
-      {
-        path: 'product-performance',
-        loadComponent: () =>
-          import('./reports/product-performance/product-performance.component').then(m => m.ProductPerformanceComponent),
-      },
-      {
-        path: 'financial-reports',
-        loadComponent: () =>
-          import('./reports/financial-reports/financial-reports.component').then(m => m.FinancialReportsComponent),
-      },
-      {
-        path: 'hourly',
-        loadComponent: () =>
-          import('./reports/charts/hourly/hourly.component').then(m => m.HourlyComponent),
-      },
-      {
-        path: 'weekly',
-        loadComponent: () =>
-          import('./reports/charts/weekly/weekly.component').then(m => m.WeeklyComponent),
-      },
-      {
-        path: 'monthly',
-        loadComponent: () =>
-          import('./reports/charts/monthly/monthly.component').then(m => m.MonthlyComponent),
-      },
-    ],
-  },
-  { 
     path: 'account-management', 
     loadComponent: () => import('./pages/account-management/account-management.component'), 
     canActivate: [AuthGuardService, RoleGuardService],  
@@ -122,6 +78,51 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/clock-in/clock-in.component'), 
     canActivate: [AuthGuardService, RoleGuardService],  
      data: { expectedRoles: [...ADMIN_ROLES, ...COUNTER_ROLES, ...PRODUCTION_ROLES]}
+     
+  },
+  { 
+    path: 'reports',
+    loadComponent: () => import('./pages/reports/reports.component'),
+    canActivate: [AuthGuardService, RoleGuardService],
+    data: { expectedRoles: ADMIN_ROLES },
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () =>
+          import('./pages/reports/charts/charts.component').then(m => m.ChartsComponent),
+      },
+      {
+        path: 'transaction',
+        loadComponent: () =>
+          import('./pages/reports/transaction/transaction.component').then(m => m.TransactionComponent),
+      },
+      {
+        path: 'product-performance',
+        loadComponent: () =>
+          import('./pages/reports/product-performance/product-performance.component').then(m => m.ProductPerformanceComponent),
+      },
+      {
+        path: 'financial-reports',
+        loadComponent: () =>
+          import('./pages/reports/financial-reports/financial-reports.component').then(m => m.FinancialReportsComponent),
+      },
+      {
+        path: 'hourly',
+        loadComponent: () =>
+          import('./pages/reports/charts/hourly/hourly.component').then(m => m.HourlyComponent),
+      },
+      {
+        path: 'weekly',
+        loadComponent: () =>
+          import('./pages/reports/charts/weekly/weekly.component').then(m => m.WeeklyComponent),
+      },
+      {
+        path: 'monthly',
+        loadComponent: () =>
+          import('./pages/reports/charts/monthly/monthly.component').then(m => m.MonthlyComponent),
+      },
+    ],
   },
   { 
     path: '**', 

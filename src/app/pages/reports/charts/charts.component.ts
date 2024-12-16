@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router'; // Import RouterModule
 import { MenuService } from '../../../services/menu.service';
 import { LeftsidebarComponent } from '../../../components/leftsidebar/leftsidebar.component';
 
 @Component({
-  selector: 'app-hourly',
+  selector: 'app-charts',
   standalone: true,
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule, // Add RouterModule here
     LeftsidebarComponent,
   ],
-  templateUrl: './hourly.component.html',
-  styleUrls: ['./hourly.component.css'],
+  templateUrl: './charts.component.html',
+  styleUrls: ['./charts.component.css'],
 })
-export class HourlyComponent implements OnInit {
+export class ChartsComponent implements OnInit {
   isMenuActive: boolean = false;
 
   constructor(private menuService: MenuService) {}
@@ -25,6 +27,6 @@ export class HourlyComponent implements OnInit {
       this.isMenuActive = status;
     });
 
-    this.menuService.changeHeaderText('Hourly Charts');
+    this.menuService.changeHeaderText('Reports');
   }
 }

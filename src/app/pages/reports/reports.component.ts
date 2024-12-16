@@ -1,23 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router'; // Import RouterModule
 import { MenuService } from '../../services/menu.service';
 import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-charts',
+  selector: 'app-reports',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule, // Add RouterModule here
-    LeftsidebarComponent,
-  ],
-  templateUrl: './charts.component.html',
-  styleUrls: ['./charts.component.css'],
+  imports: [LeftsidebarComponent, HeaderComponent, FormsModule, RouterModule],
+  templateUrl: './reports.component.html',
+  styleUrls: ['./reports.component.css']
 })
-export class ChartsComponent implements OnInit {
+export default class ReportsComponent implements OnInit {
   isMenuActive: boolean = false;
 
   constructor(private menuService: MenuService) {}
@@ -26,7 +21,6 @@ export class ChartsComponent implements OnInit {
     this.menuService.isMenuActive$.subscribe((status) => {
       this.isMenuActive = status;
     });
-
     this.menuService.changeHeaderText('Reports');
   }
 }
