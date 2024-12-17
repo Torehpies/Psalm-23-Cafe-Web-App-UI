@@ -31,7 +31,7 @@ export class ProductGridPanelComponent implements OnInit {
     this.loadProductsFromLocalStorage();
     this.categoryService.selectedCategory$.subscribe((category) => {
       this.filteredProducts = category
-        ? this.products.filter((item) => item.category === category)
+        ? this.products.filter((item) => item.category === category && item.status === "Active")
         : this.products;
     });
   }

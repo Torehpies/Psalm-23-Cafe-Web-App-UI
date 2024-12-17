@@ -17,6 +17,10 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
+  getOrders() {
+    return this.http.get(`${apiUrls.orderServiceApi}`);
+  }
+
   addLineItem(lineItem: LineItem): void {
     const currentLineItems = this.lineItemsSubject.value;
     const newLineItems = [...currentLineItems, lineItem];

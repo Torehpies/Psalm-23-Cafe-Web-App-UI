@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MenuService } from '../../../services/menu.service';
 import { LeftsidebarComponent } from '../../../components/leftsidebar/leftsidebar.component';
+import { OrderService } from '../../../services/order.service';
 
 @Component({
   selector: 'app-transaction',
@@ -18,14 +19,7 @@ import { LeftsidebarComponent } from '../../../components/leftsidebar/leftsideba
 export class TransactionComponent implements OnInit {
   isMenuActive: boolean = false;
 
-  // Sample Transaction Data
-  transactionData = [
-    { date: '2024-12-01', time: '10:00', paymentMethod: 'Cash', items: ['Milk Tea'], total: 100 },
-    { date: '2024-12-02', time: '14:00', paymentMethod: 'Card', items: ['Bread', 'Coffee'], total: 250 },
-    { date: '2024-12-03', time: '09:30', paymentMethod: 'Cash', items: ['Milk Tea', 'Bread'], total: 200 },
-    { date: '2024-12-10', time: '16:45', paymentMethod: 'Card', items: ['Coffee'], total: 100 },
-    { date: '2024-12-11', time: '12:30', paymentMethod: 'Cash', items: ['Bread'], total: 100 }
-  ];
+  transactionData: { date: string, time: string, paymentMethod: string, items: string[], total: number }[] = [];
 
   filteredData = {
     transactions: [...this.transactionData],
@@ -34,11 +28,23 @@ export class TransactionComponent implements OnInit {
   startDate: string = '';
   endDate: string = '';
 
-  constructor(private menuService: MenuService) {}
+  constructor(private menuService: MenuService, private orderService: OrderService) {}
 
   ngOnInit() {
     this.menuService.isMenuActive$.subscribe(status => {
       this.isMenuActive = status;
+    });
+
+    this.orderService.getOrders().subscribe((orders: any) => {
+      console.log('Fetched orders:', orders); // Debugging line
+      this.transactionData = orders.map((order: any) => ({
+        date: new Date(order.Date).toLocaleDateString(),
+        time: new Date(order.Date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        paymentMethod: order.PaymentMethod,
+        items: order.products.map((product: any) => product.name),
+        total: order.TotalAmount
+      }));
+      this.filteredData.transactions = [...this.transactionData];
     });
 
     // Do NOT change the header text here
