@@ -4,4 +4,5 @@ export interface AccountManagement {
     lastName: string;
     email: string;
     role: string;
+    status: string;
 }

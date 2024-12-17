@@ -38,14 +38,18 @@ export class AccountManagementService {
     }
 
     updateAccount(id: string, account: any): Observable<any> {
-        return this.http.put<any>(`${this.apiUrl}/${id}`, account);
+        return this.http.put<any>(`${this.apiUrl}${id}`, account);
     }
 
     deleteAccount(id: string): Observable<any> {
-        return this.http.delete<any>(`${this.apiUrl}/${id}`);
+        return this.http.delete<any>(`${this.apiUrl}${id}`);
     }
 
-    disableAccount(id: string): Observable<any> {
-        return this.http.patch<any>(`${this.apiUrl}/${id}/disable`, {});
+    disableAccount(id: string): Observable<AccountManagement> {
+        return this.http.patch<AccountManagement>(`${this.apiUrl}disable/${id}`, {});
+    }
+
+    enableAccount(id: string): Observable<AccountManagement> {
+        return this.http.patch<AccountManagement>(`${this.apiUrl}enable/${id}`, {});
     }
 }

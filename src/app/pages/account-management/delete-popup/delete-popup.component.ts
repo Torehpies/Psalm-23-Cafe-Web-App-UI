@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AccountManagementService } from '../../../services/accountmanagement.service';
+import { AccountManagement } from '../../../models/account-management.model';
 
 @Component({
   selector: 'app-account-delete-popup',
@@ -9,8 +11,11 @@ import { CommonModule } from '@angular/common';
 })
 export class AccountDeletePopupComponent {
   @Output() close = new EventEmitter<void>();
+  @Input() account: AccountManagement | null = null ; // Add Input property for account ID
 
   showDeletePopup: boolean = false;
+
+  constructor(private accountManagementService: AccountManagementService) {}
 
   openDeletePopup(): void {
     this.showDeletePopup = true;
@@ -21,7 +26,16 @@ export class AccountDeletePopupComponent {
   }
 
   deleteAccount(): void {
-    console.log("Account Deleted"); 
-    this.closeDeletePopup(); 
+    if (this.account) {
+      this.accountManagementService.deleteAccount(this.account._id).subscribe(() => {
+        console.log("Account Deleted");
+        this.reloadPage
+        this.closeDeletePopup();
+      });
+    }
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 }

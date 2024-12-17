@@ -2,22 +2,46 @@
   <div class="bg-white p-6 rounded-lg shadow-lg relative">
     <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" (click)="closePopup()">X</button>
     <h3 class="text-xl font-bold mb-4">Account Information</h3>
-    <form *ngIf="account" (ngSubmit)="onSubmit()">
+    <form [formGroup]="updateAccountForm" (ngSubmit)="onSubmit()">
       <div class="mb-4">
-        <input id="name" type="text" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="First Name" [(ngModel)]="account.firstName" name="firstName" />
-        <input id="lastName" type="text" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="Last Name" [(ngModel)]="account.lastName" name="lastName" />
+        <input id="name" type="text" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="First Name" formControlName="firstName" />
+        <div *ngIf="updateAccountForm.get('firstName')?.touched && updateAccountForm.get('firstName')?.invalid">
+          <small class="error">First Name is required</small>
+        </div>
+        <input id="lastName" type="text" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="Last Name" formControlName="lastName" />
+        <div *ngIf="updateAccountForm.get('lastName')?.touched && updateAccountForm.get('lastName')?.invalid">
+          <small class="error">Last Name is required</small>
+        </div>
       </div>
       <div class="mb-4">
-        <select id="userRole" name="role" class="input-field w-full p-2 border border-gray-300 rounded mb-2" [(ngModel)]="account.role">
+        <select id="userRole" name="role" class="input-field w-full p-2 border border-gray-300 rounded mb-2" formControlName="role">
           <option value="">Select Role</option>
           <option *ngFor="let role of roles" [value]="role">{{ role | titlecase }}</option>
         </select>
+        <div *ngIf="updateAccountForm.get('role')?.touched && updateAccountForm.get('role')?.invalid">
+          <small class="error">Role is required</small>
+        </div>
       </div>
       <div class="mb-4">
-        <input id="email" type="email" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="Email" [(ngModel)]="account.email" name="email" />
+        <input id="email" type="email" class="input-field w-full p-2 border border-gray-300 rounded mb-2" placeholder="Email" formControlName="email" />
+        <div *ngIf="updateAccountForm.get('email')?.touched && updateAccountForm.get('email')?.invalid">
+          <small class="error">Please enter a valid email</small>
+        </div>
       </div>
-      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
+      <div *ngIf="updateAccountForm.errors?.['unchanged']" class="form-group">
+        <small class="error">No changes detected in the form.</small>
+      </div>
+      <div class="button-group">
+        <button type="submit" [disabled]="!updateAccountForm.valid" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
+        <button type="button" (click)="openCancelModal()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Cancel</button>
+      </div>
     </form>
   </div>
 </div>
+<app-confirm-modal
+  *ngIf="showModal"
+  [message]="modalMessage"
+  (confirmed)="onConfirmed($event)"
+  (canceled)="onModalCancel()"
+></app-confirm-modal>
 

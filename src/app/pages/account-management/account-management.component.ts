@@ -84,20 +84,24 @@ export default class AccountManagementComponent implements OnInit {
     this.selectedAccount = null;
   }
 
-  openDeletePopup() {
+  openDeletePopup(account: AccountManagement): void {
+    this.selectedAccount = account;
     this.showDeletePopup = true;
   }
 
   closeDeletePopup() {
     this.showDeletePopup = false;
+    this.selectedAccount = null;
   }
 
-  openDisablePopup() {
+  openDisablePopup(account: AccountManagement): void {
+    this.selectedAccount = account;
     this.showDisablePopup = true;
   }
 
   closeDisablePopup() {
     this.showDisablePopup = false;
+    this.selectedAccount = null;
   }
 
   openInfoPopup() {
@@ -110,5 +114,6 @@ export default class AccountManagementComponent implements OnInit {
 
   onAccountUpdated() {
     this.fetchAccounts();
+    this.selectedAccount = null;
   }
 }

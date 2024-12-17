@@ -23,7 +23,7 @@
     <!-- Action Buttons -->
     <button class="edit-btn" (click)="toggleEdit()">Edit</button>
     <button class="status-btn" (click)="toggleStatus()">
-      {{ product.Status === 'Active' ? 'Deactivate' : 'Activate' }}
+      {{ product.status === 'Active' ? 'Deactivate' : 'Activate' }}
     </button>
     <button class="close-btn" (click)="closeModal()">×</button>
   </div>
