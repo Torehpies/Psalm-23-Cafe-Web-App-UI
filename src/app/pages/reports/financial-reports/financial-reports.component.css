@@ -140,7 +140,8 @@ table tr:last-child {
   color: #222;
   font-weight: bold;
   background: #fff;
-  width: 50%;
+  width: 30%;
   padding: 10px;
   border-radius: 20px;
+  border: #222 solid 3px;
 }

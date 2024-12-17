@@ -25,14 +25,14 @@
           <h3 class="text-xl text-brown-900 mb-2">Employees</h3>
           <ul class="list-none p-0 m-0">
             <li *ngFor="let user of users" (click)="selectUser(user)" class="p-3 border-b border-brown-700 cursor-pointer text-xl text-brown-900 leading-6 hover:bg-yellow-100">
-              {{ user.firstName }} {{ user.lastName }} 
-              <span class="role block text-lg text-brown-800 ml-1 italic">{{ user.role }}</span>
+              {{ user.firstName | titlecase }} {{ user.lastName | titlecase }} 
+              <span class="role block text-lg text-brown-800 ml-1 italic">{{ user.role | titlecase }}</span>
             </li>
           </ul>
         </div>
 
         <div class="employee-details bg-white border border-brown-700 rounded p-4 overflow-auto">
-          <h3 class="text-xl text-brown-900 mb-2" *ngIf="selectedUser">{{ selectedUser.firstName }} {{ selectedUser.lastName }} - {{ selectedUser.role }}</h3>
+          <h3 class="text-xl text-brown-900 mb-2" *ngIf="selectedUser">{{ selectedUser.firstName | titlecase}} {{ selectedUser.lastName | titlecase }} - {{ selectedUser.role | titlecase }}</h3>
           <h3 class="text-xl text-brown-900 mb-2" *ngIf="!selectedUser">Choose employee to view</h3>
           <table *ngIf="selectedUser" class="w-full border-collapse mt-2 table-fixed">
             <thead>
