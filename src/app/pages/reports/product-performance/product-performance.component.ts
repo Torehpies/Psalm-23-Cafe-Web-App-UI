@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MenuService } from '../../../services/menu.service';
 import { LeftsidebarComponent } from '../../../components/leftsidebar/leftsidebar.component';
+import { ProductPerformanceService } from '../../../services/productPerformance.service';
+import { ProductPerformance, Category } from '../../../models/productPerformance.model';
 
 @Component({
   selector: 'app-product-performance',
@@ -20,27 +22,16 @@ import { LeftsidebarComponent } from '../../../components/leftsidebar/leftsideba
 export class ProductPerformanceComponent implements OnInit {
   isMenuActive: boolean = false;
 
-  productData = {
-    milkTea: [
-      { name: 'Okinawa', quantity: 40, price: 10000, date: '2024-12-01' },
-      { name: 'Taro', quantity: 40, price: 10000, date: '2024-12-05' }
-    ],
-    bread: [
-      { name: 'Ensaymada', quantity: 40, price: 1000, date: '2024-12-10' },
-      { name: 'Pandesal', quantity: 40, price: 1000, date: '2024-12-12' }
-    ],
-    coffee: [
-      { name: 'Americano', quantity: 40, price: 1000, date: '2024-12-11' },
-      { name: 'Latte', quantity: 40, price: 1000, date: '2024-12-13' }
-    ]
-  };
-
-  filteredData = { ...this.productData };
+  productData: Category[] = [];
+  filteredData: Category[] = [];
 
   startDate: string = '';
   endDate: string = '';
 
-  constructor(private menuService: MenuService) {}
+  constructor(
+    private menuService: MenuService,
+    private productPerformanceService: ProductPerformanceService
+  ) {}
 
   ngOnInit() {
     this.menuService.isMenuActive$.subscribe((status) => {
@@ -48,6 +39,11 @@ export class ProductPerformanceComponent implements OnInit {
     });
 
     this.menuService.changeHeaderText('Reports');
+
+    this.productPerformanceService.getProductPerformance().subscribe((response) => {
+      this.productData = response.data[0].categories;
+      this.filteredData = [...this.productData];
+    });
   }
 
   // Method to filter data by date range
@@ -96,15 +92,10 @@ export class ProductPerformanceComponent implements OnInit {
 
   // Helper method to filter products by a date range
   filterByDateRange(startDate: Date, endDate: Date) {
-    let filteredMilkTea = this.filterByDate(this.productData.milkTea, startDate, endDate);
-    let filteredBread = this.filterByDate(this.productData.bread, startDate, endDate);
-    let filteredCoffee = this.filterByDate(this.productData.coffee, startDate, endDate);
-
-    this.filteredData = {
-      milkTea: filteredMilkTea,
-      bread: filteredBread,
-      coffee: filteredCoffee
-    };
+    this.filteredData = this.productData.map(category => ({
+      ...category,
+      products: this.filterByDate(category.products, startDate, endDate)
+    }));
   }
 
   // Helper method to filter individual products by date

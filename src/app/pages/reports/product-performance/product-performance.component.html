@@ -29,35 +29,13 @@
 
     <!-- Product Performance Data -->
     <div class="product-data-container">
-      <div class="product-category">
-        <h3>MILK TEA</h3>
+      <div class="product-category" *ngFor="let category of filteredData">
+        <h3>{{ category.category.toUpperCase() }}</h3>
         <table>
-          <tr *ngFor="let item of filteredData.milkTea">
-            <td>{{ item.name }}</td>
+          <tr *ngFor="let item of category.products">
+            <td>{{ item.name }}<span *ngIf="item.size"> ({{ item.size }})</span></td>
             <td>{{ item.quantity }} pcs</td>
-            <td>₱{{ item.price }}</td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="product-category">
-        <h3>BREAD</h3>
-        <table>
-          <tr *ngFor="let item of filteredData.bread">
-            <td>{{ item.name }}</td>
-            <td>{{ item.quantity }} pcs</td>
-            <td>₱{{ item.price }}</td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="product-category">
-        <h3>COFFEE</h3>
-        <table>
-          <tr *ngFor="let item of filteredData.coffee">
-            <td>{{ item.name }}</td>
-            <td>{{ item.quantity }} pcs</td>
-            <td>₱{{ item.price }}</td>
+            <td>₱{{ item.price * item.quantity }}</td>
           </tr>
         </table>
       </div>
