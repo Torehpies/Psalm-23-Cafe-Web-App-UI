@@ -1,11 +1,16 @@
-<app-header class="sticky-header"/>
-<div class="container">
-    <app-leftsidebar />
-    <div class="main-content" [class.active]="isMenuActive">
+<div class="size-screen">
+    <app-header class="sticky-header" />
+    <div class="container">
+        <app-leftsidebar />
+        <div class="main-content" [class.active]="isMenuActive">
+            <div class="flex flex-row px-40">
+                <app-main-board class="basis-3/4 mr-5 grow"></app-main-board>
+                <div class="flex flex-col grow">
+                    <app-date-time class=""></app-date-time>
+                    <app-daily class=""></app-daily>
+                </div>
+            </div>
+        </div>
 
-        <app-main-board></app-main-board>
-        <app-date-time></app-date-time>
-        <app-daily></app-daily>
     </div>
-
 </div>
