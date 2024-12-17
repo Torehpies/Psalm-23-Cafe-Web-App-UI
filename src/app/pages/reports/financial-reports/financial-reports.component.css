@@ -18,6 +18,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 20px;
 }
 
 /* Filter container */
@@ -95,7 +96,7 @@
 
 /* Table Wrapper */
 .table-wrapper {
-  max-height: 600px; /* Increased height */
+  max-height: 330px;
   overflow-y: auto;
   position: relative;
   padding-top: 0; /* Remove space for sticky header */
@@ -134,8 +135,12 @@ table tr:last-child {
 
 /* Profit/Loss Section */
 .profit-loss {
-  margin: 20px 0;
   font-size: 18px;
   text-align: center;
-  color: #5d4037;
+  color: #222;
+  font-weight: bold;
+  background: #fff;
+  width: 50%;
+  padding: 10px;
+  border-radius: 20px;
 }

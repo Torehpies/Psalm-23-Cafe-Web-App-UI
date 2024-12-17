@@ -18,6 +18,7 @@
   display: flex;
   flex-direction: column;
   align-items: center; /* Center content for better UX */
+  border-radius: 20px;
 }
 
 /* Filter container */
@@ -78,11 +79,17 @@
   outline-offset: 2px;
 }
 
+/* Wrapper for transaction data to enable scrolling */
+.transaction-data-wrapper {
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: calc(100vh - 275px); /* Adjust based on your layout */
+}
+
 /* Data Section Styling */
 .transaction-data-container {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
   gap: 20px;
   width: 100%;
   box-sizing: border-box;
