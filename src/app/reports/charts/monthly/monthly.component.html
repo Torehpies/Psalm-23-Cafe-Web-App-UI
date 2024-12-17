@@ -1,1 +1,38 @@
-<p>monthly works!</p>
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <app-leftsidebar></app-leftsidebar>
+  
+    <!-- Main Content Area -->
+    <div class="main-content" [class.active]="isMenuActive">
+      <!-- Tabs for navigation -->
+      <div class="navbar">
+        <div class="nav-buttons">
+          <button 
+            class="nav-btn" 
+            [class.active]="isButtonActive('hourly')" 
+            (click)="navigateTo('hourly')"
+            [routerLink]="['/reports/hourly']"
+            routerLinkActive="active">Hourly</button>
+          <button 
+            class="nav-btn" 
+            [class.active]="isButtonActive('weekly')" 
+            (click)="navigateTo('weekly')"
+            [routerLink]="['/reports/weekly']"
+            routerLinkActive="active">Weekly</button>
+          <button 
+            class="nav-btn" 
+            [class.active]="isButtonActive('monthly')" 
+            (click)="navigateTo('monthly')"
+            [routerLink]="['/reports/monthly']"
+            routerLinkActive="active">Monthly</button>
+        </div>
+      </div>
+  
+      <!-- Chart Content -->
+      <div class="chart-container">
+        <h3 class="chart-title">Monthly Sales</h3>
+        <canvas id="monthlyChart"></canvas>
+      </div>
+    </div>
+  </div>
+  

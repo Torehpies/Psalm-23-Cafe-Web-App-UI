@@ -1,23 +1,30 @@
-<div class="container">
+<div class="dashboard-container">
+  <!-- Sidebar -->
   <app-leftsidebar></app-leftsidebar>
+
+  <!-- Main Content Area -->
   <div class="main-content" [class.active]="isMenuActive">
     <!-- Tabs for navigation -->
-    <div class="charts-tabs">
-      <button 
-        class="nav-btn" 
-        [routerLink]="['./hourly']" 
-        routerLinkActive="active">Hourly</button>
-      <button 
-        class="nav-btn" 
-        [routerLink]="['./weekly']" 
-        routerLinkActive="active">Weekly</button>
-      <button 
-        class="nav-btn" 
-        [routerLink]="['./monthly']" 
-        routerLinkActive="active">Monthly</button>
+    <div class="navbar">
+      <div class="nav-buttons">
+        <button 
+          class="nav-btn" 
+          [routerLink]="['hourly']" 
+          routerLinkActive="active">Hourly</button>
+        <button 
+          class="nav-btn" 
+          [routerLink]="['weekly']" 
+          routerLinkActive="active">Weekly</button>
+        <button 
+          class="nav-btn" 
+          [routerLink]="['monthly']" 
+          routerLinkActive="active">Monthly</button>
+      </div>
     </div>
 
-    <!-- Render child route here dynamically -->
-    <router-outlet></router-outlet>
+    <!-- Chart Content -->
+    <div class="chart-container">
+      <router-outlet></router-outlet> <!-- Child routes load here -->
+    </div>
   </div>
 </div>

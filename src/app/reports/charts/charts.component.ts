@@ -11,22 +11,24 @@ import { LeftsidebarComponent } from '../../components/leftsidebar/leftsidebar.c
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule, // Add RouterModule here
-    LeftsidebarComponent,
+    RouterModule, // Enable routing for navigation within the component
+    LeftsidebarComponent, // Include the sidebar component
   ],
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.css'],
 })
 export class ChartsComponent implements OnInit {
-  isMenuActive: boolean = false;
+  isMenuActive: boolean = false; // Tracks the sidebar toggle state
 
   constructor(private menuService: MenuService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    // Subscribe to the sidebar state changes
     this.menuService.isMenuActive$.subscribe((status) => {
       this.isMenuActive = status;
     });
 
+    // Update the header text for this view
     this.menuService.changeHeaderText('Reports');
   }
 }

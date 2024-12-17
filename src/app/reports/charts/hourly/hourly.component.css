@@ -1,27 +1,70 @@
-.container {
-    display: flex;
-    flex-direction: row;
-    min-height: 70vh;
-    padding: 0;
-  }
-  
-  /* Style for the main content */
-  .main-content {
-    flex-grow: 1;
-    padding: 20px;
-    background-color: #ffecb3;
-    transition: background-color 0.2s ease;
-  }
-  
-  /* Sticky Header */
-  .sticky-header {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    font-size: 18px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-  }
-  
+.dashboard-container {
+  font-family: Arial, sans-serif;
+  background-color: #ffecb3;
+  padding: 20px;
+  height: 70.5vh; /* Takes up 100% of the viewport height */
+  margin: 0; /* Remove margin for consistent sizing */
+  box-sizing: border-box; /* Ensures padding doesn't increase the height */
+}
+
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.nav-buttons .nav-btn {
+  background-color: #5d3b09;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.nav-buttons .nav-btn:hover {
+  background-color: #ffda91;
+  color: #5d3b09;
+}
+
+.nav-buttons .nav-btn.active,
+.nav-buttons .nav-btn[class~="active"] {
+  background-color: #ffda91;
+  color: #5d3b09;
+}
+
+/* Chart Content */
+.chart-container {
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 340px; /* Fixed height for the container */
+}
+
+.chart-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}

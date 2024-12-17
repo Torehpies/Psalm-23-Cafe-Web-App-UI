@@ -1,81 +1,58 @@
-/* General Container */
-.container {
-  display: flex;
-  height: 100hv;
+/* Dashboard Container */
+.dashboard-container {
   font-family: Arial, sans-serif;
-}
-
-/* Main Content */
-.main-content {
-  flex: 1;
+  background-color: #fbd687;
   padding: 20px;
-  background-color: #ffecb3;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
 }
 
-/* Chart Tabs */
-.chart-tabs {
+/* Navigation Bar */
+.navbar {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  padding: 10px 20px;
+  border-radius: 8px;
 }
 
-.chart-tab {
-  background-color: #ffe4a6;
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.nav-buttons .nav-btn {
+  background-color: #5d3b09;
+  color: #fff;
   border: none;
+  border-radius: 8px;
   padding: 10px 20px;
-  margin: 0 5px;
-  border-radius: 5px;
+  margin: 0 10px;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
-.chart-tab:hover {
+.nav-buttons .nav-btn:hover {
   background-color: #ffda91;
+  color: #5d3b09;
 }
 
-/* Responsive container for charts area */
+.nav-buttons .nav-btn.active {
+  background-color: #ffda91;
+  color: #5d3b09;
+}
+
+/* Chart Container */
 .chart-container {
   margin-top: 20px;
   background-color: white;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  min-height: 300px;
 }
 
-/* Active main navigation menu button hover effect */
-.chart-tab.active {
-  background-color: #5d3b09;
-  color: white;
-}
-
-/* Add alignment and scrollbar adjustments if necessary */
-.scroll-container {
-  overflow: auto;
-  max-height: 500px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-
-  .app-leftsidebar {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .chart-tabs {
-    flex-wrap: wrap;
-  }
-}
-.nav-btn.active {
-  background-color: #5d3b09;
-  color: white;
+.chart-title {
+  text-align: center;
+  margin-bottom: 20px;
 }
