@@ -1,0 +1,52 @@
+.size-screen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.size-full {
+  flex-grow: 1;
+  display: flex;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Adjustments for full-screen layout */
+.flex {
+  display: flex;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.basis-3/4 {
+  flex-basis: 75%;
+}
+
+.mr-5 {
+  margin-right: 1.25rem;
+}
+
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.mb-5 {
+  margin-bottom: 1.25rem;
+}

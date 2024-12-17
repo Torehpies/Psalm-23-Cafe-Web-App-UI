@@ -1,16 +1,15 @@
 <div class="size-screen">
     <app-header class="sticky-header" />
-    <div class="container">
+    <div class="size-full flex">
         <app-leftsidebar />
-        <div class="main-content" [class.active]="isMenuActive">
-            <div class="flex flex-row px-40">
-                <app-main-board class="basis-3/4 mr-5 grow"></app-main-board>
+        <div class="flex flex-col flex-grow mx-40" [class.active]="isMenuActive">
+            <div class="flex flex-row px-10 py-5 h-full">
+                <app-main-board class="h-full basis-1/2 mr-5 flex-grow"></app-main-board>
                 <div class="flex flex-col grow">
-                    <app-date-time class=""></app-date-time>
-                    <app-daily class=""></app-daily>
+                    <app-date-time class="mb-5"></app-date-time>
+                    <app-daily class="flex-grow"></app-daily>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
