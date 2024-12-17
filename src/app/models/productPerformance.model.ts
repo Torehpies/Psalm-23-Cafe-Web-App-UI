@@ -2,7 +2,13 @@ export interface ProductPerformance {
     _id: string,
     date: string,
     total: number,
+    categories: Category[],
     products: Product[],
+}
+
+export interface Category {
+    category: string;
+    products: Product[];
 }
 
 interface Product {

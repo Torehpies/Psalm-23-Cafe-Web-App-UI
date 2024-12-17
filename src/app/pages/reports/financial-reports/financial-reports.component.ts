@@ -100,17 +100,19 @@ export class FinancialReportsComponent implements OnInit {
     const aggregatedData: { [key: string]: AggregatedProductPerformance } = {};
 
     this.productPerformances.forEach(performance => {
-      performance.products.forEach(product => {
-        if (!aggregatedData[product.productId]) {
-          aggregatedData[product.productId] = {
-            productId: product.productId,
-            name: product.name,
-            quantity: 0,
-            amount: 0
-          };
-        }
-        aggregatedData[product.productId].quantity += product.quantity;
-        aggregatedData[product.productId].amount += product.price * product.quantity;
+      performance.categories.forEach(category => {
+        category.products.forEach(product => {
+          if (!aggregatedData[product.productId]) {
+            aggregatedData[product.productId] = {
+              productId: product.productId,
+              name: product.name,
+              quantity: 0,
+              amount: 0
+            };
+          }
+          aggregatedData[product.productId].quantity += product.quantity;
+          aggregatedData[product.productId].amount += product.price * product.quantity;
+        });
       });
     });
 

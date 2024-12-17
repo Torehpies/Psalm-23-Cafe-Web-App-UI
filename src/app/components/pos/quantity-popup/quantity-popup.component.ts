@@ -27,7 +27,8 @@ export class QuantityPopupComponent implements OnInit{
     quantity: this.quantity,
     price: this.product?.price,
     sizes: this.product?.sizes,
-    selectedSize: this.selectedSize
+    selectedSize: this.selectedSize,
+    category: this.product?.category // Include category
   }
 
   ngOnInit(): void {
@@ -38,7 +39,8 @@ export class QuantityPopupComponent implements OnInit{
         quantity: this.quantity,
         price: this.product.price,
         sizes: this.product.sizes,
-        selectedSize: this.selectedSize
+        selectedSize: this.selectedSize,
+        category: this.product.category // Include category
       };
       if (this.product.sizes && this.product.sizes.length > 0) {
         this.selectedSize = this.product.sizes[0].size; // Set default size

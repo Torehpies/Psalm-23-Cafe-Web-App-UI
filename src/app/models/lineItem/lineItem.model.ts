@@ -6,5 +6,6 @@ export type LineItem = {
     quantity: number | null;
     price: number | undefined;
     sizes: Size[] | undefined;
-    selectedSize: string | undefined; // Add selectedSize property
+    selectedSize: string | undefined; 
+    category: string | undefined; // Include category
 }

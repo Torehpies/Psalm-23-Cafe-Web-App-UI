@@ -60,7 +60,8 @@ export class OrderService {
           _id: item._id,
           name: item.name,
           Quantity: item.quantity,
-          price: item.price
+          price: item.price,
+          category: item.category?.toLowerCase() // Include category
         };
         if (item.selectedSize !== "") {
           product.size = item.selectedSize;
@@ -69,6 +70,7 @@ export class OrderService {
       })
     };
 
+    console.log(order);
     return this.http.post(`${apiUrls.orderServiceApi}create`, order);
   }
 
