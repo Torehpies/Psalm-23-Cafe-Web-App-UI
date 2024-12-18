@@ -21,6 +21,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/resetpassword/resetpassword.component') 
   },
   { 
+    path: 'reappeal', 
+    loadComponent: () => import('./pages/reappeal/reappeal.component') 
+  },
+  { 
     path: 'home', 
     loadComponent: () => import('./pages/dashboard/dashboard.component'), 
     canActivate: [AuthGuardService] 
