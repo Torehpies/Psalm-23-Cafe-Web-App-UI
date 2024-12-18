@@ -3,15 +3,16 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Supplies } from '../models/supplies.model';
 import { StockHistory } from '../models/stock-history.model';
+import { apiUrls } from '../api.urls';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SuppliesService {
 
-  private apiUrl = 'http://localhost:8800/api/supplies';
-  private historyUrl = 'http://localhost:8800/api/stockhistory';
-  private createStockHistory = 'http://localhost:8800/api/stockhistory/create';
+  private apiUrl = apiUrls.suppliesServiceApi;
+  private historyUrl = apiUrls.stockHistoryServiceApi;
+  private createStockHistory = `${apiUrls.stockHistoryServiceApi}create`;
   private createSupply = `${this.apiUrl}/create`;
   private editSupply = `${this.apiUrl}/update/:id`;
 

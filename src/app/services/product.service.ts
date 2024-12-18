@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../models/product/product.model';
 import { Response } from '../models/response.model';
+import { apiUrls } from '../api.urls';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getProducts() {
-    return this.http.get<Response<Product[]>>('http://localhost:8800/api/products');
+    return this.http.get<Response<Product[]>>(apiUrls.productServiceApi);
   }
 
   saveProducts(){
