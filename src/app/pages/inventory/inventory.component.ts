@@ -66,9 +66,14 @@ export default class InventoryComponent {
   }
 
   refreshItems() {
-    this.suppliesService.getSupplies().subscribe((items) => {
-      this.items = items;
-    });
+    this.suppliesService.getSupplies().subscribe(
+      (items) => {
+        this.items = items;
+      },
+      (error) => {
+        console.error('Error fetching items:', error.error);
+      }
+    );
   }
 
   // Handle the click on an item card
