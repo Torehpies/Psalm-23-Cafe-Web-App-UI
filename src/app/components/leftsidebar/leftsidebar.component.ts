@@ -34,13 +34,13 @@ export class LeftsidebarComponent implements OnInit {
   
    logout(){
     this.menuService.toggleMenu();
-    this.router.navigate(['']);
+    this.router.navigate(['login']);
     this.authService.logoutService();
     // localStorage.removeItem("authToken");
    }
 
    gotoDashboard(): void {
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['home']);
     this.menuService.toggleMenu();
    }
 

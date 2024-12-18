@@ -6,6 +6,10 @@ import { ADMIN_ROLES, COUNTER_ROLES, PRODUCTION_ROLES } from './models/role/role
 export const routes: Routes = [
   { 
     path: '', 
+    loadComponent: () => import('./pages/landing/landing.component') 
+  },
+  { 
+    path: 'login', 
     loadComponent: () => import('./pages/login/login.component') 
   },
   { 
@@ -63,19 +67,19 @@ export const routes: Routes = [
     path: 'supplies', 
     loadComponent: () => import('./pages/supplies/supplies.component'), 
     canActivate: [AuthGuardService, RoleGuardService],  
-     data: { expectedRoles: [...ADMIN_ROLES, ...COUNTER_ROLES]}
+     data: { expectedRoles: [...ADMIN_ROLES, ...PRODUCTION_ROLES]}
   },
   { 
     path: 'production', 
     loadComponent: () => import('./pages/production/production.component'), 
     canActivate: [AuthGuardService, RoleGuardService],  
-     data: { expectedRoles: [...ADMIN_ROLES, ...COUNTER_ROLES]}
+     data: { expectedRoles: [...ADMIN_ROLES, ...PRODUCTION_ROLES]}
   },
   { 
     path: 'scrapping', 
     loadComponent: () => import('./pages/scrapping/scrapping.component'), 
     canActivate: [AuthGuardService, RoleGuardService],  
-     data: { expectedRoles: [...ADMIN_ROLES, ...COUNTER_ROLES]}
+     data: { expectedRoles: [...ADMIN_ROLES, ...PRODUCTION_ROLES]}
   },
   { 
     path: 'clock-in', 

@@ -1,5 +1,9 @@
 <div class="sidebar" [class.active]="isMenuActive">
     <ul>
+        <li *ngIf="admin_roles.includes(userRole) 
+            || counter_roles.includes(userRole) 
+            || production_roles.includes(userRole)" 
+            (click)="gotoclockin()">Clock-in</li>
         <li (click)="gotoDashboard()">Dashboard</li>
         <li *ngIf="admin_roles.includes(userRole)" (click)="gotoReports()">Reports</li>
         <li *ngIf="admin_roles.includes(userRole)" (click)="gotoAccountManagement()">Account Management</li>
@@ -12,10 +16,6 @@
         <li *ngIf="admin_roles.includes(userRole)
             || production_roles.includes(userRole)" 
             (click)="gotoSupplies()">Supplies</li>
-        <li *ngIf="admin_roles.includes(userRole) 
-            || counter_roles.includes(userRole) 
-            || production_roles.includes(userRole)" 
-            (click)="gotoclockin()">Clock-in</li>
         <li *ngIf="admin_roles.includes(userRole)
             || production_roles.includes(userRole)" 
             (click)="gotoProduction()">Production</li>
