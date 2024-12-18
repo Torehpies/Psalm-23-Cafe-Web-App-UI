@@ -1,0 +1,42 @@
+<div class="popup-backdrop" *ngIf="showAddForm"></div>
+<div class="popup-modal" *ngIf="showAddForm">
+  <div class="popup-content">
+    <h2>Add Supply</h2>
+    <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="itemName">Item:</label>
+        <select formControlName="itemName" id="itemName">
+          <option value="" disabled>Select Item</option>
+          <option *ngFor="let supply of supplyData" [value]="supply.name">{{ supply.name }}</option>
+        </select>
+        <div *ngIf="addItemForm.get('itemName')?.touched && addItemForm.get('itemName')?.invalid">
+          <small class="error">Item name is required</small>
+        </div>
+      </div>
+
+      <div>
+        <label for="quantity">Quantity:</label>
+        <input formControlName="quantity" id="quantity" type="number" placeholder="Enter quantity" />
+        <div *ngIf="addItemForm.get('quantity')?.touched && addItemForm.get('quantity')?.invalid">
+          <small class="error">Quantity is required</small>
+        </div>
+        <div *ngIf="addItemForm.get('quantity')?.errors?.['insufficientStock']">
+          <small class="error">Insufficient stock</small>
+        </div>
+      </div>
+
+      <div>
+        <label for="dateProduced">Date Produced:</label>
+        <input formControlName="dateProduced" id="dateProduced" type="date" />
+        <div *ngIf="addItemForm.get('dateProduced')?.touched && addItemForm.get('dateProduced')?.invalid">
+          <small class="error">Date produced is required</small>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" [disabled]="!addItemForm.valid" class="add-btn">Add</button>
+        <button type="button" (click)="onCancel()" class="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

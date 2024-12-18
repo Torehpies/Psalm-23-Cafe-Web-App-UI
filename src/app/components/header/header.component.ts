@@ -1,20 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, effect, computed, Signal } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
+import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
+
   isMenuActive: boolean = false;
+  private menuService = inject(MenuService);
+  // authService = inject(AuthService);
+
+  // isLoggedIn = computed(() => this.authService.isLoggedInSignal());
 
   get headerText() {
     return this.menuService.headerText;
   }
   
-  constructor(private menuService: MenuService) {}
 
   ngOnInit() {
       this.menuService.isMenuActive$.subscribe(status => {

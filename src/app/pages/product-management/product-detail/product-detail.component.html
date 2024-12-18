@@ -1,0 +1,36 @@
+<div class="popup-backdrop" *ngIf="product">
+  <div class="popup-modal">
+    <!-- Header with Product Name -->
+    <div class="popup-header">
+      <h2>{{ product.name }}</h2>
+    </div>
+
+     <!-- Product Details -->
+     <p>Category: {{ product.category }}</p>
+     <p *ngIf="product.price">Price: {{ product.price | currency: 'PHP' }}</p>
+     <p>Status: {{ product.status }}</p>
+ 
+     <!-- Sizes -->
+     <div *ngIf="product.sizes && product.sizes.length > 0">
+       <h3>Price:</h3>
+       <ul>
+         <li *ngFor="let size of product.sizes">
+           {{ size.size }} - {{ size.price | currency: 'PHP' }}
+         </li>
+       </ul>
+     </div>
+
+    <!-- Action Buttons -->
+    <button class="edit-btn" (click)="toggleEdit()">Edit</button>
+    <button class="status-btn" (click)="toggleStatus()">
+      {{ product.status === 'Active' ? 'Deactivate' : 'Activate' }}
+    </button>
+    <button class="close-btn" (click)="closeModal()">×</button>
+  </div>
+</div>
+
+<app-edit-product
+  *ngIf="showEdit"
+  [product]="product"
+  (visible)="toggleEdit()"
+></app-edit-product>

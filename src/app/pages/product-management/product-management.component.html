@@ -1,0 +1,34 @@
+<div class="size-screen">
+  <app-header class="sticky top-0 z-10 bg-yellow-400" />
+  <div class="flex flex-col lg:flex-row">
+    <app-leftsidebar />
+    <div class="flex-grow px-6 main-content" [class.active]="isMenuActive">
+      <div class="flex justify-end space-x-6 mt-6">
+        <button (click)="toggleShowProductForm()"
+          class="px-6 py-2 bg-yellow-400 text-black font-bold rounded hover:-translate-y-1 transform transition">+ Add
+          Product</button>
+      </div>
+  
+      <div class="flex justify-center mt-6">
+        <div class="flex flex-row flex-wrap justify-center">
+        <!-- <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-16"> -->
+          <div
+            class=" bg-orange-950 rounded-lg  flex flex-col items-center text-center m-3
+              hover:scale-105 transition-transform cursor-pointer min-w-[200px] max-w-[250px] min-h-[200px]"
+            *ngFor="let product of products" (click)="showProductDetails(product)">
+            <span class="text-lg text-slate-50 font-bold mt-3">{{ product.category }}</span>
+            <h1 class="text-3xl font-black bg-slate-50 w-full text-orange-950 font-semibold mt-2 mb-4 flex-grow flex items-center justify-center break-words">{{
+              product.name }}</h1>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <app-product-form *ngIf="showProductForm" (visible)="toggleShowProductForm()"
+    (productAdded)="onProductAdded($event)"></app-product-form>
+  
+  <app-product-detail *ngIf="showProductDetail" [product]="selectedProduct"
+    (visible)="closeProductDetails()"></app-product-detail>
+</div>

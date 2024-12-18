@@ -1,0 +1,42 @@
+<div class="popup-backdrop" *ngIf="showEditForm"></div>
+<div class="popup-modal" *ngIf="showEditForm">
+  <div class="popup-content">
+    <h2>Edit Supply</h2>
+    <form [formGroup]="editItemForm" (ngSubmit)="onUpdate()">
+      <div>
+        <label for="editItemName">Item:</label>
+        <select formControlName="itemName" id="editItemName">
+          <option value="" disabled>Select Item</option>
+          <option *ngFor="let supply of supplyData" [value]="supply.name">{{ supply.name }}</option>
+        </select>
+        <div *ngIf="editItemForm.get('itemName')?.touched && editItemForm.get('itemName')?.invalid">
+          <small class="error">Item name is required</small>
+        </div>
+      </div>
+
+      <div>
+        <label for="editQuantity">Quantity:</label>
+        <input formControlName="quantity" id="editQuantity" type="number" placeholder="Enter quantity" />
+        <div *ngIf="editItemForm.get('quantity')?.touched && editItemForm.get('quantity')?.invalid">
+          <small class="error">Quantity is required</small>
+        </div>
+        <div *ngIf="editItemForm.get('quantity')?.errors?.['insufficientStock']">
+          <small class="error">Insufficient stock</small>
+        </div>
+      </div>
+
+      <div>
+        <label for="editDateProduced">Date Produced:</label>
+        <input formControlName="dateProduced" id="editDateProduced" type="date" />
+        <div *ngIf="editItemForm.get('dateProduced')?.touched && editItemForm.get('dateProduced')?.invalid">
+          <small class="error">Date produced is required</small>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" [disabled]="!editItemForm.valid" class="update-btn">Update</button>
+        <button type="button" (click)="onCancel()" class="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

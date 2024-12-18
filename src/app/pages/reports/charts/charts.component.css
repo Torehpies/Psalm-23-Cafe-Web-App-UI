@@ -1,0 +1,81 @@
+/* General Container */
+.container {
+  display: flex;
+  height: 100hv;
+  font-family: Arial, sans-serif;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #ffecb3;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Chart Tabs */
+.chart-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.chart-tab {
+  background-color: #ffe4a6;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.chart-tab:hover {
+  background-color: #ffda91;
+}
+
+/* Responsive container for charts area */
+.chart-container {
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-height: 300px;
+}
+
+/* Active main navigation menu button hover effect */
+.chart-tab.active {
+  background-color: #5d3b09;
+  color: white;
+}
+
+/* Add alignment and scrollbar adjustments if necessary */
+.scroll-container {
+  overflow: auto;
+  max-height: 500px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .app-leftsidebar {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .chart-tabs {
+    flex-wrap: wrap;
+  }
+}
+.nav-btn.active {
+  background-color: #5d3b09;
+  color: white;
+}

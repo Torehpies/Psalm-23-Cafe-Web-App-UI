@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Item } from '../models/item.model';
+import { Item } from '../models/item/item.model';
 import { map } from 'rxjs';
-import { Ingredient } from '../models/ingredient.model';
+import { Ingredient } from '../models/ingredient/ingredient.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class InventoryService {
   // Method to get items
   getItems(): Observable<Item[]> {
     return this.http.get<Ingredient[]>(`${this.apiUrl}`).pipe(
-      map((ingredients) => 
+      map((ingredients) =>
         ingredients.map(ingredient => ({
           name: ingredient.name,
           quantity: ingredient.stock,
@@ -37,7 +37,7 @@ export class InventoryService {
       stock: item.quantity,  // Assuming 'quantity' in Item maps to 'stock' in Ingredient
       unit: item.unit,
     };
-  
+
     // Send POST request with the transformed data and set responseType to 'text'
     return this.http.post<string>(this.apiUrl, ingredientData, { responseType: 'text' as 'json' });
   }

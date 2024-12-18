@@ -9,6 +9,7 @@ header {
     background-color: #936639;
     color:white;
     align-items: center;
+    height: var(--header-height);
 }
 header p {
     font-size: 30px;

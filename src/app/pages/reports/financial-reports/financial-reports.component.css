@@ -1,0 +1,147 @@
+/* Main container adjustments */
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 70.5vh;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+/* Main content wrapper */
+.main-content {
+  flex-grow: 1;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #ffecb3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+}
+
+/* Filter container */
+.filter-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap; /* Allow filters to wrap on smaller screens */
+  margin-bottom: 20px;
+}
+
+/* Date Filter Styling */
+.date-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-filter label {
+  font-size: 14px;
+  color: #4d2c11;
+}
+
+.date-filter input[type="date"] {
+  padding: 8px;
+  border: 1px solid #a66e2d;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 120px;
+}
+
+/* Buttons */
+.transaction-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.transaction-buttons button {
+  background-color: #a66e2d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.transaction-buttons button:hover {
+  background-color: #70491c;
+}
+
+/* Expenses and Sales Layout */
+.data-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+/* Expenses and Sales Section */
+.expenses,
+.sales {
+  flex: 1 1 48%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Wrapper */
+.table-wrapper {
+  max-height: 330px;
+  overflow-y: auto;
+  position: relative;
+  padding-top: 0; /* Remove space for sticky header */
+  padding-bottom: 0; /* Remove space for sticky total row */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+}
+
+th,
+td {
+  
+  padding: 8px;
+  text-align: left;
+}
+
+/* Sticky Header and Total Row */
+table th,
+table tr:last-child {
+  position: sticky;
+  background: #fff;
+  z-index: 2; /* Ensure it stays above the content */
+}
+
+table th {
+  top: 0;
+}
+
+table tr:last-child {
+  bottom: 0;
+}
+
+/* Profit/Loss Section */
+.profit-loss {
+  font-size: 18px;
+  text-align: center;
+  color: #222;
+  font-weight: bold;
+  background: #fff;
+  width: 30%;
+  padding: 10px;
+  border-radius: 20px;
+  border: #222 solid 3px;
+}

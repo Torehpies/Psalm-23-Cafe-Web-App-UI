@@ -1,0 +1,8 @@
+<div class="flex flex-col space-y-2 m-2 justify-center h-full">
+    <button 
+        *ngFor="let category of categories" 
+        (click)="selectCategory(category)"
+        class="bg-amber-700 rounded-xl p-2 font-medium text-white cursor-pointer focus:bg-amber-500">
+        {{ category }}
+    </button>
+</div> 

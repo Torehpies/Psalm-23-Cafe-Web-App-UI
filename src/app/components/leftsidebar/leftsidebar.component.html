@@ -1,17 +1,27 @@
 <div class="sidebar" [class.active]="isMenuActive">
     <ul>
+        <li *ngIf="admin_roles.includes(userRole) 
+            || counter_roles.includes(userRole) 
+            || production_roles.includes(userRole)" 
+            (click)="gotoclockin()">Clock-in</li>
         <li (click)="gotoDashboard()">Dashboard</li>
-        <li (click)="gotoInventory()">Inventory</li>
-        <li (click)="gotoReports()">Reports</li>
-        <li (click)="gotoAccountManagement()">Account Management</li>
-        <li (click)="gotoAccountMonitoring()">Attendance Monitoring</li>
-        <li (click)="gotoProductManagement()">Product Management</li>
-        <!--
-        <li (click)="gotoSupplies()">Supplies</li>
-        <li (click)="gotoclockin()">Clock-in</li>
-        <li (click)="gotoProduction()">Production</li>
-        <li (click)="gotoScrapping()">Scrapping</li>
-        -->
+        <li *ngIf="admin_roles.includes(userRole)" (click)="gotoReports()">Reports</li>
+        <li *ngIf="admin_roles.includes(userRole)" (click)="gotoAccountManagement()">Account Management</li>
+        <li *ngIf="admin_roles.includes(userRole)" (click)="gotoAccountMonitoring()">Attendance Monitoring</li>
+        <li *ngIf="admin_roles.includes(userRole)" (click)="gotoProductManagement()">Product Management</li>
+        <li *ngIf="counter_roles.includes(userRole)" (click)="gotoPos()">POS</li>
+        <li *ngIf="production_roles.includes(userRole) 
+            || admin_roles.includes(userRole)" 
+            (click)="gotoInventory()">Inventory</li>
+        <li *ngIf="admin_roles.includes(userRole)
+            || production_roles.includes(userRole)" 
+            (click)="gotoSupplies()">Used Supplies</li>
+        <li *ngIf="admin_roles.includes(userRole)
+            || production_roles.includes(userRole)" 
+            (click)="gotoProduction()">Produced Goods</li>
+        <li *ngIf="admin_roles.includes(userRole)
+            || production_roles.includes(userRole)" 
+            (click)="gotoScrapping()">Scrapping</li>
         <li class="logout" (click)="logout()">Log Out</li>
     </ul>
 </div>

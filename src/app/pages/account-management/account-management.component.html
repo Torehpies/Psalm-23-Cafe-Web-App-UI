@@ -1,0 +1,70 @@
+<app-header class="sticky top-0 z-10"/>
+<div class="container mx-auto p-4 bg-yellow-200 min-h-screen">
+  <app-leftsidebar></app-leftsidebar>
+  <div class="main-content bg-white p-6 rounded-lg shadow-md" [class.active]="isMenuActive">
+    <section class="content">
+      <h2 class="text-2xl font-bold mb-4">Account Management</h2>
+
+      <!-- Actions Section -->
+      <div class="actions flex justify-end mb-4">
+        <div class="action-buttons-container flex items-center gap-4">
+          <input type="text" placeholder="Search User" class="search-input w-64 p-2 border border-gray-300 rounded" />
+          <button class="approve-button bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600" (click)="openInfoPopup()">Approve Account</button>
+        </div>
+      </div>
+
+      <!-- Approved Accounts Table -->
+      <h3 class="text-xl font-bold mb-4">Approved Accounts</h3>
+      <table class="user-table w-full border-collapse text-left mb-4">
+        <thead>
+          <tr>
+            <th class="border p-2 text-center">Name</th>
+            <th class="border p-2 text-center">User Role</th>
+            <th class="border p-2 text-center">Email</th>
+            <th class="border p-2 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let account of approvedAccounts">
+            <td class="border p-2 text-center">{{ account.firstName }} {{ account.lastName }}</td>
+            <td class="border p-2 text-center">{{ account.role | titlecase }}</td>
+            <td class="border p-2 text-center">{{ account.email }}</td>
+            <td class="border p-2 text-center">
+              <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600" (click)="openUpdateComponent(account)">Update</button>
+              <button class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600" (click)="openDisablePopup(account)">
+                {{ account.status === 'disabled' ? 'Enable' : 'Disable' }}
+              </button>
+              <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" (click)="openDeletePopup(account)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      
+
+    </section>
+  </div>
+</div>
+
+<app-account-management-update 
+  *ngIf="showUpdateForm"
+  [account]="selectedAccount"
+  (close)="closeUpdateComponent()">
+</app-account-management-update>
+<app-account-info-popup 
+  *ngIf="showInfoPopup"
+  [unapprovedAccounts]="unapprovedAccounts"
+  (close)="closeInfoPopup()"
+  (accountUpdated)="onAccountUpdated()">
+</app-account-info-popup>
+<app-account-delete-popup 
+  *ngIf="showDeletePopup"
+  [account]="selectedAccount"
+  (close)="closeDeletePopup()">
+</app-account-delete-popup>
+<app-account-disable-popup 
+  *ngIf="showDisablePopup"
+  [account]="selectedAccount"
+  (close)="closeDisablePopup()"
+  (accountUpdated)="onAccountUpdated()">
+</app-account-disable-popup>

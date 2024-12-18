@@ -1,0 +1,156 @@
+.restock-form-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    position: relative; /* Ensure relative positioning for child elements */
+    min-height: 77vh; /* Add height if necessary to create space */
+
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    font-weight: bold;
+  }
+
+  .add-item-btn-container {
+    text-align: right;
+    margin-bottom: 20px;
+  }
+  
+  .add-item-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #fff940;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .add-item-btn:hover {
+    background-color: #D6C32E;
+  }
+
+  .restock-table-container {
+    max-height: calc(77vh - 200px); /* Adjust height to fit the viewport */
+    overflow-y: auto; /* Enable vertical scroll if content exceeds max height */
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+  .restock-table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures no double borders */
+  }
+  
+  .restock-table th,
+  .restock-table td {
+    height: 50px; /* Set fixed height */
+    overflow: hidden; /* Prevent content overflow */
+    text-overflow: ellipsis; /* Add ellipsis if text overflows */
+    white-space: nowrap; /* Prevent text wrapping */
+    vertical-align: middle; /* Align content vertically */
+    padding: 5px; /* Adjust padding for consistency */
+  }
+  
+  .restock-table th {
+    background-color: #f4f4f4;
+    position: sticky;
+    top: 0;
+  }
+  
+  .restock-table td {
+    text-align: center; /* Center-align text in table cells */
+  }
+  
+  .restock-table tr {
+    max-height: 50px;
+    height: 50px;
+  }
+
+  .restock-table tr:nth-child(even) {
+    background-color: #fde8d0; /* Light peach for alternating rows */
+  }
+  
+  .restock-table tr:nth-child(odd) {
+    background-color: #ffffff; /* White for non-alternating rows */
+  }
+
+  .cell-content {
+    height: 50px; /* Match the row height */
+    line-height: 50px; /* Vertically center text */
+    overflow: hidden; /* Prevent content overflow */
+    text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+  
+  .edit-btn,
+  .del-btn {
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .edit-btn {
+    background-color: #ffa500;
+    color: white;
+  }
+  
+  .edit-btn:hover {
+    background-color: #e68900;
+  }
+  
+  .del-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .del-btn:hover {
+    background-color: #e53935;
+  }
+  
+  /* Styling for the Submit and Cancel buttons */
+  .form-buttons {
+    position: absolute; /* Positions the buttons relative to the container */
+    bottom: -10px; /* Distance from the bottom of the container */
+    left: 50%; /* Center align */
+    transform: translateX(-50%); /* Center horizontally */
+    display: flex;
+    gap: 20px; /* Space between buttons */
+}
+
+  
+  .submit-btn,
+  .cancel-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .submit-btn {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .submit-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .cancel-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .cancel-btn:hover {
+    background-color: #e53935;
+  }
+  

@@ -1,0 +1,23 @@
+
+<div class="lg:w-4/12 sm:w-3/4 mt-40 p-10 rounded-lg shadow-lg mx-auto bg-white">
+  <h3 class="text-3xl font-semibold py-5">Login</h3>
+  <form [formGroup]="loginForm" class="flex flex-col">
+    <div *ngIf="errorMessage" class="text-red-500 m-0">{{ errorMessage }}</div>
+    <div class="flex mb-4 flex-col mt-1">
+      <input formControlName="email" type="text" class="p-2 border border-gray-300 rounded" placeholder="Email">
+      <span *ngIf="loginForm.hasError('required','email') && loginForm.controls['email'].dirty" class="text-red-500 mt-1 text-sm">* Email is Required</span>
+      <span *ngIf="loginForm.hasError('email','email')" class="text-red-500 mt-1 text-sm">* Email is Invalid</span>
+    </div>
+    <div class="flex mb-4 flex-col mt-1">
+      <input formControlName="password" type="password" class="p-2 border border-gray-300 rounded" placeholder="Password">
+      <span *ngIf="loginForm.hasError('required','password') && loginForm.controls['password'].dirty"
+        class="text-red-500 mt-1 text-sm">* Password is Required</span>
+    </div>
+    <button [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="login()" class="bg-yellow-900 p-2 rounded mt-1 text-white">Login</button>
+  </form>
+  <div class="flex justify-between mt-5">
+    <a routerLink="/forgot-password" class="hover:underline ml-2 text-yellow-800 cursor-pointer">Forgot Password?</a>
+    <a routerLink="/create-account" class="hover:underline ml-2 text-yellow-800 cursor-pointer">Create Account</a>
+  </div>
+  <a routerLink="/reappeal" class="hover:underline ml-2 text-yellow-800 cursor-pointer">Reappeal Registration</a>
+</div>

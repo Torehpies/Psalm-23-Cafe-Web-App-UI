@@ -1,0 +1,59 @@
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+  }
+  
+  .toggle-buttons {
+    display: flex;
+  }
+  
+  .toggle-button {
+    background-color: #ccc;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .add-item-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 1% 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 20px;
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 175px; /* Adjust as needed */
+  }
+  
+  .add-item-button:hover {
+    background-color: white;
+    color: green;
+    border: 1px solid green; /* Optional border to enhance the hover effect */
+  }
+  
+  @media (max-width: 768px) {
+    .button-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .toggle-buttons {
+      margin-bottom: 10px;
+    }
+  
+    .add-item-button {
+      position: static;
+      width: 100%;
+      text-align: center;
+      margin-top: 10px;
+    }
+  }
+  

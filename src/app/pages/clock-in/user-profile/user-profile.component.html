@@ -1,0 +1,49 @@
+<div class=" flex flex-row  justify-between h-full w-full min-h-[calc(100vh-6.9rem)]">
+    <!-- grid grid-cols-2 gap-[5rem] -->
+    <div class="flex flex-col justify-center basis-1/2">
+        <div class="time-container text-slate-50 flex flex-col font-black justify-start items-center text-7xl" 
+        style="margin-bottom: 2rem;">
+            <h2 id="current-time" class="border-8 border-orange-950 bg-slate-50 text-orange-950
+             p-10 rounded-xl">{{ currentTime | date: 'hh:mm a' }}</h2>
+        </div>
+        <div class="button flex justify-center">
+            <button [style.backgroundColor]="isLocked ? 'gray' : (isClockedIn ? 'red' : 'green')" 
+                    (click)="onButtonClick()" 
+                    class="text-white w-3/4 h-20 rounded-lg text-3xl" 
+                    [disabled]="isLocked">
+                {{ isClockedIn ? 'Clock-Out' : 'Clock-In' }}
+            </button>
+        </div>
+    </div>
+
+    <div class="grow basis-1/2 bg-white shadow-md flex flex-col justify-start rounded-lg overflow-hidden">
+        <div class="worker-info flex items-center p-5">
+            <img src="assets/profile-placeholder.png" alt="Profile Picture" class="w-20 h-20 rounded-full mr-5 border-2 border-yellow-500">
+            <div>
+                <h3 class="m-0 text-2xl">{{ user.name }}</h3>
+                <p class="m-0 text-lg text-gray-700">{{ user.role | titlecase }}</p>
+            </div>
+        </div>
+    
+        <div class="table-container grow overflow-y-auto border-t border-gray-300 max-h-[calc(100vh-15rem)]">
+            <!-- style="height: 45rem;" -->
+            <table class="w-full text-center ">
+                <thead class="sticky top-0 z-10">
+                    <tr>
+                        <th class="border-b border-gray-300 bg-gray-100 font-bold p-5 text-xl w-1/3">Date</th>
+                        <th class="border-b border-gray-300 bg-gray-100 font-bold p-5 text-xl w-1/3">Time In</th>
+                        <th class="border-b border-gray-300 bg-gray-100 font-bold p-5 text-xl w-1/3">Time Out</th>
+                    </tr>
+                </thead>
+                <tbody class="overflow-y-auto max-h-[calc(100vh-20rem)]">
+                    <tr *ngFor="let record of clockInData" class="odd:bg-gray-200 even:bg-white">
+                        <td class="p-5 border-b border-black text-lg">{{ record.Date | date: 'yyyy/MM/dd' }}</td>
+                        <td class="p-5 border-b border-black text-lg">{{ record.TimeIn | date: 'hh:mm a' }}</td>
+                        <td class="p-5 border-b border-black text-lg">{{ record.TimeOut | date: 'hh:mm a' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,8 @@
+<div class="size-screen block flex flex-col">
+    <app-header class=""/>
+    <app-leftsidebar />
+    <div class="main-content flex flex-row grow p-2 " [class.active]="isMenuActive">
+        <app-product-panel class="grow mr-3  "></app-product-panel>
+        <app-order-panel class=" "></app-order-panel>
+    </div>
+</div>

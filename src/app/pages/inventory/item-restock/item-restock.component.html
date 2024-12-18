@@ -1,0 +1,54 @@
+<div class="popup-backdrop">
+    <div class="popup-modal">
+      <h2>Restock Item</h2>
+  
+      <form [formGroup]="restockForm" (ngSubmit)="submitRestock()">
+        <div class="form-group">
+          <label for="name">Item Name:</label>
+          <select id="name" formControlName="name" (change)="onItemSelected($event)">
+            <option value="" disabled selected>Select Item</option>
+            <option *ngFor="let item of items" [value]="item.name">{{item.name}}</option>
+          </select>
+        </div>
+        <div *ngIf="restockForm.get('name')?.touched && restockForm.get('name')?.invalid">
+          <small class="error">Item Name is required</small>
+        </div>
+  
+        <div class="form-group">
+          <label for="quantity">Quantity:</label>
+          <input type="number" id="quantity" formControlName="quantity" min="1" />
+        </div>
+        <div *ngIf="restockForm.get('quantity')?.touched && restockForm.get('quantity')?.invalid">
+          <small class="error">Quantity must be at least 1</small>
+        </div>
+  
+        <div class="form-group">
+          <label for="expireDate">Expiration Date:</label>
+          <input type="date" id="expireDate" formControlName="expireDate"/>
+        </div>
+        <div *ngIf="restockForm.get('expireDate')?.touched && restockForm.get('expireDate')?.invalid">
+          <small class="error">Expiration Date is required</small>
+        </div>
+
+        <div class="form-group">
+          <label for="price">Price (PHP):</label>
+          <input type="number" id="price" formControlName="price" min="1" />
+        </div>
+        <div *ngIf="restockForm.get('price')?.touched && restockForm.get('price')?.invalid">
+          <small class="error">Price must be at least 1</small>
+        </div>
+  
+        <div class="button-group">
+          <button type="submit" [disabled]="restockForm.invalid" class="btn-submit">Submit Restock</button>
+          <button type="button" class="btn-cancel" (click)="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <app-confirm-modal
+  *ngIf="showModal"
+  [message]="modalMessage"
+  (confirmed)="onConfirmed($event)"
+  (canceled)="onModalCancel()"
+></app-confirm-modal>

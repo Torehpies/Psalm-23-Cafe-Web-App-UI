@@ -1,0 +1,62 @@
+<div class="grid grid-cols-4 gap-1 mt-3">
+    <button (click)="addBill(1000)" class="rounded-md font-medium p-1 bg-blue-500 col-span-1">₱1000</button>
+    <button (click)="addBill(500)" class="rounded-md font-medium p-1 bg-yellow-400 col-span-1">₱500</button>
+    <button (click)="addBill(200)" class="rounded-md font-medium p-1 bg-green-500 col-span-1">₱200</button>
+    <button (click)="clearPayment()" class="rounded-md font-medium border-2 border-red-500 col-start-4">CLEAR</button>
+    <button (click)="addBill(100)" class="rounded-md font-medium p-1 bg-violet-500 col-span-1">₱100</button>
+    <button (click)="addBill(50)" class="rounded-md font-medium p-1 bg-red-500 col-span-1 ">₱50</button>
+    <button (click)="addBill(20)" class="rounded-md font-medium p-1 bg-amber-600 col-span-1">₱20</button>
+</div>
+<div class="grid grid-cols-2 mt-3">
+    <div class="col-span-1 flex flex-col">
+        <span class="text-center">Cash Received:</span>
+        <div class="flex justify-center">
+            <span class="">₱</span>
+            <input type="number" [(ngModel)]="payment" class="ml-2 pl-2 w-24 border-gray-700 border-2 rounded-xl">
+        </div>
+    </div>
+    <div class="col-span-1 flex flex-col">
+        <span class="text-center">Change:</span>
+        <ng-container class="flex justify-center items-center">
+            <ng-template [ngIf]="!payment">
+                <div class="text-center text-sm">Input Cash Received</div>
+            </ng-template>
+            <ng-template [ngIf]="payment">
+                <ng-template [ngIf]="!total">
+                    <div class="text-center text-sm">No Items</div>
+                </ng-template>
+                <ng-template [ngIf]="total">
+                    <ng-template [ngIf]="change >= 0">
+                        <div class="text-center grow">{{change}}</div>
+                    </ng-template>
+                    <ng-template [ngIf]="change < 0">
+                        <div class="text-red-500 text-center grow">{{change}}</div>
+                    </ng-template>
+                </ng-template>
+            </ng-template>
+        </ng-container>
+    </div>
+</div>
+<div class="flex flex-row justify-around mt-2">
+    <button 
+        *ngFor="let paymentType of paymentTypes"
+        (click)="setPaymentType(paymentType)"
+        [disabled]="!(orderService.lineItems$ | async)?.length || (paymentType === 'Cash' && (payment === 0 || payment < total))"
+        [ngClass]="{
+            'bg-gray-400': !(orderService.lineItems$ | async)?.length || (paymentType === 'Cash' && (payment === 0 || payment < total)), 
+            'bg-green-500': (orderService.lineItems$ | async)?.length && !(paymentType === 'Cash' && (payment === 0 || payment < total))
+        }"
+        class="p-1 text-white font-bold rounded-lg w-24">
+        {{paymentType}}
+    </button>
+</div>
+<!-- <button (click)="confirmPayment()" class="bg-green-500 text-white p-2 rounded mt-2">Confirm Payment</button> -->
+<app-receipt-modal 
+    *ngIf="showModal" 
+    [lineItems]="orderService.lineItems$ | async" 
+    [totalAmount]="total" 
+    [paymentType]="selectedPaymentType" 
+    [change]="change"
+    (close)="closeModal()"
+    (confirmPayment)="handleConfirmPayment()">
+</app-receipt-modal>

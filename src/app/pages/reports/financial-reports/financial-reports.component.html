@@ -1,0 +1,92 @@
+<div class="size-screen">
+  <div class="flex flex-col lg:flex-row">
+    <app-leftsidebar></app-leftsidebar>
+    <div class="main-content">
+  
+      <!-- Filter Section -->
+      <div class="financial-reports-container">
+        <div class="filter-container">
+          <!-- Date Filter -->
+          <div class="date-filter">
+            <label for="startDate">From:</label>
+            <input type="date" id="startDate" [(ngModel)]="startDate" (change)="filterData()" />
+            <label for="endDate">To:</label>
+            <input type="date" id="endDate" [(ngModel)]="endDate" (change)="filterData()" />
+          </div>
+  
+          <!-- Predefined Buttons -->
+          <div class="transaction-buttons">
+            <button (click)="filterDataByRange('today')">Today</button>
+            <button (click)="filterDataByRange('yesterday')">Yesterday</button>
+            <button (click)="filterDataByRange('last30days')">Last 30 Days</button>
+            <button (click)="filterDataByRange('monthToDate')">Month to Date</button>
+            <button (click)="downloadReport()">Download Report</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Expenses and Sales Section -->
+      <div class="data-container">
+        <!-- Expenses Section -->
+        <div class="expenses">
+          <h2>Expenses</h2>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let expense of expenses">
+                  <td>{{ expense.item }}</td>
+                  <td>{{ expense.quantity }}</td>
+                  <td>₱ {{ expense.amount }}</td>
+                </tr>
+                <tr>
+                  <td colspan="2">Total</td>
+                  <td>₱ {{ totalExpenses }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+  
+        <!-- Sales Section -->
+        <div class="sales">
+          <h2>Sales</h2>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Quantity</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let sale of sales">
+                  <td>{{ sale.name }}</td>
+                  <td>{{ sale.quantity }}</td>
+                  <td>₱ {{ sale.amount }}</td>
+                </tr>
+                <tr>
+                  <td colspan="2">Total</td>
+                  <td>₱ {{ totalSales }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Profit/Loss Section -->
+      <div class="profit-loss">
+        <h3>Profit/Loss: ₱ {{ profitLoss }}</h3>
+      </div>
+  
+    </div>
+  </div>
+</div>

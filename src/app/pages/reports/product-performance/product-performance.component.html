@@ -1,0 +1,46 @@
+<div class="flex flex-col lg:flex-row">
+  <app-leftsidebar></app-leftsidebar>
+  <div class="main-content">
+
+    <!-- Filter Section inside the Main Content -->
+    <div class="product-performance">
+      <!-- Filter Buttons and Date Filter aligned in one row -->
+      <div class="filter-container">
+        <!-- Date Filter -->
+        <div class="date-filter">
+          <label for="startDate">From:</label>
+          <input type="date" id="startDate" [(ngModel)]="startDate" (change)="filterDataByCustomDateRange()" />
+          <label for="endDate">To:</label>
+          <input type="date" id="endDate" [(ngModel)]="endDate" (change)="filterDataByCustomDateRange()" />
+        </div>
+
+        <!-- Predefined Date Filter Buttons -->
+        <div class="download-buttons">
+          <button (click)="filterDataByDateRange('today')">Today</button>
+          <button (click)="filterDataByDateRange('yesterday')">Yesterday</button>
+          <button (click)="filterDataByDateRange('last30days')">Last 30 Days</button>
+          <button (click)="filterDataByDateRange('monthToDate')">Month to Date</button>
+          <button (click)="filterDataByDateRange('lastMonth')">Last Month</button>
+          <button (click)="downloadReport()">Download</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Performance Data -->
+    <div class="product-data-container">
+      <div class="product-category" *ngFor="let performance of filteredData">
+        <h3>{{ performance.date | date: 'fullDate' }}</h3>
+        <div *ngFor="let category of performance.categories">
+          <h4>{{ category.category.toUpperCase() }}</h4>
+          <table>
+            <tr *ngFor="let item of category.products">
+              <td>{{ item.name }}<span *ngIf="item.size"> ({{ item.size }})</span></td>
+              <td>{{ item.quantity }} pcs</td>
+              <td>₱{{ item.price * item.quantity }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="main-content" [class.active]="isMenuActive">
+    <div class="restock-form-container">
+        <h1 class="title">Restock Form</h1>
+      
+        <div class="add-item-btn-container">
+          <button (click)="openRestock()" class="add-item-btn">Add Item</button>
+        </div>
+      
+        <form [formGroup]="restockForm" (ngSubmit) = "onSubmit()">
+          <div class="rsetock-table-container">
+        <table class="restock-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Expiration Date</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="rows">
+            <!-- Example of an item row, can be dynamically added using Angular -->
+            <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
+              <td><div class="cell-content">{{row.value.name}}</div></td>
+              <td><div class="cell-content">{{row.value.quantity}}</div></td>
+              <td><div class="cell-content">{{row.value.expireDate}}</div></td>
+              <td><div class="cell-content">{{row.value.price}}</div></td>
+              <td>
+                  <button type="button" class="edit-btn">Edit</button>
+                  <button type="button"(click)="confirmDeleteRow(i)" class="del-btn">Delete</button>
+              </td>
+          </tr>
+          
+          </tbody>
+        </table>
+      </div>
+        <!-- Submit and Cancel buttons below the table -->
+        <div class="form-buttons">
+          <button type="submit" class="submit-btn">Submit</button>
+          <button type="button" (click)="openCancelModal()" class="cancel-btn">Cancel</button>
+        </div>
+      </form>
+      </div>
+      
+</div>
+
+ <!-- Include Restock Modal -->
+ <app-item-restock
+ *ngIf="showRestock"
+ (close)="closeRestock()"
+ (restockItem)="onRestockItem($event)">
+ 
+</app-item-restock>
+
+<app-confirm-modal
+*ngIf="showModal"
+[message]="modalMessage"
+(confirmed)="onConfirmed($event)"
+(canceled)="onModalCancel()"
+></app-confirm-modal>

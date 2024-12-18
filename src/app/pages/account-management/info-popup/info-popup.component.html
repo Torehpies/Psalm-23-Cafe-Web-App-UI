@@ -1,0 +1,29 @@
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg relative w-3/4 max-w-3xl">
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" (click)="closePopup()">X</button>
+    <h3 class="text-xl font-bold mb-4">Unapproved Accounts</h3>
+    <div class="overflow-y-auto max-h-96">
+      <table class="w-full border-collapse text-left">
+        <thead>
+          <tr>
+            <th class="border p-2 text-center">Name</th>
+            <th class="border p-2 text-center">Email</th>
+            <th class="border p-2 text-center">Role</th>
+            <th class="border p-2 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let account of unapprovedAccounts">
+            <td class="border p-2 text-center">{{ account.firstName }} {{ account.lastName}}</td>
+            <td class="border p-2 text-center">{{ account.email }}</td>
+            <td class="border p-2 text-center">{{ account.role }}</td>
+            <td class="border p-2 text-center">
+              <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" (click)="approveAccount(account._id)">Accept</button>
+              <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" (click)="rejectAccount(account._id)">Reject</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

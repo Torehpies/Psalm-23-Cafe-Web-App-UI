@@ -1,0 +1,29 @@
+<div class="h-screen">
+  <div class="lg:w-4/12 sm:w-3/4 mt-40 p-10 pb-5 rounded-lg shadow-lg mx-auto bg-white">
+    <h1 class="text-3xl font-bold mb-1">Reappeal Registration</h1>
+    <p class="mb-4">Your registration was rejected. Please enter your email to reappeal your registration</p>
+    <form [formGroup]="reappealForm" (ngSubmit)="onSubmit()">
+      <div class="mb-5">
+        <div class="flex flex-row justify-between">
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <div *ngIf="errorMessage" class="text-red-500 m-0 text-sm">{{ errorMessage }}</div>
+        </div>
+        <input id="email" type="email" formControlName="email" class="mt-1 block w-full px-3 py-2 
+        border border-gray-300 rounded-md shadow-sm sm:text-sm" />
+        <div *ngIf="reappealForm.get('email')?.invalid && (reappealForm.get('email')?.dirty || reappealForm.get('email')?.touched)" class="text-red-500 text-sm mt-1">
+          Please enter a valid email.
+        </div>
+      </div>
+      <button type="submit" class="mb-5 bg-yellow-900 text-white px-4 py-2 rounded-md" 
+        [disabled]="reappealForm.invalid"
+        [class.disabled]="reappealForm.invalid">Submit</button>
+    </form>
+    <a routerLink="/login" class="hover:underline text-yellow-800 cursor-pointer">Go back to login</a>
+  </div>
+</div>
+
+<div *ngIf="showStatusModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+      <p>{{ statusMessage }}</p>
+    </div>
+  </div>

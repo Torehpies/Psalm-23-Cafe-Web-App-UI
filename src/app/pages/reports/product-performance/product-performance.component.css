@@ -1,0 +1,158 @@
+/* Main container for the page */
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 70.5vh; /* Changed from 80vh to 100vh to occupy full viewport height */
+  justify-content: center; /* Center content horizontally */
+  align-items: flex-start; /* Align items to the top */
+}
+
+/* Main content section inside the container */
+.main-content {
+  width: calc(100% - 250px); /* Adjust to take up the remaining space */
+  height: 71vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #ffecb3;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the content inside the main content */
+  border-radius: 20px;
+}
+
+/* Filter container (Date Filter and Buttons) */
+.filter-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-start; /* Align the filter and buttons to the left */
+  margin-bottom: 20px;
+}
+
+/* Date Filter Styling - Adjusted */
+.date-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-filter label {
+  font-size: 14px;
+  color: #4d2c11;
+}
+
+.date-filter input[type="date"] {
+  padding: 8px;
+  border: 1px solid #a66e2d;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 120px;
+}
+
+/* Filter buttons (styled similarly to Transaction Buttons) */
+.download-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.download-buttons button {
+  background-color: #a66e2d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.download-buttons button:hover {
+  background-color: #70491c;
+}
+
+.download-buttons button:focus {
+  outline: 2px solid #70491c;
+  outline-offset: 2px;
+}
+
+/* Product Data Container: Align product containers in one row */
+.product-data-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px; /* Space between child items */
+  width: 100%;
+  min-height: 400px; /* Set a minimum height */
+  box-sizing: border-box;
+}
+
+.product-category {
+  width: calc(33.33% - 20px); /* Divide space evenly among three items per row */
+  max-width: 300px; /* Optional: Restrict maximum width for better control */
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.product-category h3 {
+  color: #5c3300;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table td {
+  padding: 8px;
+  text-align: left;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .filter-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .date-filter,
+  .download-buttons {
+    gap: 10px;
+  }
+
+  .product-data-container {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .date-filter input[type="date"] {
+    width: auto;
+  }
+
+  .download-buttons button {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  table td {
+    font-size: 12px;
+  }
+}
