@@ -59,16 +59,28 @@ export class TransactionComponent implements OnInit {
         start.setHours(0, 0, 0, 0);
         end.setHours(23, 59, 59, 999);
         break;
+      case 'yesterday':
+        start.setDate(start.getDate() - 1);
+        start.setHours(0, 0, 0, 0);
+        end.setDate(end.getDate() - 1);
+        end.setHours(23, 59, 59, 999);
+        break;
       case 'last30days':
-        start.setDate(end.getDate() - 7);
+        start.setDate(end.getDate() - 30);
+        start.setHours(0, 0, 0, 0);
+        end.setHours(23, 59, 59, 999);
         break;
       case 'monthToDate':
         start.setDate(1);
+        start.setHours(0, 0, 0, 0);
+        end.setHours(23, 59, 59, 999);
         break;
       case 'lastMonth':
         start.setMonth(start.getMonth() - 1);
         start.setDate(1);
-        end.setDate(0);
+        start.setHours(0, 0, 0, 0);
+        end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+        end.setHours(23, 59, 59, 999);
         break;
       default:
         return;
@@ -80,6 +92,7 @@ export class TransactionComponent implements OnInit {
   filterByDateRange(startDate: Date, endDate: Date) {
     this.filteredData.transactions = this.transactionData.filter(transaction => {
       const transactionDate = new Date(transaction.date);
+      transactionDate.setHours(0, 0, 0, 0);
       return transactionDate >= startDate && transactionDate <= endDate;
     });
   }
@@ -89,6 +102,13 @@ export class TransactionComponent implements OnInit {
 
     const start = new Date(this.startDate);
     const end = new Date(this.endDate);
+    start.setHours(0, 0, 0, 0); // Ensure the start date includes the entire day
+    end.setHours(23, 59, 59, 999); // Ensure the end date includes the entire day
+
+    if (end < start) {
+      alert('The "To" date cannot be earlier than the "From" date.');
+      return;
+    }
 
     this.filterByDateRange(start, end);
   }
