@@ -19,6 +19,7 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
     role: ''
   };
 
+  currentTime: Date = new Date();
   clockInData: Attendance[] = []; // Use Attendance model
   currentClockInIndex: number | null = null; // Track the current record being edited
   lastClockInDate: string | null = null; // Track the last clock-in date
@@ -43,6 +44,12 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
     if (userId) {
       this.attendanceService.getAttendance().subscribe(attendanceRecords => {
         this.clockInData = attendanceRecords.filter(record => record.userId === userId);
+        const today = new Date().toDateString();
+        const todayRecord = this.clockInData.find(record => new Date(record.Date).toDateString() === today);
+        if (todayRecord) {
+          this.isClockedIn = !!todayRecord.TimeOut;
+          this.currentClockInIndex = this.clockInData.indexOf(todayRecord);
+        }
       });
     }
   }
@@ -65,30 +72,33 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
           if (this.isClockedIn) {
             // Clock-Out: Update the existing record
             if (this.currentClockInIndex !== null) {
-              this.clockInData[this.currentClockInIndex].Timeout = formattedTime;
+              this.clockInData[this.currentClockInIndex].TimeOut = now;
               const attendance = this.clockInData[this.currentClockInIndex];
-              this.attendanceService.createAttendance(attendance).subscribe(response => {
-                console.log('Attendance created:', response);
+              this.attendanceService.timeOut(attendance._id!, now).subscribe(response => {
+                console.log('Attendance updated:', response);
               });
               this.currentClockInIndex = null; // Reset after clocking out
               this.isClockedIn = !this.isClockedIn;
             }
           } else {
             // Clock-In: Create a new record
-            this.clockInData.push({
+            const newAttendance: Attendance = {
               userId: user._id,
-              Date: new Date(),
-              TimeIn: formattedTime,
-              Timeout: '' // Set Timeout as null
-            });
-            this.currentClockInIndex = this.clockInData.length - 1; // Save the index of the new record
-            this.lastClockInDate = formattedDate; // Set the last clock-in date
+              Date: now,
+              TimeIn: now,
+              TimeOut: undefined
+            };
+            this.attendanceService.timeIn(now).subscribe(response => {
+              this.clockInData.push(newAttendance);
+              this.currentClockInIndex = this.clockInData.length - 1; // Save the index of the new record
+              this.lastClockInDate = formattedDate; // Set the last clock-in date
 
-            // Ensure Angular change detection picks up the update
-            this.clockInData = [...this.clockInData];
-            
-            // Toggle the button state
-            this.isClockedIn = !this.isClockedIn;
+              // Ensure Angular change detection picks up the update
+              this.clockInData = [...this.clockInData];
+              
+              // Toggle the button state
+              this.isClockedIn = !this.isClockedIn;
+            });
           }
 
           // Log the current state of clockInData
@@ -124,7 +134,7 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
     const options: Intl.DateTimeFormatOptions = {
       hour: 'numeric',
       minute: 'numeric',
-      hour12: false,
+      hour12: true,
       timeZone: 'Asia/Manila',
     };
     return new Intl.DateTimeFormat('en-US', options).format(date);

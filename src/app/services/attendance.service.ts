@@ -18,11 +18,11 @@ export class AttendanceService {
     return this.httpClient.get<Attendance>(`${apiUrls.attendanceServiceApi}${attendanceId}`);
   }
 
-  createAttendance(attendance: Attendance): Observable<any> {
-    return this.httpClient.post(`${apiUrls.attendanceServiceApi}create`, attendance, { responseType: 'text' as 'json' });
+  timeIn(timeIn: Date): Observable<any> {
+    return this.httpClient.post(`${apiUrls.attendanceServiceApi}timein`, timeIn);
   }
 
-  updateAttendance(attendanceId: string, updatedData: Partial<Attendance>): Observable<Attendance> {
-    return this.httpClient.put<Attendance>(`${apiUrls.attendanceServiceApi}${attendanceId}`, updatedData);
+  timeOut(attendanceId: string, timeOut: Date): Observable<Attendance> {
+    return this.httpClient.put<Attendance>(`${apiUrls.attendanceServiceApi}timeout/${attendanceId}`, timeOut);
   }
 }

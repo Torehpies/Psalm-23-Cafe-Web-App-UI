@@ -4,6 +4,6 @@ export interface Attendance {
     _id?: string;
     userId: User['_id'];
     Date: Date;
-    TimeIn: string;
-    Timeout: string; // Make TimeOut required
+    TimeIn: Date;
+    TimeOut?: Date; // Make TimeOut required
 }

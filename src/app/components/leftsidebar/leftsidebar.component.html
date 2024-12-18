@@ -15,10 +15,10 @@
             (click)="gotoInventory()">Inventory</li>
         <li *ngIf="admin_roles.includes(userRole)
             || production_roles.includes(userRole)" 
-            (click)="gotoSupplies()">Supplies</li>
+            (click)="gotoSupplies()">Used Supplies</li>
         <li *ngIf="admin_roles.includes(userRole)
             || production_roles.includes(userRole)" 
-            (click)="gotoProduction()">Production</li>
+            (click)="gotoProduction()">Produced Goods</li>
         <li *ngIf="admin_roles.includes(userRole)
             || production_roles.includes(userRole)" 
             (click)="gotoScrapping()">Scrapping</li>
