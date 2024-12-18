@@ -1,6 +1,11 @@
 <div class="main-content flex-grow p-5 bg-yellow-200 transition-colors duration-200" [class.active]="isMenuActive">
-    <div class="chart-container flex justify-center items-center h-[35rem]">
-      <canvas id="monthlySalesChart"></canvas>
-    </div>
+  <div class="flex justify-center mb-4">
+    <button (click)="changeYear(-1)" class="p-2 border rounded bg-white text-black mr-2">Previous Year</button>
+    <input type="number" [(ngModel)]="selectedYear" (change)="onYearChange($event)" class="p-2 border rounded bg-white text-black w-24" readonly>
+    <button (click)="changeYear(1)" class="p-2 border rounded bg-white text-black ml-2" [disabled]="isNextYearDisabled()">Next Year</button>
+  </div>
+  <div class="chart-container flex justify-center items-center h-[35rem]">
+    <canvas id="monthlySalesChart"></canvas>
+  </div>
 </div>
 
