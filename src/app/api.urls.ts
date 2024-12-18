@@ -1,14 +1,18 @@
 import { AttendanceService } from "./services/attendance.service";
 
+export const BASE_URL = 'https://psalm-23-web-app-backend.onrender.com/api/';
+
 export const apiUrls = {
-  authServiceApi: 'http://localhost:8800/api/auth/',
-  productServiceApi: 'http://localhost:8800/api/products/',
-  orderServiceApi: 'http://localhost:8800/api/orders/',
-  usedSuppliesServiceApi: 'http://localhost:8800/api/usedSupplies/',
-  scrappingServiceApi: 'http://localhost:8800/api/scrapping/',
-  userServiceApi: 'http://localhost:8800/api/user/',
-  attendanceServiceApi: 'http://localhost:8800/api/attendance/',
-  produceHistoryServiceApi: 'http://localhost:8800/api/produceHistory/',
-  accountManagementServiceApi: 'http://localhost:8800/api/approveUser/',
-  productPerformanceServiceApi: 'http://localhost:8800/api/productPerformance/'
-}
+  authServiceApi: `${BASE_URL}auth/`,
+  productServiceApi: `${BASE_URL}products/`,
+  orderServiceApi: `${BASE_URL}orders/`,
+  usedSuppliesServiceApi: `${BASE_URL}usedSupplies/`,
+  scrappingServiceApi: `${BASE_URL}scrapping/`,
+  userServiceApi: `${BASE_URL}user/`,
+  attendanceServiceApi: `${BASE_URL}attendance/`,
+  produceHistoryServiceApi: `${BASE_URL}produceHistory/`,
+  accountManagementServiceApi: `${BASE_URL}approveUser/`,
+  productPerformanceServiceApi: `${BASE_URL}productPerformance/`,
+  suppliesServiceApi: `${BASE_URL}supplies/`,
+  stockHistoryServiceApi: `${BASE_URL}stockhistory/`
+};
