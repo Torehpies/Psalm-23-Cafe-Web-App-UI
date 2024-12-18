@@ -22,8 +22,8 @@ import { ProductPerformance, Category } from '../../../models/productPerformance
 export class ProductPerformanceComponent implements OnInit {
   isMenuActive: boolean = false;
 
-  productData: Category[] = [];
-  filteredData: Category[] = [];
+  productData: ProductPerformance[] = [];
+  filteredData: ProductPerformance[] = [];
 
   startDate: string = '';
   endDate: string = '';
@@ -41,8 +41,9 @@ export class ProductPerformanceComponent implements OnInit {
     this.menuService.changeHeaderText('Reports');
 
     this.productPerformanceService.getProductPerformance().subscribe((response) => {
-      this.productData = response.data[0].categories;
-      this.filteredData = [...this.productData];
+      console.log('Fetched data:', response); // Debugging statement
+      this.productData = response.data;
+      this.filteredData = this.aggregateData(this.productData);
     });
   }
 
@@ -55,7 +56,8 @@ export class ProductPerformanceComponent implements OnInit {
       case 'today':
         start.setHours(0, 0, 0, 0);
         end.setHours(23, 59, 59, 999);
-        break;
+        this.filterByToday();
+        return;
       case 'yesterday':
         start.setDate(start.getDate() - 1);
         start.setHours(0, 0, 0, 0);
@@ -64,14 +66,20 @@ export class ProductPerformanceComponent implements OnInit {
         break;
       case 'last30days':
         start.setDate(start.getDate() - 30);
+        start.setHours(0, 0, 0, 0);
+        end.setHours(23, 59, 59, 999);
         break;
       case 'monthToDate':
         start.setDate(1);
+        start.setHours(0, 0, 0, 0);
+        end.setHours(23, 59, 59, 999);
         break;
       case 'lastMonth':
         start.setMonth(start.getMonth() - 1);
         start.setDate(1);
-        end.setDate(0); // End date is the last day of the previous month
+        start.setHours(0, 0, 0, 0);
+        end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+        end.setHours(23, 59, 59, 999);
         break;
       default:
         return; // No filtering applied
@@ -86,24 +94,69 @@ export class ProductPerformanceComponent implements OnInit {
 
     const start = new Date(this.startDate);
     const end = new Date(this.endDate);
+    start.setHours(0, 0, 0, 0); // Ensure the start date includes the entire day
+    end.setHours(23, 59, 59, 999); // Ensure the end date includes the entire day
+
+    if (end < start) {
+      alert('The "To" date cannot be earlier than the "From" date.');
+      return;
+    }
 
     this.filterByDateRange(start, end);
   }
 
   // Helper method to filter products by a date range
   filterByDateRange(startDate: Date, endDate: Date) {
-    this.filteredData = this.productData.map(category => ({
-      ...category,
-      products: this.filterByDate(category.products, startDate, endDate)
-    }));
+    const filtered = this.productData.filter(performance => {
+      const performanceDate = new Date(performance.date);
+      performanceDate.setHours(0, 0, 0, 0);
+      return performanceDate >= startDate && performanceDate <= endDate;
+    });
+    this.filteredData = this.aggregateData(filtered);
   }
 
-  // Helper method to filter individual products by date
-  filterByDate(products: any[], startDate: Date, endDate: Date) {
-    return products.filter(product => {
-      const productDate = new Date(product.date);
-      return productDate >= startDate && productDate <= endDate;
+  // Method to filter data for today
+  filterByToday() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(today);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const filtered = this.productData.filter(performance => {
+      const performanceDate = new Date(performance.date);
+      performanceDate.setHours(0, 0, 0, 0);
+      return performanceDate >= today && performanceDate <= endOfDay;
     });
+    this.filteredData = this.aggregateData(filtered);
+  }
+
+  // Method to aggregate data
+  aggregateData(data: ProductPerformance[]): ProductPerformance[] {
+    const aggregated: { [key: string]: ProductPerformance } = {};
+
+    data.forEach(performance => {
+      performance.categories.forEach(category => {
+        if (!aggregated[category.category]) {
+          aggregated[category.category] = {
+            _id: '',
+            date: '',
+            total: 0,
+            categories: [{ category: category.category, products: [] }],
+            products: []
+          };
+        }
+        category.products.forEach(product => {
+          const existingProduct = aggregated[category.category].categories[0].products.find(p => p.productId === product.productId);
+          if (existingProduct) {
+            existingProduct.quantity += product.quantity;
+          } else {
+            aggregated[category.category].categories[0].products.push({ ...product });
+          }
+        });
+      });
+    });
+
+    return Object.values(aggregated);
   }
 
   // Method to download the report

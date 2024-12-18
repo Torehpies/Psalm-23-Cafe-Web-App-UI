@@ -144,6 +144,7 @@ export class ItemFormComponent {
             (response) => {
               console.log('Supply added:', response); // Log the plain text response
               this.itemAdded.emit(response); // Emit the added supply to update the UI
+              this.reloadPage();
             },
             (error) => {
               console.error('Error adding supply:', error);
@@ -160,7 +161,7 @@ export class ItemFormComponent {
       this.addItemForm.reset();
     }
     this.visible.emit();
-    this.reloadPage();
+    
   }
 
   reloadPage() {
