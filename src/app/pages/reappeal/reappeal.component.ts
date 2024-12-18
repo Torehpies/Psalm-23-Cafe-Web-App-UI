@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -13,6 +13,11 @@ import { RouterModule, Router } from '@angular/router';
 })
 export default class ReappealComponent {
   reappealForm: FormGroup;
+  errorMessage: string | null = null;
+  router = inject(Router);
+
+  showStatusModal = false;
+  statusMessage = '';
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.reappealForm = this.fb.group({
@@ -20,7 +25,6 @@ export default class ReappealComponent {
     });
 
     this.reappealForm.get('email')?.valueChanges.subscribe(() => {
-      this.reappealForm.get('email')?.updateValueAndValidity();
     });
   }
 
@@ -31,16 +35,27 @@ export default class ReappealComponent {
 
   onSubmit() {
     if (this.reappealForm.valid) {
-      this.authService.reappealEmailService(this.reappealForm.value.email).subscribe(
-        response => {
+      this.authService.reappealService(this.reappealForm.value.email)
+      .subscribe({
+        next: (res) => {
           // Handle successful response
-          console.log('Reappeal email sent successfully', response);
+          this.showStatus('Reappeal request sent successfully');
+          this.reappealForm.reset();
         },
-        error => {
-          // Handle error response
-          console.error('Error sending reappeal email', error);
+        error: (err) => {
+          this.errorMessage = err.error.message;
         }
+      }
       );
     }
+  }
+
+  
+  private showStatus(message: string): void {
+    this.statusMessage = message;
+    this.showStatusModal = true;
+    setTimeout(() => {
+      this.showStatusModal = false;
+    }, 2000); // Hide the modal after 3 seconds
   }
 }
