@@ -24,10 +24,18 @@ export default class ResetPasswordComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
 
-  token!: string;
+  // token!: string;
   authService = inject(AuthService)
 
+  token: string | null = null;
+
+  constructor(private route: ActivatedRoute) {}
+
   ngOnInit(): void{
+    this.route.queryParams.subscribe((params) => {
+      this.token = params['token'];
+      console.log('Token:', this.token);
+    });
     this.resetPasswordForm = this.fb.group({
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required]
@@ -37,10 +45,10 @@ export default class ResetPasswordComponent implements OnInit {
       }
     )
 
-    this.activatedRoute.params.subscribe(val=>{
-      this.token = val['token'];
-      console.log(this.token)
-    })
+    // this.activatedRoute.params.subscribe(val=>{
+    //   this.token = val['token'];
+    //   console.log(this.token)
+    // })
   }
 
   reset(){
