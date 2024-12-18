@@ -7,8 +7,12 @@
              p-10 rounded-xl">{{ currentTime | date: 'hh:mm a' }}</h2>
         </div>
         <div class="button flex justify-center">
-            <button [style.backgroundColor]="isClockedIn ? 'red' : 'green'" (click)="onButtonClick()" class="text-white w-3/4 h-20 rounded-lg text-3xl">
-                {{ isClockedIn ? 'Clock-Out' : 'Clock-In' }}</button>
+            <button [style.backgroundColor]="isLocked ? 'gray' : (isClockedIn ? 'red' : 'green')" 
+                    (click)="onButtonClick()" 
+                    class="text-white w-3/4 h-20 rounded-lg text-3xl" 
+                    [disabled]="isLocked">
+                {{ isClockedIn ? 'Clock-Out' : 'Clock-In' }}
+            </button>
         </div>
     </div>
 
@@ -34,8 +38,8 @@
                 <tbody class="overflow-y-auto max-h-[calc(100vh-20rem)]">
                     <tr *ngFor="let record of clockInData" class="odd:bg-gray-200 even:bg-white">
                         <td class="p-5 border-b border-black text-lg">{{ record.Date | date: 'yyyy/MM/dd' }}</td>
-                        <td class="p-5 border-b border-black text-lg">{{ record.TimeIn }}</td>
-                        <td class="p-5 border-b border-black text-lg">{{ record.TimeOut }}</td>
+                        <td class="p-5 border-b border-black text-lg">{{ record.TimeIn | date: 'hh:mm a' }}</td>
+                        <td class="p-5 border-b border-black text-lg">{{ record.TimeOut | date: 'hh:mm a' }}</td>
                     </tr>
                 </tbody>
             </table>

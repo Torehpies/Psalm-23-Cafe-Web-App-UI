@@ -14,15 +14,19 @@ export class AttendanceService {
     return this.httpClient.get<Attendance[]>(`${apiUrls.attendanceServiceApi}`);
   }
 
+  getAttendanceByUserId(userId: string): Observable<Attendance[]> {
+    return this.httpClient.get<Attendance[]>(`${apiUrls.attendanceServiceApi}user/${userId}`);
+  }
+
   getAttendanceById(attendanceId: string): Observable<Attendance> {
     return this.httpClient.get<Attendance>(`${apiUrls.attendanceServiceApi}${attendanceId}`);
   }
 
-  timeIn(timeIn: Date): Observable<any> {
-    return this.httpClient.post(`${apiUrls.attendanceServiceApi}timein`, timeIn);
+  timeIn(payload: {userId: string, TimeIn: Date | string}): Observable<any> {
+    return this.httpClient.post(`${apiUrls.attendanceServiceApi}timein`, payload);
   }
 
-  timeOut(attendanceId: string, timeOut: Date): Observable<Attendance> {
-    return this.httpClient.put<Attendance>(`${apiUrls.attendanceServiceApi}timeout/${attendanceId}`, timeOut);
+  timeOut(attendanceId: string, payload: {userId: string, TimeOut: Date | string}): Observable<Attendance> {
+    return this.httpClient.patch<Attendance>(`${apiUrls.attendanceServiceApi}timeout/${attendanceId}`, payload);
   }
 }

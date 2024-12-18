@@ -14,6 +14,7 @@ import { Attendance } from '../../../models/attendance.model'; // Import Attenda
 })
 export class UserProfileComponent implements OnInit, AfterViewInit {
   isClockedIn: boolean = false; // Initial state: Clock-In
+  isLocked: boolean = false; // Initial state: Not locked
   user = {
     name: '',
     role: ''
@@ -28,10 +29,9 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private attendanceService: AttendanceService, // Inject AttendanceService
     private userService: UserService // Inject UserService
-  ) {} // Inject AuthService
+  ) { } // Inject AuthService
 
   ngOnInit(): void {
-    this.clockInData = []; // Initialize empty data
     this.authService.getUserName().subscribe(userName => {
       this.user.name = `${userName.firstName} ${userName.lastName}`;
     });
@@ -42,15 +42,31 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
 
     const userId = this.authService.getUserId();
     if (userId) {
-      this.attendanceService.getAttendance().subscribe(attendanceRecords => {
-        this.clockInData = attendanceRecords.filter(record => record.userId === userId);
-        const today = new Date().toDateString();
-        const todayRecord = this.clockInData.find(record => new Date(record.Date).toDateString() === today);
-        if (todayRecord) {
-          this.isClockedIn = !!todayRecord.TimeOut;
-          this.currentClockInIndex = this.clockInData.indexOf(todayRecord);
-        }
-      });
+      this.attendanceService.getAttendanceByUserId(userId).subscribe(attendanceRecords => {
+        this.clockInData = attendanceRecords;   
+        this.checkIfClockedInToday();
+        
+      })
+    }
+  }
+      
+  
+
+  checkIfClockedInToday(): void {
+    const today = new Date();
+    const todayRecord = this.clockInData.find(record => {
+      const recordDate = new Date(record.TimeIn);
+      return recordDate.getDate() === today.getDate() &&
+             recordDate.getMonth() === today.getMonth() &&
+             recordDate.getFullYear() === today.getFullYear();
+    });
+
+    if (todayRecord) {
+      this.isClockedIn = !todayRecord.TimeOut;
+      this.isLocked = !!todayRecord.TimeOut;
+    } else {
+      this.isClockedIn = false;
+      this.isLocked = false;
     }
   }
 
@@ -61,50 +77,51 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
 
   onButtonClick(): void {
     const now = new Date();
-    const formattedDate = this.formatDate(now); // Format as "Oct 17, 2024"
-    const formattedTime = this.formatTime(now); // Format as "7:00 AM"
-
     const userId = this.authService.getUserId();
+
     if (userId) {
-      this.userService.getUsers().subscribe(response => {
-        const user = response.data.find(u => u._id === userId);
-        if (user) {
-          if (this.isClockedIn) {
-            // Clock-Out: Update the existing record
-            if (this.currentClockInIndex !== null) {
-              this.clockInData[this.currentClockInIndex].TimeOut = now;
-              const attendance = this.clockInData[this.currentClockInIndex];
-              this.attendanceService.timeOut(attendance._id!, now).subscribe(response => {
-                console.log('Attendance updated:', response);
-              });
-              this.currentClockInIndex = null; // Reset after clocking out
-              this.isClockedIn = !this.isClockedIn;
+      if (this.isClockedIn) {
+        // Clock-Out: Update the existing record
+        const todayRecord = this.clockInData.find(record => {
+          const recordDate = new Date(record.Date);
+          return recordDate.getDate() === now.getDate() &&
+                 recordDate.getMonth() === now.getMonth() &&
+                 recordDate.getFullYear() === now.getFullYear();
+        });
+
+        if (todayRecord && todayRecord._id) {
+          const payload = {userId: userId ,TimeOut: now.toISOString() };
+          console.log(payload)
+          this.attendanceService.timeOut(todayRecord._id, payload).subscribe(
+            response => {
+              console.log('Attendance updated:', response);
+              this.isClockedIn = false;
+              this.isLocked = true;
+            },
+            error => {
+              console.error('Error updating attendance:', error.message);
             }
-          } else {
-            // Clock-In: Create a new record
-            const newAttendance: Attendance = {
-              userId: user._id,
-              Date: now,
-              TimeIn: now,
-              TimeOut: undefined
-            };
-            this.attendanceService.timeIn(now).subscribe(response => {
-              this.clockInData.push(newAttendance);
-              this.currentClockInIndex = this.clockInData.length - 1; // Save the index of the new record
-              this.lastClockInDate = formattedDate; // Set the last clock-in date
-
-              // Ensure Angular change detection picks up the update
-              this.clockInData = [...this.clockInData];
-              
-              // Toggle the button state
-              this.isClockedIn = !this.isClockedIn;
-            });
-          }
-
-          // Log the current state of clockInData
-          console.log(this.clockInData);
+          );
+        } else {
+          console.error('No attendance record found for today');
         }
-      });
+      } else {
+        // Clock-In: Create a new record
+        const payload = { userId: userId, TimeIn: now.toISOString() };
+        console.log("timeIn", payload)
+        this.attendanceService.timeIn(payload).subscribe(
+          response => {
+            console.log('Attendance created:', response);
+            this.isClockedIn = true;
+            this.clockInData.push(response);
+          },
+          error => {
+            console.error('Error creating attendance:', error);
+          }
+        );
+      }
+    } else {
+      console.error('User ID is null');
     }
   }
 
