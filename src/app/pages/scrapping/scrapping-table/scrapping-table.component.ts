@@ -80,7 +80,7 @@ export class ScrappingTableComponent implements OnInit {
       next: ({ supplies, products, scrapping }) => {
         this.supplyData = supplies;
         this.productData = products.data;
-        this.scrapData = scrapping.data;
+        this.scrapData = scrapping.data.sort((a, b) => new Date(b.usedAt).getTime() - new Date(a.usedAt).getTime());
         localStorage.setItem('supplyData', JSON.stringify(supplies));
         localStorage.setItem('products', JSON.stringify(products.data));
         localStorage.setItem('scrapData', JSON.stringify(scrapping.data));
@@ -102,9 +102,9 @@ export class ScrappingTableComponent implements OnInit {
       this.filteredScrapData = this.scrapData.filter(record => {
         const scrapDateObj = new Date(record.usedAt);
         return (!fromDateObj || scrapDateObj >= fromDateObj) && (!toDateObj || scrapDateObj <= toDateObj);
-      });
+      }).sort((a, b) => new Date(b.usedAt).getTime() - new Date(a.usedAt).getTime());
     } else {
-      this.filteredScrapData = this.newScrapData;
+      this.filteredScrapData = this.newScrapData.sort((a, b) => new Date(b.usedAt).getTime() - new Date(a.usedAt).getTime());
     }
     // console.log('Filtered scrap data:', this.filteredScrapData); // Debug log
   }
@@ -192,7 +192,7 @@ export class ScrappingTableComponent implements OnInit {
       next: ({ supplies, products, scrapping }) => {
         this.supplyData = supplies;
         this.productData = products.data;
-        this.scrapData = scrapping.data;
+        this.scrapData = scrapping.data.sort((a, b) => new Date(b.usedAt).getTime() - new Date(a.usedAt).getTime());
         localStorage.setItem('supplyData', JSON.stringify(supplies));
         localStorage.setItem('products', JSON.stringify(products));
         localStorage.setItem('scrapData', JSON.stringify(scrapping.data));

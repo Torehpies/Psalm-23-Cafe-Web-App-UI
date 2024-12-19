@@ -17,17 +17,21 @@ import { AuthService } from '../../services/auth.service';
 export default class DashboardComponent {
   isMenuActive: boolean = false;
   role: string= "";
+  name: string = "";
 
   constructor(private menuService: MenuService, private authService: AuthService) {}
 
   ngOnInit() {
       this.role = this.authService.getUserRole() ?? "";
+      this.authService.getUserName().subscribe(userName => {
+          this.name = userName ? `${userName.firstName} ${userName.lastName}` : "";
+          this.menuService.changeHeaderText('Welcome, ' + this.name + '!');
+      });
 
       this.menuService.isMenuActive$.subscribe((status) => {
           this.isMenuActive = status;
       });
 
-      this.menuService.changeHeaderText('Welcome, ' + this.role + '!');
   }
 
   // update(){

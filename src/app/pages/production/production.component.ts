@@ -21,7 +21,7 @@ export default class ProductionComponent {
     this.menuService.isMenuActive$.subscribe((status) => {
       this.isMenuActive = status;       
     });
-    this.menuService.changeHeaderText('Production');
+    this.menuService.changeHeaderText('Produced Goods');
   }
 
   onItemAdded(item: any) {

@@ -76,7 +76,7 @@ export class ProductionTableComponent implements OnInit {
     }).subscribe({
       next: ({ products, produceHistory }) => {
         this.productData = products.data;
-        this.produceHistoryData = produceHistory.data;
+        this.produceHistoryData = produceHistory.data.sort((a, b) => new Date(b.producedAt).getTime() - new Date(a.producedAt).getTime());
         localStorage.setItem('products', JSON.stringify(products.data));
         localStorage.setItem('produceHistoryData', JSON.stringify(produceHistory.data));
         this.applyDateFilter();
@@ -92,7 +92,7 @@ export class ProductionTableComponent implements OnInit {
 
   applyDateFilter(): void {
     if (this.isAddActive) {
-      this.produceHistoryData = this.newProduceHistoryData;
+      this.produceHistoryData = this.newProduceHistoryData.sort((a, b) => new Date(b.producedAt).getTime() - new Date(a.producedAt).getTime());
     } else {
       const fromDateObj = this.fromDate ? new Date(this.fromDate) : null;
       const toDateObj = this.toDate ? new Date(this.toDate) : null;
@@ -100,7 +100,7 @@ export class ProductionTableComponent implements OnInit {
       this.produceHistoryData = this.produceHistoryData.filter(record => {
         const produceDateObj = new Date(record.producedAt);
         return (!fromDateObj || produceDateObj >= fromDateObj) && (!toDateObj || produceDateObj <= toDateObj);
-      });
+      }).sort((a, b) => new Date(b.producedAt).getTime() - new Date(a.producedAt).getTime());
     }
   }
 
@@ -186,7 +186,7 @@ export class ProductionTableComponent implements OnInit {
     }).subscribe({
       next: ({ products, produceHistory }) => {
         this.productData = products.data;
-        this.produceHistoryData = produceHistory.data;
+        this.produceHistoryData = produceHistory.data.sort((a, b) => new Date(b.producedAt).getTime() - new Date(a.producedAt).getTime());
         localStorage.setItem('products', JSON.stringify(products.data));
         localStorage.setItem('produceHistoryData', JSON.stringify(produceHistory.data));
         this.applyDateFilter();

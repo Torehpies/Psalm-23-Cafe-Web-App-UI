@@ -73,7 +73,7 @@ export class SupplyTableComponent implements OnInit {
     }).subscribe({
       next: ({ supplies, usedSupplies }) => {
         this.supplyData = supplies;
-        this.usedSuppliesData = usedSupplies.data;
+        this.usedSuppliesData = usedSupplies.data.sort((a, b) => new Date(b.usedAt).getTime() - new Date(a.usedAt).getTime());
         localStorage.setItem('supplyData', JSON.stringify(supplies));
         localStorage.setItem('usedSuppliesData', JSON.stringify(usedSupplies.data));
         this.applyDateFilter();
@@ -89,7 +89,7 @@ export class SupplyTableComponent implements OnInit {
 
   applyDateFilter(): void {
     if (this.isAddActive) {
-      this.usedSuppliesData = this.newSupplyData;
+      this.usedSuppliesData = this.newSupplyData.sort((a, b) => new Date(b.usedAt).getTime() - new Date(a.usedAt).getTime());
     } else {
       const fromDateObj = this.fromDate ? new Date(this.fromDate) : null;
       const toDateObj = this.toDate ? new Date(this.toDate) : null;
@@ -97,7 +97,7 @@ export class SupplyTableComponent implements OnInit {
       this.usedSuppliesData = this.usedSuppliesData.filter(record => {
         const supplyDateObj = new Date(record.usedAt);
         return (!fromDateObj || supplyDateObj >= fromDateObj) && (!toDateObj || supplyDateObj <= toDateObj);
-      });
+      }).sort((a, b) => new Date(b.usedAt).getTime() - new Date(a.usedAt).getTime());
     }
   }
 
@@ -172,7 +172,7 @@ export class SupplyTableComponent implements OnInit {
     }).subscribe({
       next: ({ supplies, usedSupplies }) => {
         this.supplyData = supplies;
-        this.usedSuppliesData = usedSupplies.data;
+        this.usedSuppliesData = usedSupplies.data.sort((a, b) => new Date(b.usedAt).getTime() - new Date(a.usedAt).getTime());
         localStorage.setItem('supplyData', JSON.stringify(supplies));
         localStorage.setItem('usedSuppliesData', JSON.stringify(usedSupplies.data));
         this.applyDateFilter();

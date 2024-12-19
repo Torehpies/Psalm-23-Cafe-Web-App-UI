@@ -45,8 +45,8 @@
             <tbody>
               <tr *ngFor="let attendance of attendances">
                 <td class="border border-brown-700 p-2 text-lg leading-6 text-brown-900">{{ attendance.Date | date }}</td>
-                <td class="border border-brown-700 p-2 text-lg leading-6 text-brown-900">{{ attendance.TimeIn }}</td>
-                <td class="border border-brown-700 p-2 text-lg leading-6 text-brown-900">{{ attendance.TimeOut }}</td>
+                <td class="border border-brown-700 p-2 text-lg leading-6 text-brown-900">{{ attendance.TimeIn | date:'shortTime' }}</td>
+                <td class="border border-brown-700 p-2 text-lg leading-6 text-brown-900">{{ attendance.TimeOut | date:'shortTime' }}</td>
               </tr>
             </tbody>
           </table>

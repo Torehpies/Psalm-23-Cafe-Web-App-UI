@@ -7,7 +7,7 @@
 // })
 // export class DataService {
 
-//   private apiUrl = 'http://localhost:7000/'; // Replace with your backend URL
+
 
 //   constructor(private http: HttpClient) {}
 
@@ -24,12 +24,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private apiUrl = 'http://localhost:7000/';  // Replace with your actual API URL
+  // private apiUrl = 'http://localhost:7000/';  // Replace with your actual API URL
 
-  constructor(private http: HttpClient) {}
+  // constructor(private http: HttpClient) {}
 
-  // Ensure the response is typed as an array of any type (or replace 'any' with a specific type if needed)
-  getData(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);  // Fetch data from the API and ensure it returns an array
-  }
+  // // Ensure the response is typed as an array of any type (or replace 'any' with a specific type if needed)
+  // getData(): Observable<any[]> {
+  //   return this.http.get<any[]>(this.apiUrl);  // Fetch data from the API and ensure it returns an array
+//  
 }

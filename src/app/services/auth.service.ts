@@ -72,7 +72,7 @@ export class AuthService {
   // }
 
   /*
-  private apiUrl = 'http://localhost:8800';
+  
   private loginUrl = `${this.apiUrl}/api/auth/login`;
   private createAccountUrl = `${this.apiUrl}/api/auth/register`;
   private forgotPasswordUrl = `${this.apiUrl}/forgot-password`;
