@@ -25,7 +25,7 @@ export default class CreateAccountComponent implements OnInit {
       lastName: ['', Validators.required],
       position: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required]
     },
     {

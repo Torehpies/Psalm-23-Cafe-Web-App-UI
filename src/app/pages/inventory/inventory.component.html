@@ -1,16 +1,16 @@
 <div class="size-screen">
   <app-header class="sticky top-0 z-10 bg-yellow-400" />
+  <app-leftsidebar />
   <div class="flex flex-col lg:flex-row p-3">
-    <app-leftsidebar />
     <div class="flex-grow px-6 main-content" [class.active]="isMenuActive">
       <!-- Button Container -->
-      <div class="flex justify-end space-x-6 mt-6" *ngIf="!showRestockForm">
+      <div class="flex mr-[4rem] justify-end space-x-6 mt-6" *ngIf="!showRestockForm">
         <button (click)="toggleShowItemForm()"
-          class="px-6 py-2 bg-yellow-400 text-black font-bold rounded hover:-translate-y-1 transform transition">
-          + Add Item
+        class="w-[7rem] p-2 border-4 border-amber-700 bg-white text-black font-bold rounded-xl hover:-translate-y-1 transform transition">
+        + Add Item
         </button>
         <button (click)="toggleRestockForm()"
-          class="px-6 py-2 bg-yellow-400 text-black font-bold rounded hover:-translate-y-1 transform transition">
+          class="w-[7rem]  p-2 border-4 border-amber-700 bg-white text-black font-bold rounded-xl hover:-translate-y-1 transform transition">
           Restock
         </button>
       </div>
