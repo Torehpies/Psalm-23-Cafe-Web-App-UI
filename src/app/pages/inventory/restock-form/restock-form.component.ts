@@ -27,7 +27,7 @@ export class RestockFormComponent {
   constructor(private menuService: MenuService, private fb: FormBuilder, private suppliesService: SuppliesService) {
     this.restockForm = this.fb.group({
       rows: this.fb.array([])
-    })
+    });
   }
   
   get rows() {
@@ -79,7 +79,18 @@ export class RestockFormComponent {
     expireDate: string; 
     price: number; 
   }) {
-    this.rows.push(this.fb.group(row));
+    const formGroup = this.fb.group({
+      ...row,
+      isEditable: [false]
+    });
+    this.rows.push(formGroup);
+  }
+
+  toggleEditRow(index: number): void {
+    const row = this.rows.at(index);
+    if (row) {
+      row.patchValue({ isEditable: !row.value.isEditable });
+    }
   }
 
   confirmDeleteRow(index: number): void {

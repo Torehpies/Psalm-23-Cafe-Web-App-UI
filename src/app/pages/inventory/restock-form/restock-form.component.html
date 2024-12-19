@@ -21,13 +21,13 @@
           <tbody formArrayName="rows">
             <!-- Example of an item row, can be dynamically added using Angular -->
             <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
-              <td><div class="cell-content">{{row.value.name}}</div></td>
-              <td><div class="cell-content">{{row.value.quantity}}</div></td>
-              <td><div class="cell-content">{{row.value.expireDate}}</div></td>
-              <td><div class="cell-content">{{row.value.price}}</div></td>
+              <td><input formControlName="name" class="cell-content" /></td>
+              <td><input formControlName="quantity" type="number" class="cell-content" /></td>
+              <td><input formControlName="expireDate" type="date" class="cell-content" /></td>
+              <td><input formControlName="price" type="number" step="0.01" class="cell-content" /></td>
               <td>
-                  <button type="button" class="edit-btn">Edit</button>
-                  <button type="button"(click)="confirmDeleteRow(i)" class="del-btn">Delete</button>
+                  <!--button type="button" class="edit-btn" >Edit</button-->
+                  <button type="button" (click)="confirmDeleteRow(i)" class="del-btn">Delete</button>
               </td>
           </tr>
           

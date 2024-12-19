@@ -1,11 +1,12 @@
- <!-- Daily section -->
- <div class="bg-slate-50 rounded-xl p-5 h-full">
-     <h1 class="text-center text-3xl font-black">Today</h1>
-     <h2 class="text-center text-xl font-bold">Total customers:</h2>
-     <h4 class="text-center">{{ totalCustomers }}</h4>
-     <h2 class="text-center font-bold text-xl">Top sellers:</h2>
-     <h4 class="text-center">Pandesal {{ topSellers.pandesal }}</h4>
-     <h4 class="text-center">Okinawa Milktea {{ topSellers.okinawaMilktea }}</h4>
-     <h4 class="text-center">Mocha Cake {{ topSellers.mochaCake }}</h4>
- </div>
- 
+<!-- Daily section -->
+<div class="bg-slate-50 rounded-xl p-5 h-full">
+    <h1 class="text-center text-3xl font-black">Today</h1>
+    <h2 class="text-center text-xl font-bold">Total customers:</h2>
+    <h4 class="text-center">{{ totalCustomers }}</h4>
+    <h2 class="text-center font-bold text-xl">Top products:</h2>
+    <div *ngFor="let category of aggregatedProducts">
+        <div *ngFor="let product of category.categories[0].products | slice:0:5">
+            <h4 class="text-center">{{ product.name }} {{ product.quantity }}</h4>
+        </div>
+    </div>
+</div>

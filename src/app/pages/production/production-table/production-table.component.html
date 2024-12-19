@@ -1,4 +1,3 @@
-
 <div class="grow">
 
   <div class="flex justify-center items-center mb-5 relative">
@@ -28,10 +27,10 @@
       </div>
       <div class="flex items-center overflow-x-auto">
         <span class="mr-2">Download:</span>
-        <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">Custom Download</button>
-        <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">All Time</button>
-        <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">Month to Date</button>
-        <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700">Today</button>
+        <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700" (click)="downloadCustomRange()">Custom Download</button>
+        <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700" (click)="downloadAllTime()">All Time</button>
+        <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700" (click)="downloadMonthToDate()">Month to Date</button>
+        <button class="ml-2 p-2 h-16 w-20 font-sm border rounded bg-yellow-600 text-white hover:bg-yellow-700" (click)="downloadToday()">Today</button>
       </div>
     </div>
     <div class="overflow-auto max-h-[calc(100vh-300px)]">

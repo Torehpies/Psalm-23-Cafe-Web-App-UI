@@ -97,9 +97,16 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
               console.log('Attendance updated:', response);
               this.isClockedIn = false;
               this.isLocked = true;
+              
             },
             error => {
-              console.error('Error updating attendance:', error.message);
+              console.error('Error updating attendance:', error);
+              if (error.error instanceof ErrorEvent) {
+                console.error('Error Event:', error.error.message);
+              } else {
+                console.error(`Error Status: ${error.status}\nMessage: ${error.message}`);
+              }
+              this.reloadPage(); // Reload the page after success
             }
           );
         } else {
@@ -114,15 +121,26 @@ export class UserProfileComponent implements OnInit, AfterViewInit {
             console.log('Attendance created:', response);
             this.isClockedIn = true;
             this.clockInData.push(response);
+            
           },
           error => {
             console.error('Error creating attendance:', error);
+            if (error.error instanceof ErrorEvent) {
+              console.error('Error Event:', error.error.message);
+            } else {
+              console.error(`Error Status: ${error.status}\nMessage: ${error.message}`);
+            }
+            this.reloadPage(); // Reload the page after success
           }
         );
       }
     } else {
       console.error('User ID is null');
     }
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 
   // Live time display
