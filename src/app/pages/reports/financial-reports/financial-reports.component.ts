@@ -254,6 +254,23 @@ export class FinancialReportsComponent implements OnInit {
   }
 
   downloadReport() {
-    console.log('Report download triggered');
+    const expensesCsv = this.convertToCSV(this.expenses, ['item', 'quantity', 'amount']);
+    const salesCsv = this.convertToCSV(this.sales, ['name', 'quantity', 'amount']);
+    const csvData = `Expenses\n${expensesCsv}\n\nSales\n${salesCsv}`;
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'financial_report.csv');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  convertToCSV(data: any[], headers: string[]) {
+    const header = headers.join(',');
+    const rows = data.map(row => headers.map(header => row[header]).join(','));
+    return [header, ...rows].join('\n');
   }
 }

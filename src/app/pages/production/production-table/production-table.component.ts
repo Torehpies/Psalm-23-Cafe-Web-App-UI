@@ -203,5 +203,56 @@ export class ProductionTableComponent implements OnInit {
     }, 3000); // Hide the modal after 3 seconds
   }
 
-  
+  downloadCSV(data: any[], filename: string): void {
+    const csvData = this.convertToCSV(data);
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', filename);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  convertToCSV(data: any[]): string {
+    const headers = Object.keys(data[0]);
+    const csvRows = data.map(row => headers.map(header => JSON.stringify(row[header], (key, value) => value === null ? '' : value)).join(','));
+    return [headers.join(','), ...csvRows].join('\r\n');
+  }
+
+  downloadCustomRange(): void {
+    const filteredData = this.produceHistoryData.filter(record => {
+      const produceDateObj = new Date(record.producedAt);
+      const fromDateObj = this.fromDate ? new Date(this.fromDate) : null;
+      const toDateObj = this.toDate ? new Date(this.toDate) : null;
+      return (!fromDateObj || produceDateObj >= fromDateObj) && (!toDateObj || produceDateObj <= toDateObj);
+    });
+    this.downloadCSV(filteredData, 'custom_range_produce.csv');
+  }
+
+  downloadAllTime(): void {
+    const allData = JSON.parse(localStorage.getItem('produceHistoryData') || '[]');
+    this.downloadCSV(allData, 'all_time_produce.csv');
+  }
+
+  downloadMonthToDate(): void {
+    const currentDate = new Date();
+    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const filteredData = this.produceHistoryData.filter(record => {
+      const produceDateObj = new Date(record.producedAt);
+      return produceDateObj >= firstDayOfMonth && produceDateObj <= currentDate;
+    });
+    this.downloadCSV(filteredData, 'month_to_date_produce.csv');
+  }
+
+  downloadToday(): void {
+    const currentDate = new Date();
+    const filteredData = this.produceHistoryData.filter(record => {
+      const produceDateObj = new Date(record.producedAt);
+      return produceDateObj.toDateString() === currentDate.toDateString();
+    });
+    this.downloadCSV(filteredData, 'today_produce.csv');
+  }
 }

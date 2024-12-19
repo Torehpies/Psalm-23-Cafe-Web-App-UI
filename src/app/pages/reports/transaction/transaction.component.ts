@@ -114,7 +114,22 @@ export class TransactionComponent implements OnInit {
   }
 
   downloadReport() {
-    console.log('Downloading report...');
+    const csvData = this.convertToCSV(this.filteredData.transactions);
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'transactions_report.csv');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  convertToCSV(data: any[]) {
+    const header = Object.keys(data[0]).join(',');
+    const rows = data.map(row => Object.values(row).join(','));
+    return [header, ...rows].join('\n');
   }
 
   handleTransactionButtonClick() {
