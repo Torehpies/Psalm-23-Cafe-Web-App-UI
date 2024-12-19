@@ -44,6 +44,7 @@ export class ProductPerformanceComponent implements OnInit {
       console.log('Fetched data:', response); // Debugging statement
       this.productData = response.data;
       this.filteredData = this.aggregateData(this.productData);
+     
     });
   }
 
@@ -113,6 +114,7 @@ export class ProductPerformanceComponent implements OnInit {
       return performanceDate >= startDate && performanceDate <= endDate;
     });
     this.filteredData = this.aggregateData(filtered);
+    console.log('filteredData:', this.filteredData); // Debugging line
   }
 
   // Method to filter data for today
@@ -128,6 +130,7 @@ export class ProductPerformanceComponent implements OnInit {
       return performanceDate >= today && performanceDate <= endOfDay;
     });
     this.filteredData = this.aggregateData(filtered);
+    console.log('filteredData:', this.filteredData); // Debugging line
   }
 
   // Method to aggregate data
@@ -135,7 +138,7 @@ export class ProductPerformanceComponent implements OnInit {
     const aggregated: { [key: string]: ProductPerformance } = {};
 
     data.forEach(performance => {
-      performance.categories.forEach(category => {
+      performance.categories.forEach((category: Category) => {
         if (!aggregated[category.category]) {
           aggregated[category.category] = {
             _id: '',
@@ -145,7 +148,7 @@ export class ProductPerformanceComponent implements OnInit {
             products: []
           };
         }
-        category.products.forEach(product => {
+        category.products.forEach((product: any) => {
           const existingProduct = aggregated[category.category].categories[0].products.find(p => p.productId === product.productId);
           if (existingProduct) {
             existingProduct.quantity += product.quantity;
@@ -161,6 +164,27 @@ export class ProductPerformanceComponent implements OnInit {
 
   // Method to download the report
   downloadReport() {
-    console.log('Downloading report...');
+    const csvData = this.convertToCSV(this.filteredData);
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'product_performance_report.csv');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  convertToCSV(data: ProductPerformance[]) {
+    const header = 'Date,Category,Product,Quantity,Amount';
+    const rows = data.flatMap(performance => 
+      performance.categories.flatMap(category => 
+        category.products.map(product => 
+          `${performance.date},${category.category},${product.name},${product.quantity},${product.price * product.quantity}`
+        )
+      )
+    );
+    return [header, ...rows].join('\n');
   }
 }
