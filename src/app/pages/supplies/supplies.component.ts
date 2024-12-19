@@ -21,7 +21,7 @@ export default class SuppliesComponent {
       this.menuService.isMenuActive$.subscribe((status) => {
           this.isMenuActive = status;       
       });
-      this.menuService.changeHeaderText('Supplies');
+      this.menuService.changeHeaderText('Used Supplies');
   }
 
 }
